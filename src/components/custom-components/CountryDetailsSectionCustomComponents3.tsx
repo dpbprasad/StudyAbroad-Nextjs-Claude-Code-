@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+"use client";
+
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import Link from 'next/link';
+import ConsultationCTA from './ConsultationCTA';
+import { Section } from '../ui/Section';
+import { Card } from '../ui/Card';
+import { PageHeader } from '../ui/PageHeader';
 
-interface Institution {
-    name: string;
-    desc: string;
-}
-
-interface Feature {
-    title: string;
-    desc: string;
-}
-
+interface Institution { name: string; desc: string; }
+interface Feature { title: string; desc: string; }
 interface CountryData {
     id: string;
     name: string;
@@ -22,6 +19,8 @@ interface CountryData {
     qualifications: string[];
     features: Feature[];
 }
+
+const LOGO_SRC = 'https://static.shuffle.dev/uploads/files/8f/8fabfe5ac9e980e7956b71c583d5c06bd3f4cc88/logo-Copy.svg';
 
 const countriesData: CountryData[] = [
   {
@@ -35,38 +34,14 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Supported Study Destinations",
     institutions: [
-      {
-        name: "United Kingdom",
-        desc: "Renowned for historical academic excellence, accelerated degree pathways (3-year Bachelors, 1-year Masters), and vast career growth opportunities."
-      },
-      {
-        name: "Canada",
-        desc: "World-class education systems balanced with diverse, welcoming communities, excellent standard of living, and post-graduation work opportunities."
-      },
-      {
-        name: "New Zealand",
-        desc: "Practical, research-oriented learning, strong industry connections, high student safety standards, and a supportive, peaceful environment."
-      },
-      {
-        name: "Australia",
-        desc: "Globally recognized qualifications, strong legal frameworks protecting international students, work rights, and vibrant cosmopolitan cities."
-      },
-      {
-        name: "United States",
-        desc: "Access to unmatched campus resources, cutting-edge research facilities, highly diverse program specializations, and global networking hubs."
-      },
-      {
-        name: "Germany",
-        desc: "A powerhouse of engineering and technology, offering zero or low-cost tuition options at world-renowned public universities."
-      },
-      {
-        name: "Netherlands",
-        desc: "A leader in English-taught programs in mainland Europe, offering innovative research methodologies and a highly entrepreneurial culture."
-      },
-      {
-        name: "Sweden",
-        desc: "Focus on creative thinking, sustainable development, and a balanced lifestyle supporting both academic excellence and personal growth."
-      }
+      { name: "United Kingdom", desc: "Renowned for historical academic excellence, accelerated degree pathways (3-year Bachelors, 1-year Masters), and vast career growth opportunities." },
+      { name: "Canada", desc: "World-class education systems balanced with diverse, welcoming communities, excellent standard of living, and post-graduation work opportunities." },
+      { name: "New Zealand", desc: "Practical, research-oriented learning, strong industry connections, high student safety standards, and a supportive, peaceful environment." },
+      { name: "Australia", desc: "Globally recognized qualifications, strong legal frameworks protecting international students, work rights, and vibrant cosmopolitan cities." },
+      { name: "United States", desc: "Access to unmatched campus resources, cutting-edge research facilities, highly diverse program specializations, and global networking hubs." },
+      { name: "Germany", desc: "A powerhouse of engineering and technology, offering zero or low-cost tuition options at world-renowned public universities." },
+      { name: "Netherlands", desc: "A leader in English-taught programs in mainland Europe, offering innovative research methodologies and a highly entrepreneurial culture." },
+      { name: "Sweden", desc: "Focus on creative thinking, sustainable development, and a balanced lifestyle supporting both academic excellence and personal growth." }
     ],
     qualifications: [
       "Personalized Career & Course Sourcing",
@@ -76,22 +51,10 @@ const countriesData: CountryData[] = [
       "Pre-Departure Briefings & Travel Transition Prep"
     ],
     features: [
-      {
-        title: "Legacy of Student Trust",
-        desc: "Built on word-of-mouth success since 2007, we prioritize student matches over generic placements."
-      },
-      {
-        title: "Direct University Alliances",
-        desc: "Our direct partnerships with top global institutions enable faster offer issuance and direct admissions."
-      },
-      {
-        title: "Director-Led Case Care",
-        desc: "Your files and visa documentation are handled with direct director supervision for maximum success rates."
-      },
-      {
-        title: "Post-Arrival Integration",
-        desc: "We stay in touch to ensure you settle well into university dorms or private accommodation and thrive."
-      }
+      { title: "Legacy of Student Trust", desc: "Built on word-of-mouth success since 2007, we prioritize student matches over generic placements." },
+      { title: "Direct University Alliances", desc: "Our direct partnerships with top global institutions enable faster offer issuance and direct admissions." },
+      { title: "Director-Led Case Care", desc: "Your files and visa documentation are handled with direct director supervision for maximum success rates." },
+      { title: "Post-Arrival Integration", desc: "We stay in touch to ensure you settle well into university dorms or private accommodation and thrive." }
     ]
   },
   {
@@ -105,22 +68,10 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Higher Education System in New Zealand",
     institutions: [
-      {
-        name: "Universities",
-        desc: "Offer a wide range of undergraduate and postgraduate programs, focusing on research and academic excellence."
-      },
-      {
-        name: "Polytechnics",
-        desc: "Provide vocational education and training. Emphasize practical skills and industry connections."
-      },
-      {
-        name: "Private Training Establishments (PTEs)",
-        desc: "Offer specialized courses and training, providing flexibility in course delivery."
-      },
-      {
-        name: "Wānanga",
-        desc: "Focus on Māori education and cultural practices, providing qualifications from certificates to degrees."
-      }
+      { name: "Universities", desc: "Offer a wide range of undergraduate and postgraduate programs, focusing on research and academic excellence." },
+      { name: "Polytechnics", desc: "Provide vocational education and training. Emphasize practical skills and industry connections." },
+      { name: "Private Training Establishments (PTEs)", desc: "Offer specialized courses and training, providing flexibility in course delivery." },
+      { name: "Wānanga", desc: "Focus on Māori education and cultural practices, providing qualifications from certificates to degrees." }
     ],
     qualifications: [
       "Bachelor's Degrees (Standard undergraduate qualification)",
@@ -129,26 +80,11 @@ const countriesData: CountryData[] = [
       "Diplomas and Certificates (Shorter courses focusing on specific skills or knowledge areas)"
     ],
     features: [
-      {
-        title: "High-Quality Education",
-        desc: "New Zealand's institutions are globally recognized for their academic excellence and innovative teaching methods."
-      },
-      {
-        title: "Diverse Range of Programs",
-        desc: "A wide variety of programs across multiple fields allows students to pursue their interests and career aspirations."
-      },
-      {
-        title: "Inclusive Environment",
-        desc: "The education system promotes diversity and inclusivity, providing support for international students to adapt and thrive."
-      },
-      {
-        title: "Strong Industry Connections",
-        desc: "Partnerships with industries offer students practical experience through internships and work placements, enhancing employability."
-      },
-      {
-        title: "Post-Study Work Opportunities",
-        desc: "International students can apply for post-study work visas, allowing them to gain valuable work experience in New Zealand after graduation."
-      }
+      { title: "High-Quality Education", desc: "New Zealand's institutions are globally recognized for their academic excellence and innovative teaching methods." },
+      { title: "Diverse Range of Programs", desc: "A wide variety of programs across multiple fields allows students to pursue their interests and career aspirations." },
+      { title: "Inclusive Environment", desc: "The education system promotes diversity and inclusivity, providing support for international students to adapt and thrive." },
+      { title: "Strong Industry Connections", desc: "Partnerships with industries offer students practical experience through internships and work placements, enhancing employability." },
+      { title: "Post-Study Work Opportunities", desc: "International students can apply for post-study work visas, allowing them to gain valuable work experience in New Zealand after graduation." }
     ]
   },
   {
@@ -163,14 +99,8 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Structure of the Education System",
     institutions: [
-      {
-        name: "Undergraduate Level",
-        desc: "Bachelor's degrees typically take 3-4 years to complete, offered by universities across Canada."
-      },
-      {
-        name: "Graduate Level",
-        desc: "Master's degrees usually require 1-2 years of study after a Bachelor's degree. Doctoral programs (PhDs) involve advanced research and can take 3-6 years."
-      }
+      { name: "Undergraduate Level", desc: "Bachelor's degrees typically take 3-4 years to complete, offered by universities across Canada." },
+      { name: "Graduate Level", desc: "Master's degrees usually require 1-2 years of study after a Bachelor's degree. Doctoral programs (PhDs) involve advanced research and can take 3-6 years." }
     ],
     qualifications: [
       "Bachelor's Degrees (3-4 Years)",
@@ -178,22 +108,10 @@ const countriesData: CountryData[] = [
       "Doctoral Degrees / PhDs (3-6 Years)"
     ],
     features: [
-      {
-        title: "Diversity and Inclusion",
-        desc: "Canada is known for its multicultural society, welcoming students from around the world."
-      },
-      {
-        title: "Quality Education",
-        desc: "Canadian institutions consistently rank among the best globally."
-      },
-      {
-        title: "Research Opportunities",
-        desc: "Strong emphasis on research and innovation, with funding available for various projects."
-      },
-      {
-        title: "Student Support Services",
-        desc: "Universities and colleges offer various support services, including academic advising, counseling, and career services."
-      }
+      { title: "Diversity and Inclusion", desc: "Canada is known for its multicultural society, welcoming students from around the world." },
+      { title: "Quality Education", desc: "Canadian institutions consistently rank among the best globally." },
+      { title: "Research Opportunities", desc: "Strong emphasis on research and innovation, with funding available for various projects." },
+      { title: "Student Support Services", desc: "Universities and colleges offer various support services, including academic advising, counseling, and career services." }
     ]
   },
   {
@@ -206,18 +124,9 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "UK Higher Education System",
     institutions: [
-      {
-        name: "Undergraduate Education",
-        desc: "Typically lasts 3-4 years, leading to a Bachelor's degree. Offers a wide range of courses across various disciplines."
-      },
-      {
-        name: "Postgraduate Education",
-        desc: "Includes Master's degrees (1-2 years) and Doctoral programs (PhDs), focusing on advanced study and research in specific fields."
-      },
-      {
-        name: "Further Education",
-        desc: "Includes vocational training and qualifications, often pursued after secondary education."
-      }
+      { name: "Undergraduate Education", desc: "Typically lasts 3-4 years, leading to a Bachelor's degree. Offers a wide range of courses across various disciplines." },
+      { name: "Postgraduate Education", desc: "Includes Master's degrees (1-2 years) and Doctoral programs (PhDs), focusing on advanced study and research in specific fields." },
+      { name: "Further Education", desc: "Includes vocational training and qualifications, often pursued after secondary education." }
     ],
     qualifications: [
       "Bachelor's Degrees (3-4 Years)",
@@ -226,26 +135,11 @@ const countriesData: CountryData[] = [
       "Vocational & Further Education Diplomas"
     ],
     features: [
-      {
-        title: "World-Class Institutions",
-        desc: "The UK is home to prestigious universities known for academic excellence and research output."
-      },
-      {
-        title: "Diverse Course Offerings",
-        desc: "A wide range of undergraduate and postgraduate programs allows students to tailor their education to their interests."
-      },
-      {
-        title: "Rich Cultural Experience",
-        desc: "Studying in the UK provides exposure to a rich cultural heritage, with opportunities to engage in diverse communities and activities."
-      },
-      {
-        title: "Strong Research Focus",
-        desc: "The UK education system emphasizes research and innovation, with significant funding and resources dedicated to advancing knowledge."
-      },
-      {
-        title: "Post-Study Work Opportunities",
-        desc: "International students can benefit from post-study work options, allowing them to gain valuable work experience in the UK after completing their studies."
-      }
+      { title: "World-Class Institutions", desc: "The UK is home to prestigious universities known for academic excellence and research output." },
+      { title: "Diverse Course Offerings", desc: "A wide range of undergraduate and postgraduate programs allows students to tailor their education to their interests." },
+      { title: "Rich Cultural Experience", desc: "Studying in the UK provides exposure to a rich cultural heritage, with opportunities to engage in diverse communities and activities." },
+      { title: "Strong Research Focus", desc: "The UK education system emphasizes research and innovation, with significant funding and resources dedicated to advancing knowledge." },
+      { title: "Post-Study Work Opportunities", desc: "International students can benefit from post-study work options, allowing them to gain valuable work experience in the UK after completing their studies." }
     ]
   },
   {
@@ -258,18 +152,9 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Higher Education System in the USA",
     institutions: [
-      {
-        name: "Community Colleges",
-        desc: "Offer two-year associate degrees and vocational training, often serving as a pathway to four-year universities."
-      },
-      {
-        name: "Four-Year Colleges and Universities",
-        desc: "Provide undergraduate programs leading to Bachelor's degrees, as well as graduate programs (Master's and Doctoral degrees)."
-      },
-      {
-        name: "Research Universities",
-        desc: "Focus on research and offer a wide range of graduate programs, often with significant funding for research initiatives."
-      }
+      { name: "Community Colleges", desc: "Offer two-year associate degrees and vocational training, often serving as a pathway to four-year universities." },
+      { name: "Four-Year Colleges and Universities", desc: "Provide undergraduate programs leading to Bachelor's degrees, as well as graduate programs (Master's and Doctoral degrees)." },
+      { name: "Research Universities", desc: "Focus on research and offer a wide range of graduate programs, often with significant funding for research initiatives." }
     ],
     qualifications: [
       "Associate Degrees (2-Year pathways)",
@@ -278,26 +163,11 @@ const countriesData: CountryData[] = [
       "Doctoral Degrees / PhDs (Advanced research)"
     ],
     features: [
-      {
-        title: "Diverse Academic Programs",
-        desc: "The USA offers a vast array of programs across various fields, allowing students to tailor their education to their interests and career goals."
-      },
-      {
-        title: "World-Class Institutions",
-        desc: "Many American universities are ranked among the best globally, known for their academic excellence and research contributions."
-      },
-      {
-        title: "Flexible Curriculum",
-        desc: "Students have the freedom to choose courses from different disciplines, promoting a well-rounded education and interdisciplinary learning."
-      },
-      {
-        title: "Strong Research Opportunities",
-        desc: "The emphasis on research and innovation provides students with opportunities to engage in cutting-edge projects and gain practical experience."
-      },
-      {
-        title: "Post-Study Work Options",
-        desc: "International students can benefit from Optional Practical Training (OPT) and Curricular Practical Training (CPT), allowing them to gain work experience in the USA after graduation."
-      }
+      { title: "Diverse Academic Programs", desc: "The USA offers a vast array of programs across various fields, allowing students to tailor their education to their interests and career goals." },
+      { title: "World-Class Institutions", desc: "Many American universities are ranked among the best globally, known for their academic excellence and research contributions." },
+      { title: "Flexible Curriculum", desc: "Students have the freedom to choose courses from different disciplines, promoting a well-rounded education and interdisciplinary learning." },
+      { title: "Strong Research Opportunities", desc: "The emphasis on research and innovation provides students with opportunities to engage in cutting-edge projects and gain practical experience." },
+      { title: "Post-Study Work Options", desc: "International students can benefit from Optional Practical Training (OPT) and Curricular Practical Training (CPT), allowing them to gain work experience in the USA after graduation." }
     ]
   },
   {
@@ -310,18 +180,9 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Higher Education System in Germany",
     institutions: [
-      {
-        name: "Universities (Universitäten)",
-        desc: "Focus on academic education and research, offering Bachelor's, Master's, and Doctoral degrees across a wide range of disciplines."
-      },
-      {
-        name: "Universities of Applied Sciences (Fachhochschulen)",
-        desc: "Emphasize practical and professional education, offering Bachelor's and Master's degrees with a strong focus on applied sciences and engineering."
-      },
-      {
-        name: "Art and Music Colleges",
-        desc: "Specialize in creative fields, providing programs in fine arts, design, music, and performing arts."
-      }
+      { name: "Universities (Universitäten)", desc: "Focus on academic education and research, offering Bachelor's, Master's, and Doctoral degrees across a wide range of disciplines." },
+      { name: "Universities of Applied Sciences (Fachhochschulen)", desc: "Emphasize practical and professional education, offering Bachelor's and Master's degrees with a strong focus on applied sciences and engineering." },
+      { name: "Art and Music Colleges", desc: "Specialize in creative fields, providing programs in fine arts, design, music, and performing arts." }
     ],
     qualifications: [
       "Bachelor's Degrees (3-4 Years)",
@@ -329,26 +190,11 @@ const countriesData: CountryData[] = [
       "Doctoral Degrees / PhDs (Research-based)"
     ],
     features: [
-      {
-        title: "Tuition-Free Education",
-        desc: "Many public universities offer tuition-free or low-cost education for both domestic and international students."
-      },
-      {
-        title: "High-Quality Academic Standards",
-        desc: "German universities are known for their rigorous academic programs and high standards of education."
-      },
-      {
-        title: "Strong Research Opportunities",
-        desc: "Collaboration with industries provides students with hands-on experience and exposure to cutting-edge projects."
-      },
-      {
-        title: "Diverse Course Offerings",
-        desc: "A wide range of programs are available, many offered in English, catering to international students' needs."
-      },
-      {
-        title: "Post-Graduation Work Opportunities",
-        desc: "Germany's strong economy creates ample job opportunities for international graduates."
-      }
+      { title: "Tuition-Free Education", desc: "Many public universities offer tuition-free or low-cost education for both domestic and international students." },
+      { title: "High-Quality Academic Standards", desc: "German universities are known for their rigorous academic programs and high standards of education." },
+      { title: "Strong Research Opportunities", desc: "Collaboration with industries provides students with hands-on experience and exposure to cutting-edge projects." },
+      { title: "Diverse Course Offerings", desc: "A wide range of programs are available, many offered in English, catering to international students' needs." },
+      { title: "Post-Graduation Work Opportunities", desc: "Germany's strong economy creates ample job opportunities for international graduates." }
     ]
   },
   {
@@ -361,14 +207,8 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Higher Education System in the Netherlands",
     institutions: [
-      {
-        name: "Research Universities",
-        desc: "Focus on academic education and research, offering Bachelor's, Master's, and Doctoral degrees across various disciplines. They emphasize theoretical knowledge and research skills."
-      },
-      {
-        name: "Universities of Applied Sciences",
-        desc: "Emphasize practical and professional education, offering Bachelor's and Master's degrees with a strong focus on applied sciences, arts, and vocational training."
-      }
+      { name: "Research Universities", desc: "Focus on academic education and research, offering Bachelor's, Master's, and Doctoral degrees across various disciplines. They emphasize theoretical knowledge and research skills." },
+      { name: "Universities of Applied Sciences", desc: "Emphasize practical and professional education, offering Bachelor's and Master's degrees with a strong focus on applied sciences, arts, and vocational training." }
     ],
     qualifications: [
       "Bachelor's Degrees (Research vs. Applied Sciences)",
@@ -376,26 +216,11 @@ const countriesData: CountryData[] = [
       "Doctoral Degrees / PhDs (Advanced research)"
     ],
     features: [
-      {
-        title: "High-Quality Education",
-        desc: "Dutch universities are known for their rigorous academic standards and are consistently ranked among the best in the world."
-      },
-      {
-        title: "Wide Range of English-Taught Programs",
-        desc: "Many programs are offered in English, making it easier for international students to pursue their studies without needing to learn Dutch."
-      },
-      {
-        title: "Innovative Teaching Methods",
-        desc: "The education system emphasizes interactive learning, critical thinking, and collaboration, preparing students for real-world challenges."
-      },
-      {
-        title: "Strong International Community",
-        desc: "The Netherlands is home to a diverse population of international students, creating a multicultural environment that enriches the educational experience."
-      },
-      {
-        title: "Post-Graduation Work Opportunities",
-        desc: "The Dutch government offers a favorable policy for international graduates, allowing them to stay and work in the Netherlands for up to one year after completing their studies."
-      }
+      { title: "High-Quality Education", desc: "Dutch universities are known for their rigorous academic standards and are consistently ranked among the best in the world." },
+      { title: "Wide Range of English-Taught Programs", desc: "Many programs are offered in English, making it easier for international students to pursue their studies without needing to learn Dutch." },
+      { title: "Innovative Teaching Methods", desc: "The education system emphasizes interactive learning, critical thinking, and collaboration, preparing students for real-world challenges." },
+      { title: "Strong International Community", desc: "The Netherlands is home to a diverse population of international students, creating a multicultural environment that enriches the educational experience." },
+      { title: "Post-Graduation Work Opportunities", desc: "The Dutch government offers a favorable policy for international graduates, allowing them to stay and work in the Netherlands for up to one year after completing their studies." }
     ]
   },
   {
@@ -408,14 +233,8 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Higher Education System in Sweden",
     institutions: [
-      {
-        name: "Universities (Universitet)",
-        desc: "Focus on academic education and research, offering Bachelor's, Master's, and Doctoral degrees across a wide range of disciplines. They emphasize theoretical knowledge and research skills."
-      },
-      {
-        name: "University Colleges (Högskolor)",
-        desc: "Offer professional and vocational education, providing Bachelor's and Master's degrees with a strong focus on practical skills and applied sciences."
-      }
+      { name: "Universities (Universitet)", desc: "Focus on academic education and research, offering Bachelor's, Master's, and Doctoral degrees across a wide range of disciplines. They emphasize theoretical knowledge and research skills." },
+      { name: "University Colleges (Högskolor)", desc: "Offer professional and vocational education, providing Bachelor's and Master's degrees with a strong focus on practical skills and applied sciences." }
     ],
     qualifications: [
       "Bachelor's Degrees (3 Years)",
@@ -423,26 +242,11 @@ const countriesData: CountryData[] = [
       "Doctoral Degrees / PhDs"
     ],
     features: [
-      {
-        title: "High-Quality Education",
-        desc: "Swedish universities are known for their rigorous academic standards and are consistently ranked among the best in the world."
-      },
-      {
-        title: "Wide Range of English-Taught Programs",
-        desc: "A significant number of programs are offered in English, making it easier for international students to pursue their studies without needing to learn Swedish."
-      },
-      {
-        title: "Innovative Teaching Methods",
-        desc: "The education system emphasizes student-centered learning, critical thinking, and collaboration, preparing students for real-world challenges."
-      },
-      {
-        title: "Strong Focus on Sustainability",
-        desc: "Sweden is a global leader in sustainability and environmental awareness, integrating these principles into its educational programs."
-      },
-      {
-        title: "Post-Graduation Work Opportunities",
-        desc: "International graduates can apply for a residence permit to stay and work in Sweden for up to 12 months after completing their studies, allowing them to gain valuable work experience."
-      }
+      { title: "High-Quality Education", desc: "Swedish universities are known for their rigorous academic standards and are consistently ranked among the best in the world." },
+      { title: "Wide Range of English-Taught Programs", desc: "A significant number of programs are offered in English, making it easier for international students to pursue their studies without needing to learn Swedish." },
+      { title: "Innovative Teaching Methods", desc: "The education system emphasizes student-centered learning, critical thinking, and collaboration, preparing students for real-world challenges." },
+      { title: "Strong Focus on Sustainability", desc: "Sweden is a global leader in sustainability and environmental awareness, integrating these principles into its educational programs." },
+      { title: "Post-Graduation Work Opportunities", desc: "International graduates can apply for a residence permit to stay and work in Sweden for up to 12 months after completing their studies, allowing them to gain valuable work experience." }
     ]
   },
   {
@@ -455,18 +259,9 @@ const countriesData: CountryData[] = [
     ],
     educationSystemTitle: "Higher Education System in Australia",
     institutions: [
-      {
-        name: "Universities",
-        desc: "Offer undergraduate and postgraduate degrees with a strong focus on research, theory, and professional academic excellence."
-      },
-      {
-        name: "Vocational Education & Training (VET / TAFE)",
-        desc: "Provide industry-aligned certificates and diplomas focusing on hands-on practical skills and direct employment pathways."
-      },
-      {
-        name: "English Language Schools (ELICOS)",
-        desc: "Provide specialized English language preparation, academic English, and foundation courses for international students."
-      }
+      { name: "Universities", desc: "Offer undergraduate and postgraduate degrees with a strong focus on research, theory, and professional academic excellence." },
+      { name: "Vocational Education & Training (VET / TAFE)", desc: "Provide industry-aligned certificates and diplomas focusing on hands-on practical skills and direct employment pathways." },
+      { name: "English Language Schools (ELICOS)", desc: "Provide specialized English language preparation, academic English, and foundation courses for international students." }
     ],
     qualifications: [
       "Bachelor's Degrees (3-4 Years)",
@@ -475,316 +270,197 @@ const countriesData: CountryData[] = [
       "Vocational Diplomas & Certificates"
     ],
     features: [
-      {
-        title: "Global Recognition",
-        desc: "Australian degrees are highly valued by employers and top-ranking academic institutions worldwide."
-      },
-      {
-        title: "Post-Study Work Pathways",
-        desc: "Graduates can apply for Temporary Graduate visas (Subclass 485) to gain valuable work experience in Australia."
-      },
-      {
-        title: "High Standard of Living",
-        desc: "Australian cities like Melbourne, Sydney, and Brisbane are consistently ranked among the most livable student cities globally."
-      },
-      {
-        title: "Diverse Academic Programs",
-        desc: "Wide range of courses spanning fields like business, engineering, medicine, marine biology, and humanities."
-      },
-      {
-        title: "Strong Student Support",
-        desc: "The ESOS Act (Education Services for Overseas Students) legally protects international student rights and tuition fees."
-      }
+      { title: "Global Recognition", desc: "Australian degrees are highly valued by employers and top-ranking academic institutions worldwide." },
+      { title: "Post-Study Work Pathways", desc: "Graduates can apply for Temporary Graduate visas (Subclass 485) to gain valuable work experience in Australia." },
+      { title: "High Standard of Living", desc: "Australian cities like Melbourne, Sydney, and Brisbane are consistently ranked among the most livable student cities globally." },
+      { title: "Diverse Academic Programs", desc: "Wide range of courses spanning fields like business, engineering, medicine, marine biology, and humanities." },
+      { title: "Strong Student Support", desc: "The ESOS Act (Education Services for Overseas Students) legally protects international student rights and tuition fees." }
     ]
   }
 ];
+
+const flagSrc = (id: string) => (id === 'overview' ? LOGO_SRC : `/images/flags/${id}.gif`);
+
+const CheckIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+);
 
 const CountryDetailsSectionCustomComponents3: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const country = searchParams.get('country');
-    
-    // Set default active country to New Zealand
     const [activeCountry, setActiveCountry] = useState<CountryData>(countriesData[0]);
-    const [isMounted, setIsMounted] = useState(false);
+    const contentRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
-    // Synchronize active country state with URL query parameter
     useEffect(() => {
         if (country && typeof country === 'string') {
-            const cleanQuery = country.toLowerCase().trim();
-            const matched = countriesData.find(c => 
-                c.id === cleanQuery || 
-                c.name.toLowerCase() === cleanQuery ||
-                (cleanQuery === 'uk' && c.id === 'united-kingdom') ||
-                (cleanQuery === 'united-states' && c.id === 'usa')
+            const q = country.toLowerCase().trim();
+            const matched = countriesData.find(
+                (c) =>
+                    c.id === q ||
+                    c.name.toLowerCase() === q ||
+                    (q === 'uk' && c.id === 'united-kingdom') ||
+                    (q === 'united-states' && c.id === 'usa'),
             );
-            if (matched) {
-                setActiveCountry(matched);
-            }
+            if (matched) setActiveCountry(matched);
         }
     }, [country]);
 
-    const handleSelectCountry = (targetCountry: CountryData) => {
-        setActiveCountry(targetCountry);
+    const handleSelectCountry = (target: CountryData) => {
+        setActiveCountry(target);
         const params = new URLSearchParams(searchParams.toString());
-        params.set('country', targetCountry.id);
-        router.push(`${pathname}?${params.toString()}`);
+        params.set('country', target.id);
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+        requestAnimationFrame(() => {
+            contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
     };
 
+    const isOverview = activeCountry.id === 'overview';
+
     return (
-        <section className="relative py-20 lg:py-24 bg-transparent overflow-hidden min-h-screen">
-            <div className="absolute inset-0 opacity-10 bg-gradient-to-b from-[#0FA3A3]/20 via-transparent to-[#0FA3A3]/10 -z-20 pointer-events-none" />
-            <div className="relative container px-4 mx-auto">
-                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-                    
-                    {/* Left Sticky Navigation Menu */}
-                    <div className="w-full lg:w-1/4 lg:sticky lg:top-0 z-10">
-                        {/* Mobile Scrollable Tabs */}
-                        <div className="block lg:hidden overflow-x-auto whitespace-nowrap py-2 mb-8 -mx-4 px-4 scrollbar-none">
-                            <div className="flex gap-2">
-                                {countriesData.map((c) => (
+        <>
+            <PageHeader
+                title={isOverview ? 'Study Destinations' : `Study in ${activeCountry.name}`}
+                subtitle={isOverview ? 'Global Minds. Global Futures.' : 'Destination profile & higher-education overview.'}
+                breadcrumbs={
+                    isOverview
+                        ? [{ label: 'Home', href: '/' }, { label: 'Countries' }]
+                        : [{ label: 'Home', href: '/' }, { label: 'Countries', href: '/country-details?country=overview' }, { label: activeCountry.name }]
+                }
+            />
+
+            <Section bg="white">
+                <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-16">
+                    {/* Sidebar */}
+                    <aside className="lg:sticky lg:top-28 lg:self-start">
+                        {/* Mobile: horizontal scroll tabs */}
+                        <div className="-mx-4 mb-2 flex gap-2 overflow-x-auto px-4 pb-2 lg:hidden">
+                            {countriesData.map((c) => {
+                                const isActive = activeCountry.id === c.id;
+                                return (
                                     <button
                                         key={c.id}
                                         onClick={() => handleSelectCountry(c)}
-                                        className={`pl-2 pr-5 py-1.5 rounded-full text-sm font-semibold border transition-all duration-300 flex items-center gap-2.5 shrink-0 ${
-                                            activeCountry.id === c.id
-                                                ? 'border-[#0FA3A3] bg-[#0FA3A3] text-white shadow-[0_0_15px_rgba(15,163,163,0.3)]'
-                                                : 'border-[#0FA3A3]/30 text-slate-300 bg-[#0B2144]/30 hover:border-[#0FA3A3]'
+                                        className={`flex shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                                            isActive ? 'border-brand-600 bg-brand-600 text-white' : 'border-slate-300 bg-white text-slate-600'
                                         }`}
                                     >
-                                        <span className={`w-8 h-8 rounded-full border flex items-center justify-center overflow-hidden shrink-0 transition-colors duration-300 ${
-                                            c.id === 'overview'
-                                                ? 'border-[#0FA3A3]/30 bg-white'
-                                                : activeCountry.id === c.id
-                                                    ? 'border-white/30 bg-white/10'
-                                                    : 'border-[#0FA3A3]/20 bg-[#0B2144]/20'
-                                        }`}>
-                                            <img 
-                                                src={c.id === 'overview' ? 'https://static.shuffle.dev/uploads/files/8f/8fabfe5ac9e980e7956b71c583d5c06bd3f4cc88/logo-Copy.svg' : `/images/flags/${c.id}.gif`} 
-                                                alt={c.name} 
-                                                className={`w-full h-full ${c.id === 'overview' ? 'object-contain p-1' : 'object-cover'}`} 
-                                            />
+                                        <span className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/5">
+                                            <img src={flagSrc(c.id)} alt="" className={`h-full w-full ${c.id === 'overview' ? 'object-contain p-0.5' : 'object-cover'}`} />
                                         </span>
                                         {c.name}
                                     </button>
-                                ))}
-                            </div>
+                                );
+                            })}
                         </div>
 
-                        {/* Desktop Sidebar menu */}
-                        <div className="hidden lg:block p-8 lg:p-10 rounded-3xl border border-[#0FA3A3] bg-transparent backdrop-blur-sm shadow-[0_0_40px_rgba(15,163,163,0.08)]">
-                            <h3 className="mb-6 pb-4 border-b border-[#0FA3A3]/20 text-sm font-bold uppercase tracking-wider text-[#0FA3A3]">
-                                Study Destinations
-                            </h3>
-                            <ul className="flex flex-col gap-2.5">
-                                {countriesData.map((c) => (
-                                    <li key={c.id}>
+                        {/* Desktop: vertical list */}
+                        <div className="hidden rounded-2xl border border-slate-200 bg-white p-2 lg:block">
+                            <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500">Study Destinations</p>
+                            <nav className="flex flex-col">
+                                {countriesData.map((c) => {
+                                    const isActive = activeCountry.id === c.id;
+                                    return (
                                         <button
+                                            key={c.id}
                                             onClick={() => handleSelectCountry(c)}
-                                            className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 flex items-center justify-between border ${
-                                                activeCountry.id === c.id
-                                                    ? 'border-[#0FA3A3] bg-[#0FA3A3]/10 text-[#0FA3A3] pl-5 shadow-[inset_0_0_15px_rgba(15,163,163,0.05)] font-semibold'
-                                                    : 'border-transparent text-slate-300 hover:text-white hover:bg-[#0FA3A3]/5 hover:pl-5'
+                                            aria-current={isActive ? 'page' : undefined}
+                                            className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+                                                isActive ? 'bg-brand-50' : 'hover:bg-slate-50'
                                             }`}
                                         >
-                                            <span className="flex items-center gap-3">
-                                                <span className={`w-10 h-10 rounded-full border flex items-center justify-center overflow-hidden shrink-0 transition-colors duration-300 ${
-                                                    c.id === 'overview'
-                                                        ? 'border-[#0FA3A3]/30 bg-white'
-                                                        : activeCountry.id === c.id
-                                                            ? 'border-[#0FA3A3] bg-[#0FA3A3]/20'
-                                                            : 'border-[#0FA3A3]/20 bg-[#0B2144]/20'
-                                                }`}>
-                                                    <img 
-                                                        src={c.id === 'overview' ? 'https://static.shuffle.dev/uploads/files/8f/8fabfe5ac9e980e7956b71c583d5c06bd3f4cc88/logo-Copy.svg' : `/images/flags/${c.id}.gif`} 
-                                                        alt={c.name} 
-                                                        className={`w-full h-full ${c.id === 'overview' ? 'object-contain p-1' : 'object-cover'}`} 
-                                                    />
-                                                </span>
-                                                <span>{c.name}</span>
-                                            </span>
-                                            <svg 
-                                                xmlns="http://www.w3.org/2000/svg" 
-                                                className={`w-4 h-4 transition-transform duration-300 ${activeCountry.id === c.id ? 'translate-x-0.5 text-[#0FA3A3]' : 'opacity-0 -translate-x-2'}`} 
-                                                fill="none" 
-                                                viewBox="0 0 24 24" 
-                                                stroke="currentColor"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Right Content Column */}
-                    <div className="w-full lg:flex-1 text-left">
-                        {isMounted ? (
-                            <div className="space-y-12 animate-fade-in">
-                                
-                                {/* Country Hero Header Banner */}
-                                <div className="relative">
-                                    <div className="flex items-center gap-4 mb-4">
-                                        <span className={`w-10 h-10 rounded-full border border-[#0FA3A3]/30 ${activeCountry.id === 'overview' ? 'bg-white' : 'bg-[#0B2144]/20'} flex items-center justify-center overflow-hidden shrink-0 shadow-[0_0_15px_rgba(15,163,163,0.15)]`}>
-                                            <img 
-                                                src={activeCountry.id === 'overview' ? 'https://static.shuffle.dev/uploads/files/8f/8fabfe5ac9e980e7956b71c583d5c06bd3f4cc88/logo-Copy.svg' : `/images/flags/${activeCountry.id}.gif`} 
-                                                alt={activeCountry.name} 
-                                                className={`w-full h-full ${activeCountry.id === 'overview' ? 'object-contain p-1' : 'object-cover'}`} 
+                                            <span
+                                                className={`h-9 w-1 flex-shrink-0 rounded-full transition-colors ${
+                                                    isActive ? 'bg-brand-600' : 'bg-transparent group-hover:bg-slate-300'
+                                                }`}
+                                                aria-hidden="true"
                                             />
-                                        </span>
-                                        <span className="text-sm text-[#0FA3A3] font-semibold tracking-widest uppercase">
-                                            {activeCountry.id === 'overview' ? 'GLOBAL MINDS. GLOBAL FUTURES' : 'Destination Profile'}
-                                        </span>
-                                    </div>
-                                    <h1 className="text-4xl lg:text-5xl font-medium mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-200 uppercase">
-                                        {activeCountry.id === 'overview' ? 'Study Destinations Overview' : `Study in ${activeCountry.name}`}
-                                    </h1>
-                                    <div className="space-y-4">
-                                        {activeCountry.overview.map((para, idx) => (
-                                            <p key={idx} className="text-base lg:text-lg text-slate-300 leading-relaxed font-normal">
-                                                {para}
-                                            </p>
-                                        ))}
-                                    </div>
+                                            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/5">
+                                                <img src={flagSrc(c.id)} alt="" className={`h-full w-full ${c.id === 'overview' ? 'object-contain p-1' : 'object-cover'}`} />
+                                            </span>
+                                            <span className={`text-sm font-medium ${isActive ? 'text-brand-700' : 'text-slate-700'}`}>{c.name}</span>
+                                        </button>
+                                    );
+                                })}
+                            </nav>
+                        </div>
+                    </aside>
+
+                    {/* Content */}
+                    <div ref={contentRef} className="min-w-0 scroll-mt-24 space-y-12">
+                        {/* Overview / intro */}
+                        <div className="space-y-4 text-[15px] leading-relaxed text-slate-600 md:text-lg">
+                            {activeCountry.overview.map((para, idx) => (
+                                <p key={idx}>{para}</p>
+                            ))}
+                        </div>
+
+                        {/* Education system */}
+                        <div>
+                            <h2 className="mb-8 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
+                                {activeCountry.educationSystemTitle}
+                            </h2>
+                            <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+                                <div className="space-y-4">
+                                    <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+                                        {isOverview ? 'Supported Study Destinations' : 'Types of Institutions'}
+                                    </h3>
+                                    {activeCountry.institutions.map((inst, idx) => (
+                                        <div key={idx} className="rounded-xl border border-slate-200 bg-white p-5 shadow-card transition-colors hover:border-slate-300">
+                                            <h4 className="mb-1.5 flex items-center gap-2 text-base font-semibold text-slate-900">
+                                                <span className="h-1.5 w-1.5 rounded-full bg-brand-600" />
+                                                {inst.name}
+                                            </h4>
+                                            <p className="text-sm leading-relaxed text-slate-600">{inst.desc}</p>
+                                        </div>
+                                    ))}
                                 </div>
-
-                                {/* Education System Details Card */}
-                                {activeCountry.id !== 'overview' && (
-                                    <div>
-                                        <h2 className="text-2xl lg:text-3xl font-medium mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200">
-                                            {activeCountry.educationSystemTitle}
-                                        </h2>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                                            
-                                            {/* Institutions List Accordion style */}
-                                            <div className="space-y-4">
-                                                <h3 className="text-sm font-semibold tracking-wider uppercase text-[#0FA3A3] mb-4">
-                                                    {activeCountry.id === 'overview' ? 'Supported Study Destinations' : 'Types of Institutions'}
-                                                </h3>
-                                                {activeCountry.institutions.map((inst, idx) => (
-                                                    <div 
-                                                        key={idx} 
-                                                        className="p-5 rounded-xl border border-[#0FA3A3]/10 bg-transparent hover:border-[#0FA3A3]/40 transition-all duration-300"
-                                                    >
-                                                        <h4 className="text-base font-bold text-white mb-2 flex items-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#0FA3A3]" />
-                                                            {inst.name}
-                                                        </h4>
-                                                        <p className="text-sm leading-relaxed text-slate-300">
-                                                            {inst.desc}
-                                                        </p>
-                                                    </div>
-                                                ))}
-                                            </div>
-
-                                            {/* Qualifications Offered */}
-                                            <div>
-                                                <h3 className="text-sm font-semibold tracking-wider uppercase text-[#0FA3A3] mb-4">
-                                                    {activeCountry.id === 'overview' ? 'Our Student Support Services' : 'Qualifications Offered'}
-                                                </h3>
-                                                <div className="p-6 rounded-xl border border-[#0FA3A3]/10 bg-transparent">
-                                                    <ul className="space-y-4">
-                                                        {activeCountry.qualifications.map((qual, idx) => (
-                                                            <li key={idx} className="flex items-start gap-3 text-sm text-slate-300 leading-relaxed">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#0FA3A3] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                </svg>
-                                                                <span>{qual}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Key Features Card Grid */}
-                                {activeCountry.id !== 'overview' && (
-                                    <div>
-                                        <h2 className="text-2xl lg:text-3xl font-medium mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200">
-                                            {activeCountry.id === 'overview' ? 'Why Study Abroad' : `Why Choose ${activeCountry.name}`}
-                                        </h2>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                                            {activeCountry.features.map((feat, idx) => (
-                                                <div 
-                                                    key={idx}
-                                                    className="group p-6 lg:p-8 rounded-2xl border border-[#0FA3A3]/20 hover:border-[#0FA3A3] bg-transparent hover:bg-[#0B2144]/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(15,163,163,0.12)]"
-                                                >
-                                                    <div className="flex items-center justify-between mb-4">
-                                                        <span className="text-[10px] font-semibold tracking-wider text-[#0FA3A3] uppercase border border-[#0FA3A3]/30 rounded-full px-2.5 py-0.5">
-                                                            Benefit {idx + 1}
-                                                        </span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#0FA3A3] opacity-50 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                        </svg>
-                                                    </div>
-                                                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#0FA3A3] transition-colors duration-300">
-                                                        {feat.title}
-                                                    </h3>
-                                                    <p className="text-sm leading-relaxed text-slate-300">
-                                                        {feat.desc}
-                                                    </p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Consultation Call to Action */}
-                                <div className="p-8 lg:p-10 rounded-3xl border border-[#0FA3A3] bg-transparent relative overflow-hidden shadow-[0_0_40px_rgba(15,163,163,0.08)]">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#0FA3A3]/10 to-[#0B2144]/20 -z-10" />
-                                    <div className="max-w-2xl">
-                                        <h3 className="text-2xl lg:text-3xl font-medium text-white mb-4">
-                                            {activeCountry.id === 'overview' ? 'Ready to Study Abroad?' : `Ready to Study in ${activeCountry.name}?`}
-                                        </h3>
-                                        <p className="text-slate-300 text-sm lg:text-base leading-relaxed mb-6">
-                                            Connect with Sri Lanka's top international education consultants. Since 2007, Study Abroad (Pvt) Ltd has helped thousands of students secure admissions and visa approvals for top global universities.
-                                        </p>
-                                        <div className="flex flex-wrap gap-4">
-                                            <Link 
-                                                href="/contact" 
-                                                className="px-6 py-3.5 rounded-full bg-[#0FA3A3] hover:bg-[#0d8f8f] text-sm font-semibold text-white transition-all duration-300 shadow-[0_0_20px_rgba(15,163,163,0.3)] hover:shadow-[0_0_25px_rgba(15,163,163,0.5)]"
-                                            >
-                                                Schedule a Free Consultation
-                                            </Link>
-                                            <Link 
-                                                href="/stories" 
-                                                className="px-6 py-3.5 rounded-full border border-[#0FA3A3]/30 hover:border-[#0FA3A3] hover:bg-[#0FA3A3]/10 text-sm font-semibold text-[#0FA3A3] hover:text-white transition-all duration-300"
-                                            >
-                                                Success Stories
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        ) : (
-                            // Server-side fallback content (first country - New Zealand)
-                            <div className="space-y-12">
                                 <div>
-                                    <h1 className="text-4xl lg:text-5xl font-medium mb-6 text-white uppercase">
-                                        {activeCountry.id === 'overview' ? 'Study Destinations Overview' : `Study in ${activeCountry.name}`}
-                                    </h1>
-                                    <p className="text-base lg:text-lg text-slate-300 leading-relaxed">
-                                        {activeCountry.overview[0]}
-                                    </p>
+                                    <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-600">
+                                        {isOverview ? 'Our Student Support Services' : 'Qualifications Offered'}
+                                    </h3>
+                                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                                        <ul className="space-y-4">
+                                            {activeCountry.qualifications.map((qual, idx) => (
+                                                <li key={idx} className="flex items-start gap-3 text-sm leading-relaxed text-slate-700">
+                                                    <CheckIcon />
+                                                    <span>{qual}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        )}
-                    </div>
+                        </div>
 
+                        {/* Features */}
+                        <div>
+                            <h2 className="mb-8 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
+                                {isOverview ? 'Why Study Abroad' : `Why Choose ${activeCountry.name}`}
+                            </h2>
+                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+                                {activeCountry.features.map((feat, idx) => (
+                                    <Card key={idx}>
+                                        <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-sm font-semibold text-brand-700">
+                                            {String(idx + 1).padStart(2, '0')}
+                                        </span>
+                                        <h3 className="mb-1.5 text-lg font-semibold text-slate-900 transition-colors group-hover:text-brand-700">{feat.title}</h3>
+                                        <p className="text-[15px] leading-relaxed text-slate-600">{feat.desc}</p>
+                                    </Card>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* CTA */}
+                        <ConsultationCTA title={isOverview ? 'Ready to Study Abroad?' : `Ready to Study in ${activeCountry.name}?`} />
+                    </div>
                 </div>
-            </div>
-        </section>
+            </Section>
+        </>
     );
 };
 

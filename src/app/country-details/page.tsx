@@ -17,12 +17,9 @@ export default function CountryDetails() {
   return (
     <>
       <CountriesSectionNavigations1 />
-      {/* TEMP dark backdrop until this detail page is migrated to the light theme */}
-      <div className="bg-brand-950">
-        <Suspense fallback={<div className="min-h-screen animate-pulse bg-brand-950" />}>
-          <CountryDetailsSectionCustomComponents3 />
-        </Suspense>
-      </div>
+      <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
+        <CountryDetailsSectionCustomComponents3 />
+      </Suspense>
       <CountriesSectionFooters2 />
     </>
   );
