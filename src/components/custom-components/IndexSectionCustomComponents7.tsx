@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 interface Destination {
   country: string;
@@ -163,12 +164,12 @@ const IndexSectionCustomComponents7: React.FC = () => {
         <Section bg="white">
             {/* Header */}
             <div className="mb-8 flex flex-col justify-between gap-6 md:flex-row md:items-end lg:mb-12">
-                <div className="max-w-xl">
+                <Reveal className="max-w-xl">
                     <Eyebrow>Top Study Destinations</Eyebrow>
                     <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
                         Country of Your Choice
                     </h2>
-                </div>
+                </Reveal>
                 <div className="flex items-center gap-3">
                     <Button href="/country-details?country=overview" variant="secondary">
                         All countries

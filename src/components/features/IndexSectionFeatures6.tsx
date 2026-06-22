@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { SplitSection } from '../ui/SplitSection';
 import { Pillar } from '../ui/Pillar';
+import { Reveal } from '../ui/Reveal';
 
 interface IndexSectionFeatures6Props {
     imageLeft?: boolean;
@@ -56,23 +57,25 @@ const IndexSectionFeatures6: React.FC<IndexSectionFeatures6Props> = ({ imageLeft
         </>
       }
     >
-      <div className="flex flex-col gap-7">
-        {pillars.map((pillar) => (
-          <Pillar key={pillar.title} icon={pillar.icon} title={pillar.title} description={pillar.description} />
-        ))}
-      </div>
+      <Reveal>
+        <div className="flex flex-col gap-7">
+          {pillars.map((pillar) => (
+            <Pillar key={pillar.title} icon={pillar.icon} title={pillar.title} description={pillar.description} />
+          ))}
+        </div>
 
-      <div className="mt-8">
-        <Link
-          href="/aboutus"
-          className="group inline-flex items-center gap-2 text-base font-semibold text-brand-600 transition-colors hover:text-brand-700"
-        >
-          Learn More About Us
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </Link>
-      </div>
+        <div className="mt-8">
+          <Link
+            href="/aboutus"
+            className="group inline-flex items-center gap-2 text-base font-semibold text-brand-600 transition-colors hover:text-brand-700"
+          >
+            Learn More About Us
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+        </div>
+      </Reveal>
     </SplitSection>
   );
 };

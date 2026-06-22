@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
+import { Reveal } from '../ui/Reveal';
 
 interface Testimonial {
   name: string;
@@ -112,12 +113,12 @@ const IndexSectionTestimonials16: React.FC = () => {
 
     return (
         <Section bg="white">
-            <div className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
+            <Reveal className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
                 <Eyebrow className="justify-center">Success Stories</Eyebrow>
                 <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
                     What our students say
                 </h2>
-            </div>
+            </Reveal>
 
             <div className="flex items-center gap-4 lg:gap-6">
                 <button onClick={handlePrev} className={controlBtn} aria-label="Previous testimonial">

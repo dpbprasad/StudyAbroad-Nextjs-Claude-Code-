@@ -1,5 +1,6 @@
 import React from 'react';
 import { Section } from '../ui/Section';
+import { Reveal } from '../ui/Reveal';
 
 type Feature = {
   title: string;
@@ -52,8 +53,8 @@ const IndexSectionHeaders2: React.FC = () => {
   return (
     <Section bg="white">
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-        {features.map((feature) => (
-          <div key={feature.title} className="group flex items-start gap-5">
+        {features.map((feature, i) => (
+          <Reveal key={feature.title} delay={i * 80} className="group flex items-start gap-5">
             <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-transform duration-300 group-hover:scale-105">
               {feature.icon}
             </span>
@@ -61,7 +62,7 @@ const IndexSectionHeaders2: React.FC = () => {
               <h3 className="mb-1.5 text-lg font-semibold text-slate-900">{feature.title}</h3>
               <p className="text-[15px] leading-relaxed text-slate-600">{feature.desc}</p>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </Section>

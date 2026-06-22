@@ -11,3 +11,5 @@ export { SplitSection } from './SplitSection';
 export { Select } from './Select';
 export { Textarea } from './Textarea';
 export { PageHeader } from './PageHeader';
+export { Reveal } from './Reveal';
+export { CountUp } from './CountUp';

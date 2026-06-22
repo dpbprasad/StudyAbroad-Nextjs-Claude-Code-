@@ -2,6 +2,7 @@ import React from 'react';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Card } from '../ui/Card';
+import { Reveal } from '../ui/Reveal';
 
 interface IndexSectionHowItWorks5Props {
     tagline?: string;
@@ -43,16 +44,17 @@ const stepsData = [
 const IndexSectionHowItWorks5Test: React.FC<IndexSectionHowItWorks5Props> = ({ tagline = "How It Works" }) => {
     return (
         <Section bg="white">
-            <div className="mx-auto mb-12 max-w-3xl text-center lg:mb-16">
+            <Reveal className="mx-auto mb-12 max-w-3xl text-center lg:mb-16">
                 <Eyebrow className="justify-center">{tagline}</Eyebrow>
                 <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
                     Our Step-by-Step Consultation Process
                 </h2>
-            </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-                {stepsData.map((step) => (
-                    <Card key={step.num}>
+                {stepsData.map((step, i) => (
+                    <Reveal key={step.num} delay={i * 70} className="h-full">
+                    <Card className="h-full">
                         <div className="flex items-start gap-4">
                             <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-base font-semibold text-white transition-transform duration-200 group-hover:scale-110">
                                 {step.num}
@@ -67,6 +69,7 @@ const IndexSectionHowItWorks5Test: React.FC<IndexSectionHowItWorks5Props> = ({ t
                             </div>
                         </div>
                     </Card>
+                    </Reveal>
                 ))}
             </div>
         </Section>
