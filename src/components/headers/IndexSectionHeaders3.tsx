@@ -15,7 +15,7 @@ const IndexSectionHeaders3: React.FC = () => {
       <div className="container px-4 mx-auto">
         <div className="max-w-2xl mb-10 mx-auto text-center">
           <div className="mb-6 animate-fade-up">
-            <span className="text-sm text-[#22D3EE] font-semibold tracking-wider">EST.2007 | GLOBAL MINDS. GLOBAL FUTURES</span>
+            <span className="inline-flex items-center rounded-full border border-brand-400/30 bg-brand-400/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-brand-400 backdrop-blur-sm">EST.2007 | GLOBAL MINDS. GLOBAL FUTURES</span>
           </div>
           <h1 className="mb-6 animate-fade-up text-4xl md:text-5xl lg:text-6xl font-medium leading-none text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-200 [text-shadow:0_2px_20px_rgba(2,6,23,0.35)]" style={{ animationDelay: '150ms' }}>Your gateway to world-class education</h1>
           <p className="mb-10 animate-fade-up text-lg leading-relaxed text-slate-200 [text-shadow:0_1px_12px_rgba(2,6,23,0.45)]" style={{ animationDelay: '300ms' }}>Your Trusted Partner for International Education, Admissions, Recruitment, Placements, and Global Opportunities.</p>
@@ -26,14 +26,14 @@ const IndexSectionHeaders3: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-            <Link className="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white border-[1.5px] border-[#22D3EE] hover:border-[#22D3EE] hover:bg-[#22D3EE]/10 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950" href="/stories">
+            <Link className="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white border-[1.5px] border-brand-400 hover:border-brand-400 hover:bg-brand-400/10 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950" href="/stories">
               Success Stories
             </Link>
           </div>
         </div>
         <div className="animate-fade-up" style={{ animationDelay: '600ms' }}>
-          <button className="block mx-auto w-16 h-16 p-3 rounded-full border-[1.5px] border-[#22D3EE] hover:bg-[#22D3EE]/10 transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950">
-            <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto text-[#22D3EE] transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+          <button className="block mx-auto w-16 h-16 p-3 rounded-full border-[1.5px] border-brand-400 hover:bg-brand-400/10 transition-all duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950">
+            <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto text-brand-400 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
             </svg>
           </button>

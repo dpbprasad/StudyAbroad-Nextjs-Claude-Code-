@@ -16,7 +16,7 @@ export function Eyebrow({
         className,
       )}
     >
-      <span className="h-px w-6 bg-gold-500" aria-hidden="true" />
+      <span className="h-px w-6 bg-brand-600" aria-hidden="true" />
       {children}
     </span>
   );
