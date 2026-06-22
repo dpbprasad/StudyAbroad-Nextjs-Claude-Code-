@@ -130,7 +130,12 @@ const IndexSectionTestimonials16: React.FC = () => {
                 <div className="w-full overflow-hidden">
                     <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                         {testimonialsData.map((t, idx) => (
-                            <div key={idx} className="w-full flex-shrink-0 px-1">
+                            <div
+                                key={idx}
+                                className="w-full flex-shrink-0 px-1"
+                                aria-hidden={idx !== currentIndex}
+                                inert={idx !== currentIndex ? true : undefined}
+                            >
                                 <div className="mx-auto grid max-w-5xl items-center gap-8 lg:grid-cols-[2fr_3fr] lg:gap-14">
                                     {/* 1:1 student image */}
                                     <div className="mx-auto w-full max-w-xs lg:max-w-none">

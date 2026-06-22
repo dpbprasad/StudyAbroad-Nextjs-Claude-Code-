@@ -47,6 +47,23 @@
   color: var(--color-ink);
 }
 
+/* Keyboard focus baseline — any interactive element that doesn't define its
+   own focus style gets a visible brand ring. Components using Tailwind's
+   `focus-visible:ring-*` (a class selector) override this element selector,
+   so they keep their custom rings. :focus-visible excludes mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Respect reduced-motion everywhere */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

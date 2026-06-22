@@ -157,11 +157,19 @@ const IndexSectionBlog12: React.FC = () => {
                         className={`flex ${transitionEnabled ? 'transition-transform duration-500 ease-in-out' : 'transition-none'}`}
                         style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}
                     >
-                        {extendedData.map((article, idx) => (
-                            <div key={idx} className="w-full flex-shrink-0 px-4 md:w-1/2">
-                                <ArticleCard article={article} />
-                            </div>
-                        ))}
+                        {extendedData.map((article, idx) => {
+                            const visible = idx >= currentIndex && idx < currentIndex + visibleCards;
+                            return (
+                                <div
+                                    key={idx}
+                                    className="w-full flex-shrink-0 px-4 md:w-1/2"
+                                    aria-hidden={!visible}
+                                    inert={!visible ? true : undefined}
+                                >
+                                    <ArticleCard article={article} />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             ) : (
