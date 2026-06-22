@@ -141,7 +141,7 @@ const IndexSectionTestimonials16: React.FC = () => {
                                     {/* Quote + student */}
                                     <div className="text-center lg:text-left">
                                         <blockquote className="line-clamp-6 text-lg leading-relaxed text-slate-700 md:text-xl">
-                                            “{t.text}”
+                                            {t.text}
                                         </blockquote>
                                         {t.text.length > 300 && (
                                             <Link

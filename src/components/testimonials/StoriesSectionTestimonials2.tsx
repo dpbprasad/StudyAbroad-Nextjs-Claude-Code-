@@ -88,8 +88,8 @@ const testimonialsData: Testimonial[] = [
   }
 ];
 
-const Stars = () => (
-  <div className="flex gap-0.5 text-gold-400" aria-label="5 out of 5 stars">
+const Stars = ({ className = '' }: { className?: string }) => (
+  <div className={`flex gap-0.5 text-gold-400 ${className}`} aria-label="5 out of 5 stars">
     {Array.from({ length: 5 }).map((_, i) => (
       <svg key={i} className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1.99 5.79L10 14.77l-5.2 2.73.99-5.79L1.58 7.62l5.82-.85L10 1.5z" />
@@ -124,24 +124,32 @@ const StoriesSectionTestimonials2: React.FC = () => {
     };
 
     return (
-        <Section bg="subtle">
+        <Section bg="white">
             <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                 {getColumns().map((columnItems, colIdx) => (
                     <div key={colIdx} className="flex flex-col gap-6 lg:gap-8">
                         {columnItems.map((t, idx) => (
                             <div
                                 key={idx}
-                                className="group flex flex-col rounded-2xl bg-white p-6 shadow-card ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-card-md lg:p-7"
+                                className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-card-md"
                             >
-                                <Stars />
-                                <p className="mt-4 text-[15px] leading-relaxed text-slate-700">{t.text}</p>
-                                <div className="mt-6 flex items-center gap-3 border-t border-slate-200 pt-4">
-                                    <img className="h-11 w-11 flex-shrink-0 rounded-full object-cover ring-2 ring-brand-100" src={t.image} alt={t.name} />
-                                    <div>
-                                        <p className="text-base font-semibold text-slate-900">{t.name}</p>
-                                        <p className="text-xs font-medium text-brand-600">{t.program}</p>
-                                        <p className="mt-0.5 text-[11px] text-slate-500">{t.country} • {t.year}</p>
-                                    </div>
+                                {/* Tinted top band with a curved notch that cradles the avatar */}
+                                <div className="relative h-16 bg-brand-50" aria-hidden="true">
+                                    <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
+                                </div>
+                                <img
+                                    className="absolute left-1/2 top-4 z-10 h-24 w-24 -translate-x-1/2 rounded-full object-cover"
+                                    src={t.image}
+                                    alt={t.name}
+                                />
+                                <div className="px-6 pb-7 pt-16 lg:px-8">
+                                    <p className="text-sm font-semibold text-brand-600">{t.program}</p>
+                                    <p className="mt-1 text-xs text-slate-500">{t.country} • {t.year}</p>
+                                    <Stars className="mt-3 justify-center" />
+                                    <blockquote className="mt-5 text-[15px] leading-relaxed text-slate-700">
+                                        {t.text}
+                                    </blockquote>
+                                    <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
                                 </div>
                             </div>
                         ))}

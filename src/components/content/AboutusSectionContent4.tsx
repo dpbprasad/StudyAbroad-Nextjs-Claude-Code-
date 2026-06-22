@@ -104,12 +104,15 @@ const AboutusSectionContent4: React.FC = () => {
     <>
       {/* Intro + points */}
       <Section bg="white">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-lg leading-relaxed text-slate-600">
-            Welcome to Study Abroad (Pvt) Ltd, your trusted partner for international education in Sri Lanka.
-            Established in 2007 by MD/CEO Mrs. Priyanka Ganhataregedara, we specialize in guiding students to top
-            universities worldwide with personalized counseling and end-to-end support — covering global placement,
-            visa support, language and cultural orientation, and post-arrival assistance.
+        <div>
+          <h2 className="font-display text-2xl font-medium leading-snug tracking-tight text-slate-900 md:text-3xl">
+            Welcome to Study Abroad (Pvt) Ltd
+          </h2>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
+            Your trusted partner for international education in Sri Lanka. Established in 2007 by MD/CEO Mrs. Priyanka
+            Ganhataregedara, we specialize in guiding students to top universities worldwide with personalized counseling
+            and end-to-end support — covering global placement, visa support, language and cultural orientation, and
+            post-arrival assistance.
           </p>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
@@ -121,8 +124,9 @@ const AboutusSectionContent4: React.FC = () => {
 
       {/* Leadership */}
       <Section bg="subtle">
-        <div className="grid items-start gap-10 lg:grid-cols-[320px_1fr] lg:gap-14">
-          <div className="relative mx-auto w-full max-w-[320px]">
+        <div className="mx-auto max-w-4xl">
+          {/* Floated portrait — text wraps to its right, then flows underneath */}
+          <div className="relative mx-auto mb-8 w-full max-w-[260px] sm:max-w-[280px] md:float-left md:mx-0 md:mb-8 md:mr-10">
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-card-lg">
               <img
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600&h=600"
@@ -135,18 +139,18 @@ const AboutusSectionContent4: React.FC = () => {
               <span className="text-sm font-semibold">28+ Years of Service</span>
             </div>
           </div>
-          <div>
-            <Eyebrow>Leadership</Eyebrow>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Priyanka Ganhataregedara
-            </h2>
-            <p className="mt-1 font-medium text-brand-600">Founder &amp; Managing Director / CEO</p>
-            <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-600 md:text-base">
-              {ceoBio.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
+
+          <Eyebrow>Leadership</Eyebrow>
+          <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
+            Priyanka Ganhataregedara
+          </h2>
+          <p className="mt-1 font-medium text-brand-600">Founder &amp; Managing Director / CEO</p>
+          <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-600 md:text-base">
+            {ceoBio.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </div>
+          <div className="clear-both" />
         </div>
       </Section>
 

@@ -95,10 +95,6 @@ const LifeAbroadBody = () => (
                 ))}
             </div>
         </div>
-
-        <p className="pt-2 text-center text-lg font-semibold text-slate-900">
-            Prepare for Life Abroad with Study Abroad.
-        </p>
     </div>
 );
 
