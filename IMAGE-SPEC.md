@@ -14,9 +14,9 @@
 
 ## 2. Global rules (apply to every image)
 
-- **Format to deliver:** high-quality **JPG** (we convert to WebP/AVIF in-build). Also keep the layered/original if possible.
+- **Format to deliver:** high-quality **JPG masters** (quality ~85–90). **Do not deliver WebP/AVIF** and do not heavily pre-compress — the website auto-generates WebP/AVIF at build time, and feeding it an already-compressed file degrades quality. Send a clean, sharp JPG and let the build do the shrinking. (PNG/TIFF only if a slot needs transparency — none here do.)
 - **Resolution:** deliver at the **export size** listed per slot (already 2× for retina sharpness).
-- **File size:** compress to the budget per slot (use TinyJPG / Squoosh). Sharp but lightweight.
+- **File size:** the per-slot budgets below are the *final delivered* size the website produces automatically — **not a target to compress the master to**. Prioritise quality/sharpness in the master; the build handles compression.
 - **No baked-in text, logos, watermarks, or borders.**
 - **People:** authentic and candid — real students/advisors, genuine interaction. Avoid obvious posed stock.
 - **Licensing:** every image must be owned or properly licensed for commercial web use. Send us the licence/source for each.
@@ -120,7 +120,7 @@ public/images/
 
 **Before delivering, confirm:**
 - [ ] All 13 files named exactly as in §3 and in the right folders.
-- [ ] Correct dimensions, ratios, and under file-size budgets.
+- [ ] Correct dimensions and ratios; high-quality JPG masters (not pre-converted to WebP/AVIF, not over-compressed).
 - [ ] sRGB, no embedded text/watermarks.
 - [ ] Consistent colour grade across the whole set.
 - [ ] Licence / source provided for each image.
