@@ -111,6 +111,28 @@ public/images/
 ### 4.8 Logo — *already supplied (no action)*
 - Vector `study-abroad-pvt-ltd-logo.svg`.
 
+### 4.9 Favicon & app icons — **new** (the browser-tab icon)
+The current favicon is a leftover template icon and must be replaced.
+
+**Design guidance (read first):**
+- **Do NOT shrink the full logo** — at 16×16 px it becomes an unreadable blur. Use a **simplified brand mark**: either the symbol/emblem from the logo on its own, or a clean monogram (e.g. **"SA"**) — whichever reads at tiny sizes.
+- Put the mark on a **solid brand background** (brand-blue `#135ABE` or logo navy `#123F6F`), rounded-square canvas. A solid background reads far better in a browser tab than a transparent one.
+- Leave **safe padding** — the mark should fill ~70–80% of the canvas, centred.
+- **Test at 16×16** before finalising. If you can't tell what it is, simplify further.
+- sRGB.
+
+**Files to deliver** (drop into `public/`):
+
+| File | Size | Format | Purpose |
+|---|---|---|---|
+| `favicon.ico` | 16, 32, 48 (multi-size) | ICO | Browser tabs / bookmarks (legacy) |
+| `icon.svg` | scalable | SVG | Modern crisp favicon (optional but ideal) |
+| `apple-icon.png` | 180×180 | PNG (solid bg, **no transparency**) | iOS home-screen icon |
+| `icon-192.png` | 192×192 | PNG | Android / PWA |
+| `icon-512.png` | 512×512 | PNG (with safe-zone padding, "maskable") | Android / PWA splash |
+
+Once delivered, I wire them into the site's metadata + `manifest.json` (replacing the current placeholders).
+
 ---
 
 ## 5. Summary checklist
