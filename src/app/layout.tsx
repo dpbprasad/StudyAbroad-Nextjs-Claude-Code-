@@ -44,13 +44,8 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ['/images/hero-bg.jpg'],
   },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/logo.png', type: 'image/png' },
-    ],
-    apple: '/logo.png',
-  },
+  // Favicon is provided by the app/icon.svg file convention (temporary
+  // branded "SA" monogram — replace with the full favicon set per IMAGE-SPEC §4.9).
   manifest: '/manifest.json',
 };
 
