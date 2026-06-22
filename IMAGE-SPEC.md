@@ -1,81 +1,127 @@
-# Image Reference Sheet — Home Page
+# Photography Brief — Study Abroad (Pvt) Ltd Website (Home Page)
 
-Every photographic slot on the home page, with the size to export, aspect
-ratio, and art-direction notes. Replace the stock placeholders with real,
-licensed photography. Keep a **consistent colour grade** across all images
-(natural, warm, slightly bright — not over-saturated) so the page feels like
-one premium brand, not a stock collage.
-
-**General rules**
-- Format: optimised **JPG** for now (we move to WebP/AVIF in the `next/image` pass). Keep each file under the size budget below.
-- All exports are **2× the on-screen size** for retina sharpness.
-- No text, logos, or watermarks baked into photos.
-- People should look authentic (real students/advisors, candid), not obvious stock poses.
-- You must own or license every image (no un-licensed web grabs).
+**For:** Graphics / Image Designer
+**Goal:** Replace the current stock placeholders with real, licensed, consistently-graded photography that makes the home page feel like one premium brand.
 
 ---
 
-## 1. Hero background — **the most important image**
-- **File:** `public/images/hero-bg.jpg`
-- **Display:** full-screen background, `cover`, anchored to **bottom**.
-- **Export:** `2400 × 1600` (landscape, 3:2). Budget ≤ 400 KB.
-- **Art direction:** aspirational campus / student-with-world feel. Keep the **centre relatively calm** — white headline + buttons sit centred over it with a dark scrim. Visual interest can live in the lower third (bottom-anchored). Avoid busy clutter in the middle.
+## 1. Brand snapshot (the look we're matching)
 
-## 2. "Why Choose Us" split image
-- **Current placeholder:** Unsplash `photo-1702471897388…`
-- **Display:** fills the left/right half-panel, full section height, `cover` centred.
-- **Export:** `1600 × 2000` (portrait, 4:5). Budget ≤ 350 KB.
-- **Art direction:** advisor guiding a student, warm and trustworthy. Eye contact / genuine interaction.
+- **Feel:** clean, modern, premium, trustworthy. Aspirational but real.
+- **Audience:** students aged 18–30 and their parents.
+- **Colour anchor:** brand blue (`#135ABE`) on white / slate neutrals. Photos should sit happily next to blue UI — avoid clashing colour casts (no heavy orange/teal grading).
+- **Grade everything consistently:** natural, bright, slightly warm, true-to-life skin tones. **Not** over-saturated, not heavy HDR, not moody/dark (except where noted for the hero). All images should look like they belong to the same set.
 
-## 3. "Our Services" split image
-- **Current placeholder:** Unsplash `photo-1522202176988…`
-- **Display:** same half-panel as above (image on the left).
-- **Export:** `1600 × 2000` (portrait, 4:5). Budget ≤ 350 KB.
-- **Art direction:** counsellor advising a student at a desk / consultation moment. Should pair visually with #2 (same grade, same lighting feel).
+## 2. Global rules (apply to every image)
 
-## 4. Destination cards — **8 country photos**
-- **Display:** portrait cards, `cover`. Recognisable landmark or iconic scene per country.
-- **Export each:** `800 × 1000` (portrait, 4:5). Budget ≤ 200 KB each.
-- **Files needed (one per country):**
-  1. New Zealand
-  2. Canada
-  3. United Kingdom
-  4. United States
-  5. Australia
-  6. Germany
-  7. Netherlands
-  8. Sweden
-- **Art direction:** bright, iconic, instantly identifiable (skyline / landmark / campus). Consistent mood across all 8 so the carousel looks like a set.
+- **Format to deliver:** high-quality **JPG** (we convert to WebP/AVIF in-build). Also keep the layered/original if possible.
+- **Resolution:** deliver at the **export size** listed per slot (already 2× for retina sharpness).
+- **File size:** compress to the budget per slot (use TinyJPG / Squoosh). Sharp but lightweight.
+- **No baked-in text, logos, watermarks, or borders.**
+- **People:** authentic and candid — real students/advisors, genuine interaction. Avoid obvious posed stock.
+- **Licensing:** every image must be owned or properly licensed for commercial web use. Send us the licence/source for each.
+- **Colour profile:** sRGB.
 
-## 5. Article / blog cards — **2 photos**
-- **Display:** `16:9` thumbnail at the top of each card, `cover`.
-- **Export each:** `1200 × 675` (16:9). Budget ≤ 250 KB each.
-- **Files needed:**
-  1. **Accommodation Support** — student housing / dorm / moving in.
-  2. **Life Abroad** — student daily life / friends / campus social.
+## 3. File naming & delivery location
 
-## 6. Student testimonial photos — *already supplied (real)*
-- **Location:** `public/images/testimonials/*.png` (9 students).
-- **Display:** `1:1` square, `cover`.
-- **If refreshing:** export `800 × 800` square. Otherwise no action needed.
+Deliver files named exactly as below so they drop straight into the site. Folder structure inside the project's `public/images/`:
 
-## 7. Logo — *already supplied*
-- **File:** `study-abroad-pvt-ltd-logo.svg` (vector — used in nav + footer). No raster export needed.
+```
+public/images/
+  hero-bg.jpg
+  why-choose-us.jpg
+  services.jpg
+  destinations/
+    new-zealand.jpg
+    canada.jpg
+    united-kingdom.jpg
+    united-states.jpg
+    australia.jpg
+    germany.jpg
+    netherlands.jpg
+    sweden.jpg
+  articles/
+    accommodation.jpg
+    life-abroad.jpg
+```
 
 ---
 
-## Summary table
+## 4. Slot-by-slot brief (with visual references)
 
-| # | Slot | Count | Export size | Ratio | Budget |
-|---|------|-------|-------------|-------|--------|
+> The "Reference" link shows the *style/composition* of the current placeholder — match the **feel and crop**, not the exact subject.
+
+### 4.1 Hero background — **most important**
+- **File:** `hero-bg.jpg`
+- **Export:** `2400 × 1600` · ratio **3:2** (landscape) · ≤ **400 KB**
+- **Displayed:** full-screen, cropped to `cover`, **anchored to the bottom**, with a dark scrim over it.
+- **Brief:** aspirational campus / student-looking-to-the-future scene. Because white headline + buttons sit **centred** over a dark overlay, the **centre must stay calm** (no busy detail or faces dead-centre). Put visual interest in the **lower third**. Slightly darker / cinematic is OK here (it's the only dark slot).
+
+### 4.2 "Why Choose Us" — split panel
+- **File:** `why-choose-us.jpg`
+- **Export:** `1600 × 2000` · ratio **4:5** (portrait) · ≤ **350 KB**
+- **Displayed:** fills a tall half-panel beside text, cropped `cover`, centred.
+- **Brief:** an advisor warmly guiding a student; trust and expertise. Genuine eye contact / interaction.
+- **Reference:** https://images.unsplash.com/photo-1702471897388-5d9c50ea434e
+
+### 4.3 "Our Services" — split panel
+- **File:** `services.jpg`
+- **Export:** `1600 × 2000` · ratio **4:5** (portrait) · ≤ **350 KB**
+- **Displayed:** tall half-panel (image on the left), `cover`.
+- **Brief:** counsellor advising a student at a desk — a consultation moment. **Must pair with 4.2** (same lighting, same grade — they appear on the same page).
+- **Reference:** https://images.unsplash.com/photo-1522202176988-66273c2fd55f
+
+### 4.4 Destination cards — **8 country photos**
+- **Files:** `destinations/<country>.jpg`
+- **Export each:** `800 × 1000` · ratio **4:5** (portrait) · ≤ **200 KB** each
+- **Displayed:** portrait cards in a carousel, `cover`, with a dark gradient at the bottom for the country name.
+- **Brief:** bright, iconic, **instantly recognisable** scene per country (landmark / skyline / iconic campus). Keep the **bottom area** usable behind the overlay text. All 8 must share one mood so the row looks like a set.
+
+| Country | File | Reference |
+|---|---|---|
+| New Zealand | `new-zealand.jpg` | https://images.unsplash.com/photo-1469854523086-cc02fe5d8800 |
+| Canada | `canada.jpg` | https://images.unsplash.com/photo-1501785888041-af3ef285b470 |
+| United Kingdom | `united-kingdom.jpg` | https://images.unsplash.com/photo-1505761671935-60b3a7427bad |
+| United States | `united-states.jpg` | https://images.unsplash.com/photo-1501594907352-04cda38ebc29 |
+| Australia | `australia.jpg` | https://images.unsplash.com/photo-1523482580672-f109ba8cb9be |
+| Germany | `germany.jpg` | https://images.unsplash.com/photo-1467269204594-9661b134dd2b |
+| Netherlands | `netherlands.jpg` | https://images.unsplash.com/photo-1513694203232-719a280e022f |
+| Sweden | `sweden.jpg` | https://images.unsplash.com/photo-1504609773096-104ff2c73ba4 |
+
+### 4.5 Article cards — **2 photos**
+- **Files:** `articles/accommodation.jpg`, `articles/life-abroad.jpg`
+- **Export each:** `1200 × 675` · ratio **16:9** (landscape) · ≤ **250 KB** each
+- **Displayed:** wide thumbnail at the top of each blog card, `cover`.
+
+| Article | File | Brief | Reference |
+|---|---|---|---|
+| Accommodation Support | `accommodation.jpg` | student housing / dorm / moving in | https://images.unsplash.com/photo-1555066931-4365d14bab8c |
+| Life Abroad | `life-abroad.jpg` | student daily life / friends / campus social | https://images.unsplash.com/photo-1519389950473-47ba0277781c |
+
+### 4.6 Student testimonials — *already supplied (no action)*
+- Real student photos already in place, `1:1` square. Only refresh if a student sends a better photo — then export `800 × 800` square.
+
+### 4.7 Logo — *already supplied (no action)*
+- Vector `study-abroad-pvt-ltd-logo.svg`.
+
+---
+
+## 5. Summary checklist
+
+| # | Slot | Qty | Export size | Ratio | Budget |
+|---|------|-----|-------------|-------|--------|
 | 1 | Hero background | 1 | 2400×1600 | 3:2 | ≤400 KB |
 | 2 | Why Choose Us | 1 | 1600×2000 | 4:5 | ≤350 KB |
 | 3 | Our Services | 1 | 1600×2000 | 4:5 | ≤350 KB |
 | 4 | Destination cards | 8 | 800×1000 | 4:5 | ≤200 KB ea |
 | 5 | Article cards | 2 | 1200×675 | 16:9 | ≤250 KB ea |
-| 6 | Testimonials | 9 | 800×800 | 1:1 | (have) |
-| 7 | Logo | 1 | SVG | — | (have) |
 
-**Total new photos to source: 13** (1 hero + 2 split + 8 countries + 2 articles; testimonials/logo already done).
+**Total new photos required: 13.**
+
+**Before delivering, confirm:**
+- [ ] All 13 files named exactly as in §3 and in the right folders.
+- [ ] Correct dimensions, ratios, and under file-size budgets.
+- [ ] sRGB, no embedded text/watermarks.
+- [ ] Consistent colour grade across the whole set.
+- [ ] Licence / source provided for each image.
 </content>
-</invoke>
