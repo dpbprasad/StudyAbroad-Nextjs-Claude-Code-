@@ -5,11 +5,11 @@ const IndexSectionHeaders3: React.FC = () => {
     return (
         <section data-from-ai="false" className="relative flex items-center min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-6rem)] py-10 bg-brand-950 bg-cover bg-bottom bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
   {/* Scrim for legible text over the photo:
-      (1) a light overall brand tint for baseline contrast, and
-      (2) a stronger radial boost concentrated behind the centered text,
-      fading toward the edges so the image stays relatively clean there. */}
-  <div className="absolute inset-0 bg-black/20" />
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_65%_at_50%_50%,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.22)_50%,transparent_80%)]" />
+      (1) a base overall darkening for baseline contrast, and
+      (2) a strong, wide radial boost concentrated behind the centered text,
+      easing toward the edges so the image stays relatively clean there. */}
+  <div className="absolute inset-0 bg-black/30" />
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_80%_at_50%_50%,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_45%,rgba(0,0,0,0.15)_75%,transparent_100%)]" />
   <div className="container relative z-10 mx-auto w-full px-4">
     <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
       {/* Eyebrow — glass pill, white text + blue accent dot for legibility */}

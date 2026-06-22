@@ -6,8 +6,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      // Internal/dev-only routes that should never be indexed.
-      disallow: ['/theme-playground'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
