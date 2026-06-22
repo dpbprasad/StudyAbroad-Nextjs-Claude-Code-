@@ -88,7 +88,7 @@ const CountriesSectionNavigations1: React.FC = () => {
           <nav className="flex h-20 items-center justify-between lg:h-24">
             {/* Logo */}
             <Link href="/" className="flex h-full items-center" aria-label="Study Abroad — home">
-              <img src={LOGO_SRC} alt="Study Abroad (Pvt) Ltd" className="h-11 w-auto object-contain lg:h-14" />
+              <img src={LOGO_SRC} alt="Study Abroad (Pvt) Ltd" className="h-11 w-auto object-contain lg:h-[68px]" />
             </Link>
 
             {/* Desktop links */}
