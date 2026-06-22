@@ -104,11 +104,11 @@ const AboutusSectionContent4: React.FC = () => {
     <>
       {/* Intro + points */}
       <Section bg="white">
-        <div>
+        <div className="mx-auto max-w-4xl text-center">
           <h2 className="font-display text-2xl font-medium leading-snug tracking-tight text-slate-900 md:text-3xl">
             Welcome to Study Abroad (Pvt) Ltd
           </h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
+          <p className="mt-4 text-lg leading-relaxed text-slate-600">
             Your trusted partner for international education in Sri Lanka. Established in 2007 by MD/CEO Mrs. Priyanka
             Ganhataregedara, we specialize in guiding students to top universities worldwide with personalized counseling
             and end-to-end support — covering global placement, visa support, language and cultural orientation, and

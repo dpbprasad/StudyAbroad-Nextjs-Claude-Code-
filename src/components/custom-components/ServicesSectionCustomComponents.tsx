@@ -118,11 +118,11 @@ const ServicesSectionCustomComponents: React.FC = () => {
     return (
         <Section bg="white">
             {/* Intro */}
-            <div className="mb-14 lg:mb-16">
+            <div className="mx-auto mb-14 max-w-4xl text-center lg:mb-16">
                 <h2 className="font-display text-2xl font-medium leading-snug tracking-tight text-slate-900 md:text-3xl">
                     Comprehensive, end-to-end support
                 </h2>
-                <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
+                <p className="mt-4 text-lg leading-relaxed text-slate-600">
                     Study Abroad (Pvt) Ltd guides students with a focus on compliance and student well-being. Since 2007,
                     we have supported students through every milestone of their academic transition.
                 </p>
