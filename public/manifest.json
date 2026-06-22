@@ -1,6 +1,7 @@
 {
-  "short_name": "Shuffle App",
-  "name": "Shuffle Application",
+  "short_name": "Study Abroad",
+  "name": "Study Abroad (Pvt) Ltd",
+  "description": "Sri Lanka's leading student visa and university placement consultancy since 2007.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,8 +14,8 @@
       "sizes": "48x48"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#135ABE",
   "background_color": "#ffffff"
 }

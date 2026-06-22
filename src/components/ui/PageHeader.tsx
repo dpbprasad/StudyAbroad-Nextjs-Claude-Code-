@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from './Container';
+import { SITE_URL } from '../../lib/site';
 
 type Crumb = { label: string; href?: string };
 
@@ -15,8 +16,29 @@ export function PageHeader({
   subtitle?: string;
   breadcrumbs?: Crumb[];
 }) {
+  const breadcrumbJsonLd =
+    breadcrumbs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbs.map((c, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: c.label,
+            ...(c.href ? { item: `${SITE_URL}${c.href}` } : {}),
+          })),
+        }
+      : null;
+
   return (
     <section className="relative overflow-hidden bg-brand-900">
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+      )}
       <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-600/20 blur-3xl" aria-hidden="true" />
       <Container>
         <div className="relative py-12 lg:py-16">

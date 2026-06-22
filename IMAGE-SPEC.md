@@ -29,6 +29,7 @@ Deliver files named exactly as below so they drop straight into the site. Folder
 ```
 public/images/
   hero-bg.jpg
+  og-image.jpg
   why-choose-us.jpg
   services.jpg
   destinations/
@@ -98,10 +99,16 @@ public/images/
 | Accommodation Support | `accommodation.jpg` | student housing / dorm / moving in | https://images.unsplash.com/photo-1555066931-4365d14bab8c |
 | Life Abroad | `life-abroad.jpg` | student daily life / friends / campus social | https://images.unsplash.com/photo-1519389950473-47ba0277781c |
 
-### 4.6 Student testimonials — *already supplied (no action)*
+### 4.6 Social-share image (Open Graph) — **new**
+- **File:** `og-image.jpg`
+- **Export:** `1200 × 630` · ratio **1.91:1** (landscape) · ≤ **300 KB**
+- **Displayed:** the preview card when the site is shared on WhatsApp / Facebook / LinkedIn / X. Not shown on the site itself.
+- **Brief:** brand-forward — logo + tagline "Global Minds. Global Futures." over an on-brand photo or solid brand-blue. Keep important content away from the extreme edges (platforms crop slightly). Readable as a small thumbnail.
+
+### 4.7 Student testimonials — *already supplied (no action)*
 - Real student photos already in place, `1:1` square. Only refresh if a student sends a better photo — then export `800 × 800` square.
 
-### 4.7 Logo — *already supplied (no action)*
+### 4.8 Logo — *already supplied (no action)*
 - Vector `study-abroad-pvt-ltd-logo.svg`.
 
 ---
@@ -115,13 +122,13 @@ public/images/
 | 3 | Our Services | 1 | 1600×2000 | 4:5 | ≤350 KB |
 | 4 | Destination cards | 8 | 800×1000 | 4:5 | ≤200 KB ea |
 | 5 | Article cards | 2 | 1200×675 | 16:9 | ≤250 KB ea |
+| 6 | Social-share (OG) | 1 | 1200×630 | 1.91:1 | ≤300 KB |
 
-**Total new photos required: 13.**
+**Total new images required: 14.**
 
 **Before delivering, confirm:**
-- [ ] All 13 files named exactly as in §3 and in the right folders.
+- [ ] All 14 files named exactly as in §3 and in the right folders.
 - [ ] Correct dimensions and ratios; high-quality JPG masters (not pre-converted to WebP/AVIF, not over-compressed).
 - [ ] sRGB, no embedded text/watermarks.
 - [ ] Consistent colour grade across the whole set.
 - [ ] Licence / source provided for each image.
-</content>

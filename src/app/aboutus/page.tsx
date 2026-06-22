@@ -1,21 +1,19 @@
-"use client";
-
-import React, { useEffect } from 'react';
+import type { Metadata } from 'next';
 import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
 import { PageHeader } from '../../components/ui/PageHeader';
 import AboutusSectionContent4 from '../../components/content/AboutusSectionContent4';
 import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
 import ConsultationCTA from '../../components/custom-components/ConsultationCTA';
 
-export default function Aboutus() {
-  useEffect(() => {
-    // Load custom component scripts after React components are mounted
-    const script1 = document.createElement('script');
-    script1.src = 'js/1186841.js?v=1780940680';
-    script1.async = true;
-    document.head.appendChild(script1);
-  }, []);
+export const metadata: Metadata = {
+  title: 'About Us',
+  description:
+    "Meet Study Abroad (Pvt) Ltd — Sri Lanka's trusted international education consultancy since 2007, guiding students to universities across the UK, Canada, USA, Australia and Europe.",
+  keywords: ['about study abroad sri lanka', 'education consultants colombo', 'overseas education company sri lanka'],
+  alternates: { canonical: '/aboutus' },
+};
 
+export default function Aboutus() {
   return (
     <>
       <CountriesSectionNavigations1 />
