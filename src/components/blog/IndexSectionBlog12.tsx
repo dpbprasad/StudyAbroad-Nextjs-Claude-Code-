@@ -44,7 +44,7 @@ const ArticleCard: React.FC<{ article: Article }> = ({ article }) => (
             <img
                 src={article.image}
                 alt={article.title}
-                className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105"
+                className="h-full w-full object-cover transition duration-500 ease-smooth group-hover:scale-105"
             />
         </div>
         <div className="flex flex-1 flex-col p-6">

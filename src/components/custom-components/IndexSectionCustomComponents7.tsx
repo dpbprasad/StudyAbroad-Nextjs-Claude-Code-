@@ -128,11 +128,11 @@ const IndexSectionCustomComponents7: React.FC = () => {
 
     const renderCard = (dest: Destination, idx: number, withLink: boolean) => (
         <div key={idx} className="w-full flex-shrink-0 px-4 md:w-1/2 lg:w-1/4">
-            <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-card-md">
+            <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-card-md transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-lg">
                 <div className="absolute inset-0 z-10 bg-gradient-to-t from-brand-950 via-brand-950/40 to-transparent" />
                 <div className="h-[380px] overflow-hidden">
                     <img
-                        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110"
+                        className="h-full w-full object-cover transition duration-700 ease-smooth group-hover:scale-110"
                         src={dest.image}
                         alt={`${dest.country} study destination`}
                     />

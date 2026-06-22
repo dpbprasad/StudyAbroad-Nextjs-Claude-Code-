@@ -56,7 +56,7 @@ const IndexSectionHowItWorks5Test: React.FC<IndexSectionHowItWorks5Props> = ({ t
                     <Reveal key={step.num} delay={i * 70} className="h-full">
                     <Card className="h-full">
                         <div className="flex items-start gap-4">
-                            <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-base font-semibold text-white transition-transform duration-200 group-hover:scale-110">
+                            <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-base font-semibold text-white transition-transform duration-300 ease-smooth group-hover:scale-110">
                                 {step.num}
                             </div>
                             <div>

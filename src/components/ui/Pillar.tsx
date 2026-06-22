@@ -15,7 +15,7 @@ export function Pillar({
 }) {
   return (
     <div className={cn('group flex items-start gap-5', className)}>
-      <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-transform duration-300 group-hover:scale-105">
+      <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-transform duration-300 ease-smooth group-hover:scale-105">
         {icon}
       </span>
       <div>

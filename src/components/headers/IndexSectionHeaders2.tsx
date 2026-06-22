@@ -55,7 +55,7 @@ const IndexSectionHeaders2: React.FC = () => {
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {features.map((feature, i) => (
           <Reveal key={feature.title} delay={i * 80} className="group flex items-start gap-5">
-            <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-transform duration-300 group-hover:scale-105">
+            <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-transform duration-300 ease-smooth group-hover:scale-105">
               {feature.icon}
             </span>
             <div>

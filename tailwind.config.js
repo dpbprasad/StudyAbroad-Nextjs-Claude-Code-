@@ -629,15 +629,21 @@ module.exports = {
         'card-lg': '0 12px 32px rgba(15,23,42,0.10)',
         'focus-brand': '0 0 0 3px rgba(24,109,220,0.35)',
       },
+      transitionTimingFunction: {
+        /* Single shared premium easing (easeOutQuint) — used by the hero
+           load-in, scroll reveals, card lifts and hovers so the whole site
+           shares one smooth motion language. */
+        smooth: 'cubic-bezier(0.22,1,0.36,1)',
+      },
       animation: {
-        'fade-up': 'fade-up 0.5s cubic-bezier(0.16,1,0.3,1) both',
+        'fade-up': 'fade-up 0.8s cubic-bezier(0.22,1,0.36,1) both',
         'fade-in': 'fade-in 0.4s ease-out both',
         'swipe-hand': 'swipe-hand 2.6s cubic-bezier(0.4,0,0.2,1) infinite',
         'swipe-ripple': 'swipe-ripple 2.6s cubic-bezier(0.4,0,0.2,1) infinite',
       },
       keyframes: {
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         'fade-in': {

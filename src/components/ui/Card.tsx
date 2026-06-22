@@ -16,7 +16,7 @@ export function Card({
   return (
     <Tag
       className={cn(
-        'group relative flex flex-col rounded-2xl bg-white border border-slate-200 p-6 lg:p-8 shadow-card transition duration-300',
+        'group relative flex flex-col rounded-2xl bg-white border border-slate-200 p-6 lg:p-8 shadow-card transition duration-300 ease-smooth',
         interactive && 'hover:-translate-y-1 hover:shadow-card-md',
         className,
       )}
