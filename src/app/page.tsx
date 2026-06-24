@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import IndexSectionHeaders3 from '../components/headers/IndexSectionHeaders3';
+import IndexSectionTrustStrip from '../components/custom-components/IndexSectionTrustStrip';
 import CountriesSectionNavigations1 from '../components/navigations/CountriesSectionNavigations1';
 import IndexSectionHeaders2 from '../components/headers/IndexSectionHeaders2';
 import IndexSectionFeatures6 from '../components/features/IndexSectionFeatures6';
@@ -31,6 +32,7 @@ export default function Page() {
     <>
       <CountriesSectionNavigations1 />
       <IndexSectionHeaders3 />
+      <IndexSectionTrustStrip />
       <IndexSectionHeaders2 />
       <IndexSectionFeatures6 />
       <IndexSectionHowItWorks5Test tagline="How It Works" />
