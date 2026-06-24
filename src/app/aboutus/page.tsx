@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
 import AboutContent from '../../components/sections/AboutContent';
-import SiteFooter from '../../components/layout/SiteFooter';
 import ConsultationCTA from '../../components/sections/ConsultationCTA';
 
 export const metadata: Metadata = {
@@ -16,7 +14,6 @@ export const metadata: Metadata = {
 export default function Aboutus() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         title="About Us"
         subtitle="International education consultants in Sri Lanka since 2007."
@@ -30,7 +27,6 @@ export default function Aboutus() {
           </div>
         </div>
       </section>
-      <SiteFooter />
     </>
   );
 }

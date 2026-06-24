@@ -1,9 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
 import ServicesContent from '../../components/sections/ServicesContent';
-import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Our Study Abroad & Visa Counselling Services',
@@ -15,14 +13,12 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         title="Our Services"
         subtitle="Your gateway to global education."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
       />
       <ServicesContent />
-      <SiteFooter />
     </>
   );
 }

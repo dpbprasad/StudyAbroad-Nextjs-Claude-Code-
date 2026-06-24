@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
 import ContactContent from '../../components/sections/ContactContent';
-import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Contact Us — Book a Free Consultation',
@@ -15,14 +13,12 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         title="Contact Us"
         subtitle="Begin your journey — book a free consultation with our team."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
       />
       <ContactContent />
-      <SiteFooter />
     </>
   );
 }

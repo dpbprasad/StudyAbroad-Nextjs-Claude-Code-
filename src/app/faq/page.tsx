@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
 import FaqContent from '../../components/sections/FaqContent';
-import SiteFooter from '../../components/layout/SiteFooter';
 import ConsultationCTA from '../../components/sections/ConsultationCTA';
 
 export const metadata: Metadata = {
@@ -16,7 +14,6 @@ export const metadata: Metadata = {
 export default function Faq() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         title="Frequently Asked Questions"
         subtitle="Answers to your queries about studying abroad."
@@ -30,7 +27,6 @@ export default function Faq() {
           </div>
         </div>
       </section>
-      <SiteFooter />
     </>
   );
 }

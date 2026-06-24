@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
 import StoriesGrid from '../../components/sections/StoriesGrid';
-import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Success Stories',
@@ -15,14 +13,12 @@ export const metadata: Metadata = {
 export default function Stories() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         title="Success Stories"
         subtitle="Real student voices from across our study destinations."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Stories' }]}
       />
       <StoriesGrid />
-      <SiteFooter />
     </>
   );
 }

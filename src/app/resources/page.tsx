@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
 import ResourcesList from '../../components/sections/ResourcesList';
-import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Resources & Guides',
@@ -15,14 +13,12 @@ export const metadata: Metadata = {
 export default function Resources() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         title="Resources"
         subtitle="Useful tips and guides for your study-abroad journey."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Resources' }]}
       />
       <ResourcesList />
-      <SiteFooter />
     </>
   );
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Hero from '../components/sections/Hero';
 import TrustStrip from '../components/sections/TrustStrip';
-import SiteHeader from '../components/layout/SiteHeader';
 import ServiceHighlights from '../components/sections/ServiceHighlights';
 import WhyChooseUs from '../components/sections/WhyChooseUs';
 import ServicesSplit from '../components/sections/ServicesSplit';
@@ -12,7 +11,6 @@ import DestinationsCarousel from '../components/sections/DestinationsCarousel';
 import TestimonialsCarousel from '../components/sections/TestimonialsCarousel';
 import ConsultationSection from '../components/sections/ConsultationSection';
 import RecentArticles from '../components/sections/RecentArticles';
-import SiteFooter from '../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   // `absolute` stops the layout template from appending the brand twice.
@@ -30,7 +28,6 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <SiteHeader />
       <Hero />
       <TrustStrip />
       <ServiceHighlights />
@@ -42,7 +39,6 @@ export default function Page() {
       <TestimonialsCarousel />
       <ConsultationSection />
       <RecentArticles />
-      <SiteFooter />
     </>
   );
 }

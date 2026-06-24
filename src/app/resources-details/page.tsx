@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import SiteHeader from '../../components/layout/SiteHeader';
 import ResourceArticle from '../../components/sections/ResourceArticle';
-import SiteFooter from '../../components/layout/SiteFooter';
 
 const ARTICLES: Record<string, { title: string; description: string }> = {
   accommodation: {
@@ -41,11 +39,9 @@ export async function generateMetadata(
 export default function ResourcesDetails() {
   return (
     <>
-      <SiteHeader />
       <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
         <ResourceArticle />
       </Suspense>
-      <SiteFooter />
     </>
   );
 }

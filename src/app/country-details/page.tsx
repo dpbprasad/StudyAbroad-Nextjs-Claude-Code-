@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import SiteHeader from '../../components/layout/SiteHeader';
 import CountryDetail from '../../components/sections/CountryDetail';
-import SiteFooter from '../../components/layout/SiteFooter';
 
 const COUNTRY_NAMES: Record<string, string> = {
   'new-zealand': 'New Zealand',
@@ -43,11 +41,9 @@ export async function generateMetadata(
 export default function CountryDetails() {
   return (
     <>
-      <SiteHeader />
       <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
         <CountryDetail />
       </Suspense>
-      <SiteFooter />
     </>
   );
 }

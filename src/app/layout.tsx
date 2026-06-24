@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '../lib/site';
 import { OrganizationJsonLd } from '../components/seo/OrganizationJsonLd';
+import SiteHeader from '../components/layout/SiteHeader';
+import SiteFooter from '../components/layout/SiteFooter';
 
 // Clean geometric sans — used for all headings + body (see design.md §2)
 const inter = Inter({
@@ -64,12 +66,14 @@ export default function RootLayout({
         </Script>
         
         {/* Load Zoho SalesIQ widget script */}
-        <Script 
+        <Script
           id="zsiqscript"
           src="https://salesiq.zohopublic.com/widget?wc=siq174f78e9bbdc7a369582d2b56f29d0011d877dfa15b1bfae5334a66e91a7db68"
           strategy="lazyOnload"
         />
-        {children}
+        <SiteHeader />
+        <main>{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
