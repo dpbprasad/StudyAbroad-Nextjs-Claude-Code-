@@ -48,9 +48,11 @@ const CountriesSectionFooters2: React.FC = () => {
           <NewsletterSignup />
         </div>
 
-        <div className="flex flex-col gap-10 py-16 md:flex-row md:flex-wrap md:justify-between md:gap-x-8 lg:gap-x-12">
+        {/* Mobile: 2-col grid (Pages|Legal, WhatsApp|Accredited pair up).
+            md+: original flex-wrap row layout, unchanged. */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-16 sm:gap-x-8 md:flex md:flex-row md:flex-wrap md:justify-between md:gap-x-8 lg:gap-x-12">
           {/* Brand */}
-          <div className="md:max-w-sm">
+          <div className="col-span-2 md:max-w-sm">
             <Link href="/" className="inline-block" aria-label="Study Abroad — home">
               <img src={LOGO_SRC} alt="Study Abroad (Pvt) Ltd" className="h-14 w-auto object-contain brightness-0 invert" />
             </Link>
