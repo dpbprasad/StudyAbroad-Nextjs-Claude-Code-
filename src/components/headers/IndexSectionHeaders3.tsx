@@ -39,15 +39,6 @@ const IndexSectionHeaders3: React.FC = () => {
           Success Stories
         </Link>
       </div>
-
-      <div className="mt-14 animate-fade-up" style={{ animationDelay: '600ms' }}>
-        <button className="group block mx-auto h-16 w-16 rounded-full border-[1.5px] border-brand-400 p-3 transition-all duration-200 hover:bg-brand-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950">
-          <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto text-brand-400 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-          </svg>
-        </button>
-        <span className="mt-3 block text-center text-sm font-medium text-slate-200">Meet Our Director</span>
-      </div>
     </div>
   </div>
 </section>

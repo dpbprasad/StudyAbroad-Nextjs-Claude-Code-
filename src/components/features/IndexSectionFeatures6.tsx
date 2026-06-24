@@ -10,9 +10,9 @@ interface IndexSectionFeatures6Props {
 
 const pillars = [
   {
-    title: 'Decades of Word-of-Mouth Trust',
+    title: 'Trusted Guidance Since 2007',
     description:
-      'Built on student referrals and parent confidence, delivering personalized academic guidance since 2007.',
+      'Built on student referrals and parent confidence, we have been providing personalized academic and career guidance for students pursuing international education since 2007.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
@@ -20,9 +20,9 @@ const pillars = [
     ),
   },
   {
-    title: 'Director-Led Visa Compliance',
+    title: 'Visa Compliance Led by 28 Years of Expertise',
     description:
-      'Every documentation audit and case file undergoes direct managing director supervision for maximum visa approval.',
+      'Our visa documentation and compliance process is guided by an experienced Case Head with 28 years of industry expertise, ensuring accurate, reliable, and student-focused support.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 002 2h2a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -30,9 +30,9 @@ const pillars = [
     ),
   },
   {
-    title: 'Bespoke University Pathways',
+    title: 'Best-Fit Course and University Placements',
     description:
-      'Access our extensive network of top institutions across the UK, USA, Canada, and Europe for tailored placements.',
+      'Through our extensive network of leading institutions across the UK, USA, Canada, and Europe, we help students identify the most suitable courses, universities, and study destinations based on their academic goals and career aspirations.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
