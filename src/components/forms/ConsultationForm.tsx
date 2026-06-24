@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
@@ -83,6 +83,7 @@ export function ConsultationForm({ extended = false }: { extended?: boolean }) {
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>('idle');
+  const honeypotRef = useRef<HTMLInputElement>(null); // spam trap — humans never fill this
 
   const set =
     (key: keyof FormState) =>
@@ -104,6 +105,8 @@ export function ConsultationForm({ extended = false }: { extended?: boolean }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Honeypot: if this hidden field is filled, it's a bot — silently drop.
+    if (honeypotRef.current?.value) return;
     const errs = validate();
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
@@ -156,6 +159,16 @@ export function ConsultationForm({ extended = false }: { extended?: boolean }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+      {/* Honeypot anti-spam field — off-screen, hidden from humans, bots fill it */}
+      <input
+        ref={honeypotRef}
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 overflow-hidden opacity-0"
+      />
       <div className="grid gap-5 sm:grid-cols-2">
         <Input label="First name" name="firstName" required value={form.firstName} onChange={set('firstName')} error={errors.firstName} autoComplete="given-name" />
         <Input label="Last name" name="lastName" required value={form.lastName} onChange={set('lastName')} error={errors.lastName} autoComplete="family-name" />
