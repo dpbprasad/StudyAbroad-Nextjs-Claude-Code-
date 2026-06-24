@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
-import '../styles/main.css';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '../lib/site';
 import { OrganizationJsonLd } from '../components/seo/OrganizationJsonLd';
 
