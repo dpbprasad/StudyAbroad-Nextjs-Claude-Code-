@@ -7,7 +7,7 @@ import { YouTubeFacade } from '../ui/YouTubeFacade';
 
 // CEO message video. TODO: set to the YouTube video ID — the part after
 // `watch?v=` in the URL (e.g. https://youtu.be/ABC123  ->  'ABC123').
-const CEO_VIDEO_ID = '';
+const CEO_VIDEO_ID = 'fZDNEShwZGM';
 
 type Point = { title: string; desc: string; icon: React.ReactNode };
 
