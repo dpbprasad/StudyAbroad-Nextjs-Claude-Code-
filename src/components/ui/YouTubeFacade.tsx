@@ -18,7 +18,7 @@ type Props = {
  */
 export function YouTubeFacade({ videoId, title, poster }: Props) {
   const [playing, setPlaying] = useState(false);
-  const frame = 'relative aspect-video w-full overflow-hidden rounded-2xl bg-brand-950 shadow-card-lg';
+  const frame = 'relative aspect-video w-full overflow-hidden rounded-2xl bg-brand-950 shadow-card-lg ring-1 ring-slate-900/5';
 
   // Placeholder until a real video ID is supplied.
   if (!videoId) {
@@ -37,7 +37,7 @@ export function YouTubeFacade({ videoId, title, poster }: Props) {
       <div className={frame}>
         <iframe
           className="absolute inset-0 h-full w-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&color=white`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
@@ -66,9 +66,9 @@ export function YouTubeFacade({ videoId, title, poster }: Props) {
           if (!img.src.endsWith('hqdefault.jpg')) img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         }}
       />
-      <span className="absolute inset-0 bg-black/25 transition-colors duration-200 group-hover:bg-black/35" />
-      <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 shadow-lg transition-transform duration-200 ease-smooth group-hover:scale-110">
-        <svg viewBox="0 0 24 24" className="ml-1 h-7 w-7 text-brand-600" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+      <span className="absolute inset-0 bg-gradient-to-t from-brand-950/55 via-brand-950/10 to-brand-950/20 transition-colors duration-300 group-hover:from-brand-950/65" />
+      <span className="absolute left-1/2 top-1/2 flex h-[4.5rem] w-[4.5rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-xl ring-1 ring-white/50 backdrop-blur-sm transition-all duration-300 ease-smooth group-hover:scale-110 group-hover:bg-white">
+        <svg viewBox="0 0 24 24" className="ml-1 h-8 w-8 text-brand-600" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
       </span>
     </button>
   );
