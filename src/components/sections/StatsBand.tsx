@@ -10,7 +10,7 @@ const stats = [
   { value: '100+', label: 'University Partners' },
 ];
 
-const IndexSectionStats11: React.FC = () => {
+const StatsBand: React.FC = () => {
   return (
     <Section bg="brand">
       <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
@@ -25,4 +25,4 @@ const IndexSectionStats11: React.FC = () => {
   );
 };
 
-export default IndexSectionStats11;
+export default StatsBand;

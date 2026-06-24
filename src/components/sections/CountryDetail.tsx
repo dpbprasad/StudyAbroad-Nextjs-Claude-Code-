@@ -20,7 +20,7 @@ interface CountryData {
     features: Feature[];
 }
 
-const LOGO_SRC = 'https://static.shuffle.dev/uploads/files/8f/8fabfe5ac9e980e7956b71c583d5c06bd3f4cc88/logo-Copy.svg';
+const LOGO_SRC = '/logo.svg';
 
 const countriesData: CountryData[] = [
   {
@@ -287,7 +287,7 @@ const CheckIcon = () => (
     </svg>
 );
 
-const CountryDetailsSectionCustomComponents3: React.FC = () => {
+const CountryDetail: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -464,4 +464,4 @@ const CountryDetailsSectionCustomComponents3: React.FC = () => {
     );
 };
 
-export default CountryDetailsSectionCustomComponents3;
+export default CountryDetail;

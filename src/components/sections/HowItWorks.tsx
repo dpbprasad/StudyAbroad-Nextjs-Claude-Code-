@@ -4,7 +4,7 @@ import { Eyebrow } from '../ui/Eyebrow';
 import { Card } from '../ui/Card';
 import { Reveal } from '../ui/Reveal';
 
-interface IndexSectionHowItWorks5Props {
+interface HowItWorksProps {
     tagline?: string;
 }
 
@@ -41,7 +41,7 @@ const stepsData = [
     }
 ];
 
-const IndexSectionHowItWorks5Test: React.FC<IndexSectionHowItWorks5Props> = ({ tagline = "How It Works" }) => {
+const HowItWorks: React.FC<HowItWorksProps> = ({ tagline = "How It Works" }) => {
     return (
         <Section bg="white">
             <Reveal className="mx-auto mb-12 max-w-3xl text-center lg:mb-16">
@@ -76,4 +76,4 @@ const IndexSectionHowItWorks5Test: React.FC<IndexSectionHowItWorks5Props> = ({ t
     );
 };
 
-export default IndexSectionHowItWorks5Test;
+export default HowItWorks;

@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 
-const IndexSectionHeaders3: React.FC = () => {
+const Hero: React.FC = () => {
     return (
-        <section data-from-ai="false" className="relative flex items-center min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-6rem)] py-10 bg-brand-950 bg-cover bg-bottom bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
+        <section className="relative flex items-center min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-6rem)] py-10 bg-brand-950 bg-cover bg-bottom bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
   {/* Scrim for legible text over the photo:
       (1) a base overall darkening for baseline contrast, and
       (2) a strong, wide radial boost concentrated behind the centered text,
@@ -47,4 +47,4 @@ const IndexSectionHeaders3: React.FC = () => {
     );
 };
 
-export default IndexSectionHeaders3;
+export default Hero;

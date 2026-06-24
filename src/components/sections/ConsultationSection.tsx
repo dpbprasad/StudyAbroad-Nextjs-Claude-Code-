@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section } from '../ui/Section';
-import { Reveal } from '../ui/Reveal';
+import { Eyebrow } from '../ui/Eyebrow';
 import { ConsultationForm } from '../forms/ConsultationForm';
 
 const PinIcon = () => (
@@ -22,17 +22,24 @@ const MailIcon = () => (
   </svg>
 );
 
-const ContactSectionContact4: React.FC = () => {
+const ConsultationSection: React.FC = () => {
   return (
     <Section bg="subtle">
+      <div className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
+        <Eyebrow className="justify-center">Contact Us</Eyebrow>
+        <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+          Book Your Free Consultation
+        </h2>
+      </div>
+
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
-        {/* Form (extended) */}
-        <Reveal className="rounded-2xl bg-white p-6 shadow-card-md ring-1 ring-slate-200 sm:p-8">
-          <ConsultationForm extended />
-        </Reveal>
+        {/* Form */}
+        <div className="rounded-2xl bg-white p-6 shadow-card-md ring-1 ring-slate-200 sm:p-8">
+          <ConsultationForm />
+        </div>
 
         {/* Info + map */}
-        <Reveal delay={100} className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-6">
             <a
               href="https://maps.app.goo.gl/PLTg8veRcFbykqZe6"
@@ -75,17 +82,17 @@ const ContactSectionContact4: React.FC = () => {
           <div className="overflow-hidden rounded-2xl ring-1 ring-slate-200">
             <iframe
               title="Study Abroad Location Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.985955611181!2d79.8732120760459!3d6.892238093106822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25a38b1f5f3eb%3A0x89ecdf7b8ea057a6!2s109%20Kirulapone%20Ave%2C%20Colombo%2000500!5e0!3m2!1sen!2slk!4v1718610000000!5m2!1sen!2slk"
-              className="h-[280px] w-full border-0 lg:h-[360px]"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d856.1196523343524!2d79.87535153294604!3d6.882799655025724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25a499c9a76f7%3A0xd83d8fafe5dab54c!2sStudy%20Abroad%20(Pvt)%20Ltd!5e0!3m2!1sen!2slk!4v1780985744062!5m2!1sen!2slk"
+              className="h-[280px] w-full border-0 lg:h-[340px]"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-        </Reveal>
+        </div>
       </div>
     </Section>
   );
 };
 
-export default ContactSectionContact4;
+export default ConsultationSection;

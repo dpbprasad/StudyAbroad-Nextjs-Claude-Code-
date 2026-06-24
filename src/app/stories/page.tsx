@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
+import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
-import StoriesSectionTestimonials2 from '../../components/testimonials/StoriesSectionTestimonials2';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
+import StoriesGrid from '../../components/sections/StoriesGrid';
+import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Success Stories',
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 export default function Stories() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <PageHeader
         title="Success Stories"
         subtitle="Real student voices from across our study destinations."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Stories' }]}
       />
-      <StoriesSectionTestimonials2 />
-      <CountriesSectionFooters2 />
+      <StoriesGrid />
+      <SiteFooter />
     </>
   );
 }

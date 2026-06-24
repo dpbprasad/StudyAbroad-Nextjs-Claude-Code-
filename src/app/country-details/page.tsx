@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
-import CountryDetailsSectionCustomComponents3 from '../../components/custom-components/CountryDetailsSectionCustomComponents3';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
+import SiteHeader from '../../components/layout/SiteHeader';
+import CountryDetail from '../../components/sections/CountryDetail';
+import SiteFooter from '../../components/layout/SiteFooter';
 
 const COUNTRY_NAMES: Record<string, string> = {
   'new-zealand': 'New Zealand',
@@ -43,11 +43,11 @@ export async function generateMetadata(
 export default function CountryDetails() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
-        <CountryDetailsSectionCustomComponents3 />
+        <CountryDetail />
       </Suspense>
-      <CountriesSectionFooters2 />
+      <SiteFooter />
     </>
   );
 }

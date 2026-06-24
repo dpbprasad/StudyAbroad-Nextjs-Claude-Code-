@@ -105,7 +105,7 @@ const purpose = [
   },
 ];
 
-const AboutusSectionContent4: React.FC = () => {
+const AboutContent: React.FC = () => {
   return (
     <>
       {/* Intro + points */}
@@ -203,4 +203,4 @@ const AboutusSectionContent4: React.FC = () => {
   );
 };
 
-export default AboutusSectionContent4;
+export default AboutContent;

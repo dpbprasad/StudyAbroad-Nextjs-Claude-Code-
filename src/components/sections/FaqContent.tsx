@@ -176,7 +176,7 @@ const faqData: FaqCategories = {
     ],
 };
 
-const FaqSectionFaq2: React.FC = () => {
+const FaqContent: React.FC = () => {
     const categories = Object.keys(faqData);
     const [activeCategory, setActiveCategory] = useState<string>(categories[0]);
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -248,4 +248,4 @@ const FaqSectionFaq2: React.FC = () => {
     );
 };
 
-export default FaqSectionFaq2;
+export default FaqContent;

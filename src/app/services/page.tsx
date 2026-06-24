@@ -1,9 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
+import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
-import ServicesSectionCustomComponents from '../../components/custom-components/ServicesSectionCustomComponents';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
+import ServicesContent from '../../components/sections/ServicesContent';
+import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Our Study Abroad & Visa Counselling Services',
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <PageHeader
         title="Our Services"
         subtitle="Your gateway to global education."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
       />
-      <ServicesSectionCustomComponents />
-      <CountriesSectionFooters2 />
+      <ServicesContent />
+      <SiteFooter />
     </>
   );
 }

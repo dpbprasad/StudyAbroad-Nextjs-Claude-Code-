@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
+import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
-import AboutusSectionContent4 from '../../components/content/AboutusSectionContent4';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
-import ConsultationCTA from '../../components/custom-components/ConsultationCTA';
+import AboutContent from '../../components/sections/AboutContent';
+import SiteFooter from '../../components/layout/SiteFooter';
+import ConsultationCTA from '../../components/sections/ConsultationCTA';
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 export default function Aboutus() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <PageHeader
         title="About Us"
         subtitle="International education consultants in Sri Lanka since 2007."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
       />
-      <AboutusSectionContent4 />
+      <AboutContent />
       <section className="py-12 bg-white relative z-10">
         <div className="container px-4 mx-auto">
           <div className="max-w-7xl mx-auto">
@@ -30,7 +30,7 @@ export default function Aboutus() {
           </div>
         </div>
       </section>
-      <CountriesSectionFooters2 />
+      <SiteFooter />
     </>
   );
 }

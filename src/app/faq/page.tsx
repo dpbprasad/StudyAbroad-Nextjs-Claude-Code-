@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
+import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
-import FaqSectionFaq2 from '../../components/faq/FaqSectionFaq2';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
-import ConsultationCTA from '../../components/custom-components/ConsultationCTA';
+import FaqContent from '../../components/sections/FaqContent';
+import SiteFooter from '../../components/layout/SiteFooter';
+import ConsultationCTA from '../../components/sections/ConsultationCTA';
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 export default function Faq() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <PageHeader
         title="Frequently Asked Questions"
         subtitle="Answers to your queries about studying abroad."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'FAQ' }]}
       />
-      <FaqSectionFaq2 />
+      <FaqContent />
       <section className="py-12 bg-white relative z-10">
         <div className="container px-4 mx-auto">
           <div className="max-w-7xl mx-auto">
@@ -30,7 +30,7 @@ export default function Faq() {
           </div>
         </div>
       </section>
-      <CountriesSectionFooters2 />
+      <SiteFooter />
     </>
   );
 }

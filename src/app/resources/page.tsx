@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
+import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
-import ResourcesSectionBlog3 from '../../components/blog/ResourcesSectionBlog3';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
+import ResourcesList from '../../components/sections/ResourcesList';
+import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Resources & Guides',
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 export default function Resources() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <PageHeader
         title="Resources"
         subtitle="Useful tips and guides for your study-abroad journey."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Resources' }]}
       />
-      <ResourcesSectionBlog3 />
-      <CountriesSectionFooters2 />
+      <ResourcesList />
+      <SiteFooter />
     </>
   );
 }

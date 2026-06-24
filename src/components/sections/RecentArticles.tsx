@@ -63,7 +63,7 @@ const ArticleCard: React.FC<{ article: Article }> = ({ article }) => (
     </Link>
 );
 
-const IndexSectionBlog12: React.FC = () => {
+const RecentArticles: React.FC = () => {
     const [visibleCards, setVisibleCards] = useState(2);
     const [mounted, setMounted] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(2);
@@ -183,4 +183,4 @@ const IndexSectionBlog12: React.FC = () => {
     );
 };
 
-export default IndexSectionBlog12;
+export default RecentArticles;

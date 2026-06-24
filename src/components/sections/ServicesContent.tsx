@@ -128,7 +128,7 @@ const Check = () => (
     </svg>
 );
 
-const ServicesSectionCustomComponents: React.FC = () => {
+const ServicesContent: React.FC = () => {
     return (
         <Section bg="white">
             {/* Intro */}
@@ -213,4 +213,4 @@ const ServicesSectionCustomComponents: React.FC = () => {
     );
 };
 
-export default ServicesSectionCustomComponents;
+export default ServicesContent;

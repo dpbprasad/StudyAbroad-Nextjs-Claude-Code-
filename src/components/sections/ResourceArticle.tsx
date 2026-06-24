@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import ConsultationCTA from '../custom-components/ConsultationCTA';
+import ConsultationCTA from './ConsultationCTA';
 import { Section } from '../ui/Section';
 import { PageHeader } from '../ui/PageHeader';
 
@@ -98,7 +98,7 @@ const LifeAbroadBody = () => (
     </div>
 );
 
-const ResourcesDetailsSectionContent3: React.FC = () => {
+const ResourceArticle: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -200,4 +200,4 @@ const ResourcesDetailsSectionContent3: React.FC = () => {
     );
 };
 
-export default ResourcesDetailsSectionContent3;
+export default ResourceArticle;

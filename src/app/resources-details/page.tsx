@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
-import ResourcesDetailsSectionContent3 from '../../components/content/ResourcesDetailsSectionContent3';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
+import SiteHeader from '../../components/layout/SiteHeader';
+import ResourceArticle from '../../components/sections/ResourceArticle';
+import SiteFooter from '../../components/layout/SiteFooter';
 
 const ARTICLES: Record<string, { title: string; description: string }> = {
   accommodation: {
@@ -41,11 +41,11 @@ export async function generateMetadata(
 export default function ResourcesDetails() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
-        <ResourcesDetailsSectionContent3 />
+        <ResourceArticle />
       </Suspense>
-      <CountriesSectionFooters2 />
+      <SiteFooter />
     </>
   );
 }

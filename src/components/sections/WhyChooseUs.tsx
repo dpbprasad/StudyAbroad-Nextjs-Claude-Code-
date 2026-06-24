@@ -4,7 +4,7 @@ import { SplitSection } from '../ui/SplitSection';
 import { Pillar } from '../ui/Pillar';
 import { Reveal } from '../ui/Reveal';
 
-interface IndexSectionFeatures6Props {
+interface WhyChooseUsProps {
     imageLeft?: boolean;
 }
 
@@ -41,7 +41,7 @@ const pillars = [
   },
 ];
 
-const IndexSectionFeatures6: React.FC<IndexSectionFeatures6Props> = ({ imageLeft = false }) => {
+const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ imageLeft = false }) => {
   return (
     <SplitSection
       imageLeft={imageLeft}
@@ -80,4 +80,4 @@ const IndexSectionFeatures6: React.FC<IndexSectionFeatures6Props> = ({ imageLeft
   );
 };
 
-export default IndexSectionFeatures6;
+export default WhyChooseUs;

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import CountriesSectionNavigations1 from '../../components/navigations/CountriesSectionNavigations1';
+import SiteHeader from '../../components/layout/SiteHeader';
 import { PageHeader } from '../../components/ui/PageHeader';
-import ContactSectionContact4 from '../../components/contact/ContactSectionContact4';
-import CountriesSectionFooters2 from '../../components/footers/CountriesSectionFooters2';
+import ContactContent from '../../components/sections/ContactContent';
+import SiteFooter from '../../components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Contact Us — Book a Free Consultation',
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <>
-      <CountriesSectionNavigations1 />
+      <SiteHeader />
       <PageHeader
         title="Contact Us"
         subtitle="Begin your journey — book a free consultation with our team."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
       />
-      <ContactSectionContact4 />
-      <CountriesSectionFooters2 />
+      <ContactContent />
+      <SiteFooter />
     </>
   );
 }

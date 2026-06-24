@@ -43,7 +43,7 @@ const parseDate = (dStr: string) => {
     return new Date(parseInt(year), months[mon], parseInt(day)).getTime();
 };
 
-const ResourcesSectionBlog3: React.FC = () => {
+const ResourcesList: React.FC = () => {
     const [visibleCount, setVisibleCount] = useState(6);
     const [activeCategory, setActiveCategory] = useState<string>('All');
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
@@ -151,4 +151,4 @@ const ResourcesSectionBlog3: React.FC = () => {
     );
 };
 
-export default ResourcesSectionBlog3;
+export default ResourcesList;

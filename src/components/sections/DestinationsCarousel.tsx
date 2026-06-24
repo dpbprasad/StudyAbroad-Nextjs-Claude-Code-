@@ -62,7 +62,7 @@ const controlBtn =
 const countrySlug = (country: string) =>
   country.toLowerCase().replace('united states', 'usa').replace(/\s+/g, '-');
 
-const IndexSectionCustomComponents7: React.FC = () => {
+const DestinationsCarousel: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(4);
     const [visibleCards, setVisibleCards] = useState(4);
     const [mounted, setMounted] = useState(false);
@@ -206,4 +206,4 @@ const IndexSectionCustomComponents7: React.FC = () => {
     );
 };
 
-export default IndexSectionCustomComponents7;
+export default DestinationsCarousel;

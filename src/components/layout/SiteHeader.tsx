@@ -7,7 +7,7 @@ import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 
 const LOGO_SRC =
-  'https://static.shuffle.dev/uploads/files/8f/8fabfe5ac9e980e7956b71c583d5c06bd3f4cc88/logo-Copy.svg';
+  '/logo.svg';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -19,7 +19,7 @@ const navLinks = [
   { label: 'FAQ', href: '/faq' },
 ];
 
-const CountriesSectionNavigations1: React.FC = () => {
+const SiteHeader: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false); // slid up out of view
   const [scrolled, setScrolled] = useState(false); // past the top → add shadow
@@ -199,4 +199,4 @@ const CountriesSectionNavigations1: React.FC = () => {
   );
 };
 
-export default CountriesSectionNavigations1;
+export default SiteHeader;

@@ -38,7 +38,7 @@ const pillars: Pillar[] = [
 ];
 
 /** Trust strip — three credibility pillars shown just under the hero. design.md §11 */
-const IndexSectionTrustStrip: React.FC = () => (
+const TrustStrip: React.FC = () => (
   <section className="bg-[var(--color-bg-subtle)] py-12 lg:py-14">
     <Container>
       <div className="grid grid-cols-1 sm:grid-cols-3 sm:divide-x sm:divide-slate-300/70">
@@ -63,4 +63,4 @@ const IndexSectionTrustStrip: React.FC = () => (
   </section>
 );
 
-export default IndexSectionTrustStrip;
+export default TrustStrip;

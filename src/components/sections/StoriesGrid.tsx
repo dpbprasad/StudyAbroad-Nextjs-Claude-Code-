@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
 import { Section } from '../ui/Section';
-import { Eyebrow } from '../ui/Eyebrow';
+import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 
 interface Testimonial {
@@ -90,97 +89,84 @@ const testimonialsData: Testimonial[] = [
   }
 ];
 
-const controlBtn =
-  'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition-colors duration-200 hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2';
+// Oldest → newest, by year
+const sortedTestimonials = [...testimonialsData].sort((a, b) => Number(a.year) - Number(b.year));
 
-const Stars: React.FC<{ count?: number; className?: string }> = ({ count = 5, className = '' }) => (
-  <div className={`flex gap-0.5 ${className}`} aria-label={`${count} out of 5 stars`}>
+const Stars = ({ className = '' }: { className?: string }) => (
+  <div className={`flex gap-0.5 text-gold-400 ${className}`} aria-label="5 out of 5 stars">
     {Array.from({ length: 5 }).map((_, i) => (
-      <svg key={i} className={`h-4 w-4 ${i < count ? 'text-gold-400' : 'text-slate-300'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <svg key={i} className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1.99 5.79L10 14.77l-5.2 2.73.99-5.79L1.58 7.62l5.82-.85L10 1.5z" />
       </svg>
     ))}
   </div>
 );
 
-const IndexSectionTestimonials16: React.FC = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+const StoriesGrid: React.FC = () => {
+    const [visibleCount, setVisibleCount] = useState(9);
+    const [columnsCount, setColumnsCount] = useState(3);
 
-    const handlePrev = () =>
-        setCurrentIndex((prev) => (prev === 0 ? testimonialsData.length - 1 : prev - 1));
-    const handleNext = () =>
-        setCurrentIndex((prev) => (prev === testimonialsData.length - 1 ? 0 : prev + 1));
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) setColumnsCount(1);
+            else if (window.innerWidth < 1024) setColumnsCount(2);
+            else setColumnsCount(3);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const handleLoadMore = () => setVisibleCount((prev) => prev + 6);
+
+    const getColumns = () => {
+        const cols: Testimonial[][] = Array.from({ length: columnsCount }, () => []);
+        sortedTestimonials.slice(0, visibleCount).forEach((item, index) => {
+            cols[index % columnsCount].push(item);
+        });
+        return cols;
+    };
 
     return (
         <Section bg="white">
-            <Reveal className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
-                <Eyebrow className="justify-center">Success Stories</Eyebrow>
-                <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
-                    What our students say
-                </h2>
-            </Reveal>
-
-            <div className="flex items-center gap-4 lg:gap-6">
-                <button onClick={handlePrev} className={controlBtn} aria-label="Previous testimonial">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-
-                <div className="w-full overflow-hidden">
-                    <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                        {testimonialsData.map((t, idx) => (
-                            <div
-                                key={idx}
-                                className="w-full flex-shrink-0 px-1"
-                                aria-hidden={idx !== currentIndex}
-                                inert={idx !== currentIndex ? true : undefined}
-                            >
-                                <div className="mx-auto grid max-w-5xl items-center gap-8 lg:grid-cols-[2fr_3fr] lg:gap-14">
-                                    {/* 1:1 student image */}
-                                    <div className="mx-auto w-full max-w-xs lg:max-w-none">
-                                        <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-card-lg">
-                                            <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
-                                        </div>
+            <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {getColumns().map((columnItems, colIdx) => (
+                    <div key={colIdx} className="flex flex-col gap-6 lg:gap-8">
+                        {columnItems.map((t, idx) => (
+                            <Reveal key={idx} delay={idx * 80}>
+                                <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md">
+                                    {/* Navy top band with a curved notch that cradles the avatar */}
+                                    <div className="relative h-16 bg-brand-900" aria-hidden="true">
+                                        <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
                                     </div>
-
-                                    {/* Quote + student */}
-                                    <div className="text-center lg:text-left">
-                                        <blockquote className="line-clamp-6 text-lg leading-relaxed text-slate-700 md:text-xl">
+                                    <img
+                                        className="absolute left-1/2 top-4 z-10 h-24 w-24 -translate-x-1/2 rounded-full object-cover"
+                                        src={t.image}
+                                        alt={t.name}
+                                    />
+                                    <div className="px-6 pb-7 pt-16 lg:px-8">
+                                        <p className="text-sm font-semibold text-brand-600">{t.program}</p>
+                                        <p className="mt-1 text-xs text-slate-500">{t.country} • {t.year}</p>
+                                        <Stars className="mt-3 justify-center" />
+                                        <blockquote className="mt-5 text-[15px] leading-relaxed text-slate-700">
                                             {t.text}
                                         </blockquote>
-                                        {t.text.length > 300 && (
-                                            <Link
-                                                href="/stories"
-                                                className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
-                                            >
-                                                Read more
-                                                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </Link>
-                                        )}
-                                        <Stars className="mt-6 justify-center lg:justify-start" />
-                                        <div className="mt-4">
-                                            <p className="text-xl font-semibold text-slate-900">{t.name}</p>
-                                            <p className="text-sm font-medium text-brand-600">{t.program}</p>
-                                            <p className="mt-0.5 text-xs text-slate-500">{t.country} • {t.year}</p>
-                                        </div>
+                                        <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </Reveal>
                         ))}
                     </div>
-                </div>
-
-                <button onClick={handleNext} className={controlBtn} aria-label="Next testimonial">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
+                ))}
             </div>
+
+            {visibleCount < testimonialsData.length && (
+                <div className="mt-12 text-center">
+                    <Button onClick={handleLoadMore} variant="secondary">Load More</Button>
+                </div>
+            )}
         </Section>
     );
 };
 
-export default IndexSectionTestimonials16;
+export default StoriesGrid;

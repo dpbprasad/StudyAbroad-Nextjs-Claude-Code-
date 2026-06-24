@@ -4,7 +4,7 @@ import { SplitSection } from '../ui/SplitSection';
 import { Pillar } from '../ui/Pillar';
 import { Reveal } from '../ui/Reveal';
 
-interface IndexSectionServicesTestProps {
+interface ServicesSplitProps {
     imageLeft?: boolean;
 }
 
@@ -41,7 +41,7 @@ const pillars = [
   },
 ];
 
-const IndexSectionServicesTest: React.FC<IndexSectionServicesTestProps> = ({ imageLeft = false }) => {
+const ServicesSplit: React.FC<ServicesSplitProps> = ({ imageLeft = false }) => {
   return (
     <SplitSection
       imageLeft={imageLeft}
@@ -74,4 +74,4 @@ const IndexSectionServicesTest: React.FC<IndexSectionServicesTestProps> = ({ ima
   );
 };
 
-export default IndexSectionServicesTest;
+export default ServicesSplit;
