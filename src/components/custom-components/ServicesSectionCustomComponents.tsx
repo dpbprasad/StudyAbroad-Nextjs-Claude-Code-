@@ -2,6 +2,7 @@ import React from 'react';
 import ConsultationCTA from './ConsultationCTA';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
+import { Reveal } from '../ui/Reveal';
 
 interface ServiceItem {
     id: string;
@@ -131,7 +132,7 @@ const ServicesSectionCustomComponents: React.FC = () => {
     return (
         <Section bg="white">
             {/* Intro */}
-            <div className="mx-auto mb-12 max-w-5xl text-center lg:mb-14">
+            <Reveal className="mx-auto mb-12 max-w-5xl text-center lg:mb-14">
                 <h2 className="font-display text-2xl font-medium leading-snug tracking-tight text-slate-900 md:text-3xl">
                     Comprehensive End-to-End Study Abroad Support
                 </h2>
@@ -148,10 +149,10 @@ const ServicesSectionCustomComponents: React.FC = () => {
                         strong through proper guidance, documentation, and compliance-focused preparation.
                     </p>
                 </div>
-            </div>
+            </Reveal>
 
             {/* Featured: free in-house assessment */}
-            <div className="mb-12 overflow-hidden rounded-2xl bg-brand-50 p-6 ring-1 ring-brand-100 sm:p-8 lg:mb-14 lg:p-10">
+            <Reveal className="mb-12 overflow-hidden rounded-2xl bg-brand-50 p-6 ring-1 ring-brand-100 sm:p-8 lg:mb-14 lg:p-10">
                 <span className="inline-flex items-center rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
                     Free
                 </span>
@@ -172,12 +173,13 @@ const ServicesSectionCustomComponents: React.FC = () => {
                         ))}
                     </ul>
                 </div>
-            </div>
+            </Reveal>
 
             {/* Service cards */}
             <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-                {servicesData.map((service) => (
-                    <Card key={service.id}>
+                {servicesData.map((service, i) => (
+                    <Reveal key={service.id} delay={i * 60} className="h-full">
+                    <Card className="h-full">
                         <div id={service.id} className="flex h-full items-start gap-4">
                             <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-transform duration-300 ease-smooth group-hover:scale-105">
                                 {React.isValidElement(service.icon)
@@ -202,6 +204,7 @@ const ServicesSectionCustomComponents: React.FC = () => {
                             </div>
                         </div>
                     </Card>
+                    </Reveal>
                 ))}
             </div>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Section } from '../ui/Section';
+import { Reveal } from '../ui/Reveal';
 import { ConsultationForm } from '../forms/ConsultationForm';
 
 const PinIcon = () => (
@@ -26,12 +27,12 @@ const ContactSectionContact4: React.FC = () => {
     <Section bg="subtle">
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
         {/* Form (extended) */}
-        <div className="rounded-2xl bg-white p-6 shadow-card-md ring-1 ring-slate-200 sm:p-8">
+        <Reveal className="rounded-2xl bg-white p-6 shadow-card-md ring-1 ring-slate-200 sm:p-8">
           <ConsultationForm extended />
-        </div>
+        </Reveal>
 
         {/* Info + map */}
-        <div className="flex flex-col gap-8">
+        <Reveal delay={100} className="flex flex-col gap-8">
           <div className="flex flex-col gap-6">
             <a
               href="https://maps.app.goo.gl/PLTg8veRcFbykqZe6"
@@ -81,7 +82,7 @@ const ContactSectionContact4: React.FC = () => {
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

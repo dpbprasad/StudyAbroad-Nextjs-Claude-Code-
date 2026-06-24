@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 interface Testimonial {
   name: string;
@@ -132,29 +133,28 @@ const StoriesSectionTestimonials2: React.FC = () => {
                 {getColumns().map((columnItems, colIdx) => (
                     <div key={colIdx} className="flex flex-col gap-6 lg:gap-8">
                         {columnItems.map((t, idx) => (
-                            <div
-                                key={idx}
-                                className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-card-md"
-                            >
-                                {/* Navy top band with a curved notch that cradles the avatar */}
-                                <div className="relative h-16 bg-brand-900" aria-hidden="true">
-                                    <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
+                            <Reveal key={idx} delay={idx * 80}>
+                                <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md">
+                                    {/* Navy top band with a curved notch that cradles the avatar */}
+                                    <div className="relative h-16 bg-brand-900" aria-hidden="true">
+                                        <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
+                                    </div>
+                                    <img
+                                        className="absolute left-1/2 top-4 z-10 h-24 w-24 -translate-x-1/2 rounded-full object-cover"
+                                        src={t.image}
+                                        alt={t.name}
+                                    />
+                                    <div className="px-6 pb-7 pt-16 lg:px-8">
+                                        <p className="text-sm font-semibold text-brand-600">{t.program}</p>
+                                        <p className="mt-1 text-xs text-slate-500">{t.country} • {t.year}</p>
+                                        <Stars className="mt-3 justify-center" />
+                                        <blockquote className="mt-5 text-[15px] leading-relaxed text-slate-700">
+                                            {t.text}
+                                        </blockquote>
+                                        <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
+                                    </div>
                                 </div>
-                                <img
-                                    className="absolute left-1/2 top-4 z-10 h-24 w-24 -translate-x-1/2 rounded-full object-cover"
-                                    src={t.image}
-                                    alt={t.name}
-                                />
-                                <div className="px-6 pb-7 pt-16 lg:px-8">
-                                    <p className="text-sm font-semibold text-brand-600">{t.program}</p>
-                                    <p className="mt-1 text-xs text-slate-500">{t.country} • {t.year}</p>
-                                    <Stars className="mt-3 justify-center" />
-                                    <blockquote className="mt-5 text-[15px] leading-relaxed text-slate-700">
-                                        {t.text}
-                                    </blockquote>
-                                    <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
-                                </div>
-                            </div>
+                            </Reveal>
                         ))}
                     </div>
                 ))}

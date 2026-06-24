@@ -43,7 +43,7 @@ export function PageHeader({
       <Container>
         <div className="relative py-12 lg:py-16">
           {breadcrumbs.length > 0 && (
-            <nav aria-label="Breadcrumb" className="mb-4">
+            <nav aria-label="Breadcrumb" className="mb-4 animate-fade-up">
               <ol className="flex flex-wrap items-center gap-1.5 text-sm">
                 {breadcrumbs.map((c, i) => {
                   const isLast = i === breadcrumbs.length - 1;
@@ -69,10 +69,14 @@ export function PageHeader({
               </ol>
             </nav>
           )}
-          <h1 className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem]">
+          <h1 className="animate-fade-up font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem]" style={{ animationDelay: '100ms' }}>
             {title}
           </h1>
-          {subtitle && <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-300">{subtitle}</p>}
+          {subtitle && (
+            <p className="mt-3 max-w-2xl animate-fade-up text-lg leading-relaxed text-slate-300" style={{ animationDelay: '200ms' }}>
+              {subtitle}
+            </p>
+          )}
         </div>
       </Container>
     </section>

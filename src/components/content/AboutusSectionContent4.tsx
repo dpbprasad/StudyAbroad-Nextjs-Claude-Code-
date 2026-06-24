@@ -2,6 +2,7 @@ import React from 'react';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Card } from '../ui/Card';
+import { Reveal } from '../ui/Reveal';
 import { YouTubeFacade } from '../ui/YouTubeFacade';
 
 // CEO message video. TODO: set to the YouTube video ID — the part after
@@ -109,7 +110,7 @@ const AboutusSectionContent4: React.FC = () => {
     <>
       {/* Intro + points */}
       <Section bg="white">
-        <div className="mx-auto max-w-5xl text-center">
+        <Reveal className="mx-auto max-w-5xl text-center">
           <h2 className="font-display text-2xl font-medium leading-snug tracking-tight text-slate-900 md:text-3xl">
             Welcome to Study Abroad (Pvt) Ltd
           </h2>
@@ -118,17 +119,19 @@ const AboutusSectionContent4: React.FC = () => {
             students and families with reliable study abroad counseling, best-fit university placement, visa guidance,
             documentation support, language and cultural orientation, and post-arrival assistance.
           </p>
-        </div>
+        </Reveal>
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          {aboutPoints.map((p) => (
-            <PointCard key={p.title} point={p} />
+          {aboutPoints.map((p, i) => (
+            <Reveal key={p.title} delay={i * 70}>
+              <PointCard point={p} />
+            </Reveal>
           ))}
         </div>
       </Section>
 
       {/* Leadership — CEO video message (floated; text wraps then flows underneath) */}
       <Section bg="subtle">
-        <div className="mx-auto max-w-4xl">
+        <Reveal className="mx-auto max-w-4xl">
           {/* Floated video frame — text wraps to its right, then flows under */}
           <div className="mx-auto mb-8 w-full max-w-[460px] md:float-left md:mx-0 md:mb-6 md:mr-10">
             <YouTubeFacade videoId={CEO_VIDEO_ID} title="Message from our Founder / Managing Director" />
@@ -151,33 +154,33 @@ const AboutusSectionContent4: React.FC = () => {
             ))}
           </div>
           <div className="clear-both" />
-        </div>
+        </Reveal>
       </Section>
 
       {/* Vision & Mission */}
       <Section bg="white">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
+        <Reveal className="mx-auto mb-12 max-w-2xl text-center">
           <Eyebrow className="justify-center">Our Purpose</Eyebrow>
           <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
             Vision &amp; Mission
           </h2>
-        </div>
+        </Reveal>
         <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-          {purpose.map((p) => (
-            <div key={p.title} className="relative overflow-hidden rounded-2xl bg-brand-900 p-8 lg:p-10">
+          {purpose.map((p, i) => (
+            <Reveal key={p.title} delay={i * 80} className="relative overflow-hidden rounded-2xl bg-brand-900 p-8 lg:p-10">
               <svg className="absolute right-4 top-4 h-16 w-16 text-white/5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.987z" />
               </svg>
               <h3 className="relative text-xl font-semibold text-white md:text-2xl">{p.title}</h3>
               <p className="relative mt-3 text-[15px] leading-relaxed text-slate-300 md:text-base">{p.text}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>
 
       {/* Values & Commitment */}
       <Section bg="subtle">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
+        <Reveal className="mx-auto mb-12 max-w-3xl text-center">
           <Eyebrow className="justify-center">What Sets Us Apart</Eyebrow>
           <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
             Complete Study Abroad Support, From Start to Settlement
@@ -187,10 +190,12 @@ const AboutusSectionContent4: React.FC = () => {
             expert counseling, reliable documentation guidance, and end-to-end support for their international
             education journey.
           </p>
-        </div>
+        </Reveal>
         <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-          {values.map((p) => (
-            <PointCard key={p.title} point={p} />
+          {values.map((p, i) => (
+            <Reveal key={p.title} delay={i * 80}>
+              <PointCard point={p} />
+            </Reveal>
           ))}
         </div>
       </Section>

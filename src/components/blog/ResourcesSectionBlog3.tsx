@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 interface Article {
     id: string;
@@ -111,14 +112,14 @@ const ResourcesSectionBlog3: React.FC = () => {
 
             {/* Article grid */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-                {sortedArticles.slice(0, visibleCount).map((article) => (
+                {sortedArticles.slice(0, visibleCount).map((article, i) => (
+                    <Reveal key={article.id} delay={i * 70} className="h-full">
                     <Link
-                        key={article.id}
                         href={`/resources-details?article=${article.id}`}
-                        className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-card-md"
+                        className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md"
                     >
                         <div className="aspect-[16/9] overflow-hidden">
-                            <img src={article.image} alt={article.title} className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105" />
+                            <img src={article.image} alt={article.title} className="h-full w-full object-cover transition duration-500 ease-smooth group-hover:scale-105" />
                         </div>
                         <div className="flex flex-1 flex-col p-6">
                             <div className="mb-2 flex items-center justify-between gap-2">
@@ -137,6 +138,7 @@ const ResourcesSectionBlog3: React.FC = () => {
                             </span>
                         </div>
                     </Link>
+                    </Reveal>
                 ))}
             </div>
 

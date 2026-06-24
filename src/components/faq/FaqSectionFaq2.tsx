@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Section } from '../ui/Section';
+import { Reveal } from '../ui/Reveal';
 
 const faqLink = 'font-semibold text-brand-600 underline-offset-2 hover:underline';
 
@@ -192,7 +193,7 @@ const FaqSectionFaq2: React.FC = () => {
     return (
         <Section bg="white" className="min-h-[60vh]">
             {/* Category filter */}
-            <div className="mx-auto mb-10 flex max-w-3xl flex-wrap justify-center gap-3">
+            <Reveal className="mx-auto mb-10 flex max-w-3xl flex-wrap justify-center gap-3">
                 {categories.map((cat) => (
                     <button
                         key={cat}
@@ -206,9 +207,10 @@ const FaqSectionFaq2: React.FC = () => {
                         {cat}
                     </button>
                 ))}
-            </div>
+            </Reveal>
 
             {/* Accordion */}
+            <Reveal>
             <ul className="mx-auto max-w-3xl space-y-3">
                 {faqData[activeCategory].map((item, idx) => {
                     const isOpen = openIndex === idx;
@@ -241,6 +243,7 @@ const FaqSectionFaq2: React.FC = () => {
                     );
                 })}
             </ul>
+            </Reveal>
         </Section>
     );
 };
