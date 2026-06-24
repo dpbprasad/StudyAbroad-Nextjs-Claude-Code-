@@ -88,6 +88,9 @@ const testimonialsData: Testimonial[] = [
   }
 ];
 
+// Oldest → newest, by year
+const sortedTestimonials = [...testimonialsData].sort((a, b) => Number(a.year) - Number(b.year));
+
 const Stars = ({ className = '' }: { className?: string }) => (
   <div className={`flex gap-0.5 text-gold-400 ${className}`} aria-label="5 out of 5 stars">
     {Array.from({ length: 5 }).map((_, i) => (
@@ -117,7 +120,7 @@ const StoriesSectionTestimonials2: React.FC = () => {
 
     const getColumns = () => {
         const cols: Testimonial[][] = Array.from({ length: columnsCount }, () => []);
-        testimonialsData.slice(0, visibleCount).forEach((item, index) => {
+        sortedTestimonials.slice(0, visibleCount).forEach((item, index) => {
             cols[index % columnsCount].push(item);
         });
         return cols;
@@ -133,8 +136,8 @@ const StoriesSectionTestimonials2: React.FC = () => {
                                 key={idx}
                                 className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-card-md"
                             >
-                                {/* Tinted top band with a curved notch that cradles the avatar */}
-                                <div className="relative h-16 bg-brand-50" aria-hidden="true">
+                                {/* Navy top band with a curved notch that cradles the avatar */}
+                                <div className="relative h-16 bg-brand-900" aria-hidden="true">
                                     <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
                                 </div>
                                 <img
