@@ -191,10 +191,7 @@ const CountriesSectionNavigations1: React.FC = () => {
             <Button href="/contact" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
               Contact Us
             </Button>
-            <div className="mt-6 flex justify-center border-t border-slate-200 pt-6">
-              <img src="/images/icef-badge.png" alt="ICEF Accredited Agency" className="h-12 w-auto object-contain" />
-            </div>
-            <p className="mt-6 text-center text-sm text-slate-400">© 2026 All rights reserved.</p>
+            <p className="mt-6 border-t border-slate-200 pt-6 text-center text-sm text-slate-400">© 2026 All rights reserved.</p>
           </div>
         </nav>
       </div>
