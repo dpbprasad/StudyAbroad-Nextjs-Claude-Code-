@@ -2,11 +2,12 @@ import React from 'react';
 import { Container } from '../ui/Container';
 import { Reveal } from '../ui/Reveal';
 
-type Pillar = { title: string; desc: string; icon: React.ReactNode };
+type Pillar = { title: string; desc: string; color: string; icon: React.ReactNode };
 
 const pillars: Pillar[] = [
   {
     title: 'Experience',
+    color: '#0A295A',
     desc: 'Years of proven success and global exposure.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -16,6 +17,7 @@ const pillars: Pillar[] = [
   },
   {
     title: 'Expertise',
+    color: '#196054',
     desc: 'Specialized knowledge for your global journey.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -25,6 +27,7 @@ const pillars: Pillar[] = [
   },
   {
     title: 'Reliability',
+    color: '#D21010',
     desc: 'Trusted guidance at every step.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -45,7 +48,10 @@ const IndexSectionTrustStrip: React.FC = () => (
             delay={i * 90}
             className="flex flex-col items-center px-6 py-6 text-center sm:py-2"
           >
-            <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-white shadow-[0_6px_16px_rgba(18,61,110,0.25)]">
+            <span
+              className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full text-white shadow-[0_6px_16px_rgba(15,23,42,0.18)]"
+              style={{ backgroundColor: p.color }}
+            >
               {p.icon}
             </span>
             <h3 className="mt-4 text-lg font-bold uppercase tracking-wide text-brand-700">{p.title}</h3>
