@@ -78,11 +78,6 @@ const SiteFooter: React.FC = () => {
                 </a>
               ))}
             </div>
-            {accreditations.length > 0 && (
-              <div className="mt-8">
-                <AccreditationSlider items={accreditations} />
-              </div>
-            )}
           </div>
 
           {/* Company */}
@@ -144,6 +139,14 @@ const SiteFooter: React.FC = () => {
               </li>
             </ul>
           </div>
+
+          {/* Accredited */}
+          {accreditations.length > 0 && (
+            <div>
+              <h3 className={headingClass}>Accredited</h3>
+              <AccreditationSlider items={accreditations} />
+            </div>
+          )}
         </div>
       </Container>
 
