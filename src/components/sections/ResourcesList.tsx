@@ -6,33 +6,7 @@ import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 
-interface Article {
-    id: string;
-    date: string;
-    title: string;
-    desc: string;
-    image: string;
-    category: string;
-}
-
-const articlesData: Article[] = [
-    {
-        id: "accommodation",
-        date: "11 Jun 2026",
-        title: "Accommodation Support",
-        desc: "Discover safe, affordable, and conveniently located student housing with Study Abroad (Pvt) Ltd. Our accommodation services connect you with trusted partners and university housing to ensure a comfortable transition.",
-        image: "/images/articles/accommodation.jpg",
-        category: "Accommodation"
-    },
-    {
-        id: "life-abroad",
-        date: "10 Jun 2026",
-        title: "Life Abroad",
-        desc: "Embrace the adventure of study abroad. Learn how to handle daily responsibilities, overcome culture shock, build international friendships, and navigate university orientations to feel right at home.",
-        image: "/images/articles/life-abroad.jpg",
-        category: "Life Abroad"
-    }
-];
+import { articles, type Article } from '../../lib/articles';
 
 const months: { [key: string]: number } = {
     Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
@@ -52,8 +26,8 @@ const ResourcesList: React.FC = () => {
     const categories = ['All', 'Accommodation', 'Life Abroad'];
 
     const filteredArticles = activeCategory === 'All'
-        ? articlesData
-        : articlesData.filter((a) => a.category === activeCategory);
+        ? articles
+        : articles.filter((a) => a.category === activeCategory);
 
     const sortedArticles = [...filteredArticles].sort((a, b) => {
         const timeA = parseDate(a.date);

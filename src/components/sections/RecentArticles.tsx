@@ -7,30 +7,7 @@ import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 
-interface Article {
-    id: string;
-    date: string;
-    title: string;
-    desc: string;
-    image: string;
-}
-
-const articlesData: Article[] = [
-    {
-        id: "accommodation",
-        date: "11 Jun 2026",
-        title: "Accommodation Support",
-        desc: "Discover safe, affordable, and conveniently located student housing with Study Abroad (Pvt) Ltd. Our accommodation services connect you with trusted partners and university housing for a comfortable transition.",
-        image: "/images/articles/accommodation.jpg"
-    },
-    {
-        id: "life-abroad",
-        date: "10 Jun 2026",
-        title: "Life Abroad",
-        desc: "Embrace the adventure of study abroad. Learn how to handle daily responsibilities, overcome culture shock, build international friendships, and navigate university orientations to feel right at home.",
-        image: "/images/articles/life-abroad.jpg"
-    }
-];
+import { articles, type Article } from '../../lib/articles';
 
 const controlBtn =
     'flex h-12 w-12 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition-colors duration-200 hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2';
@@ -82,12 +59,12 @@ const RecentArticles: React.FC = () => {
     }, []);
 
     // Carousel only when there are more articles than fit (e.g. backend grows the list)
-    const isCarousel = mounted && articlesData.length > visibleCards;
+    const isCarousel = mounted && articles.length > visibleCards;
 
     const extendedData = [
-        ...articlesData.slice(-visibleCards),
-        ...articlesData,
-        ...articlesData.slice(0, visibleCards),
+        ...articles.slice(-visibleCards),
+        ...articles,
+        ...articles.slice(0, visibleCards),
     ];
 
     const handleNext = () => transitionEnabled && setCurrentIndex((p) => p + 1);
@@ -96,7 +73,7 @@ const RecentArticles: React.FC = () => {
     // Seamless circular boundary jump
     useEffect(() => {
         if (!isCarousel) return;
-        if (currentIndex >= articlesData.length + visibleCards) {
+        if (currentIndex >= articles.length + visibleCards) {
             const t = setTimeout(() => {
                 setTransitionEnabled(false);
                 setCurrentIndex(visibleCards);
@@ -106,7 +83,7 @@ const RecentArticles: React.FC = () => {
         if (currentIndex <= 0) {
             const t = setTimeout(() => {
                 setTransitionEnabled(false);
-                setCurrentIndex(articlesData.length);
+                setCurrentIndex(articles.length);
             }, 500);
             return () => clearTimeout(t);
         }
@@ -174,7 +151,7 @@ const RecentArticles: React.FC = () => {
                 </div>
             ) : (
                 <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-                    {articlesData.map((article) => (
+                    {articles.map((article) => (
                         <ArticleCard key={article.id} article={article} />
                     ))}
                 </div>

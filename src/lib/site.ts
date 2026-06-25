@@ -25,6 +25,12 @@ export const BUSINESS = {
     countryName: 'Sri Lanka',
   },
   geo: { lat: 6.8827997, lng: 79.8753515 },
-  /** Real social profile URLs — add when client provides them (currently placeholders in the footer). */
-  sameAs: [] as string[],
+  /** Official social profile URLs — kept in sync with the footer; emitted as schema.org sameAs. */
+  sameAs: [
+    'https://www.facebook.com/studyabroad.sl',
+    'https://www.instagram.com/studyabroadpvtltd',
+    'https://www.youtube.com/@StudyAbroadpvtltd',
+    'https://www.tiktok.com/@study_abroad_pvt_ltd',
+    'https://www.linkedin.com/company/study-abroad-pvt-ltd/',
+  ] as string[],
 };

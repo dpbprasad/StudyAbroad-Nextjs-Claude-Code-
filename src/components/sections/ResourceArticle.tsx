@@ -6,36 +6,7 @@ import ConsultationCTA from './ConsultationCTA';
 import { Section } from '../ui/Section';
 import { PageHeader } from '../ui/PageHeader';
 
-interface Article {
-    id: string;
-    title: string;
-    tagline: string;
-    category: string;
-    date: string;
-    image: string;
-    excerpt: string;
-}
-
-const articlesData: Article[] = [
-    {
-        id: "accommodation",
-        title: "Accommodation Support",
-        tagline: "Why Students Choose Our Accommodation Service",
-        category: "Accommodation",
-        date: "11 Jun 2026",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1080",
-        excerpt: "How we help you understand and compare accommodation options in your study destination.",
-    },
-    {
-        id: "life-abroad",
-        title: "Life Abroad",
-        tagline: "Feeling Lost? How to Make it Work",
-        category: "Life Abroad",
-        date: "10 Jun 2026",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1080",
-        excerpt: "Preparing students for independent living, culture, budgeting, wellbeing, and more.",
-    },
-];
+import { articles, type Article } from '../../lib/articles';
 
 const accommodationParagraphs = [
     "A safe and suitable place to stay is one of the most important concerns for students and parents when planning overseas education. At Study Abroad, we support students by helping them understand and explore accommodation options available in their chosen study destination.",
@@ -102,12 +73,12 @@ const ResourceArticle: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
-    const [activeArticle, setActiveArticle] = useState<Article>(articlesData[0]);
+    const [activeArticle, setActiveArticle] = useState<Article>(articles[0]);
     const articleRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const queryArticle = searchParams.get('article');
-        const matched = articlesData.find((a) => a.id.toLowerCase() === (queryArticle || '').toLowerCase());
+        const matched = articles.find((a) => a.id.toLowerCase() === (queryArticle || '').toLowerCase());
         if (matched) setActiveArticle(matched);
     }, [searchParams]);
 
@@ -142,7 +113,7 @@ const ResourceArticle: React.FC = () => {
                         <div className="rounded-2xl border border-slate-200 bg-white p-2">
                             <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500">Resource Guides</p>
                             <nav className="flex flex-col">
-                                {articlesData.map((art) => {
+                                {articles.map((art) => {
                                     const isActive = activeArticle.id === art.id;
                                     return (
                                         <button
@@ -179,8 +150,8 @@ const ResourceArticle: React.FC = () => {
 
                     {/* Content */}
                     <article ref={articleRef} className="min-w-0 scroll-mt-24">
-                        <div className="mb-8 overflow-hidden rounded-2xl shadow-card-md">
-                            <img src={activeArticle.image} alt={activeArticle.title} className="h-[260px] w-full object-cover md:h-[360px]" />
+                        <div className="mb-8 aspect-[16/9] overflow-hidden rounded-2xl shadow-card-md">
+                            <img src={activeArticle.image} alt={activeArticle.title} className="h-full w-full object-cover" />
                         </div>
                         <div className="mb-8 flex items-center gap-2 text-sm text-slate-500">
                             <span className="font-medium text-brand-600">{activeArticle.category}</span>

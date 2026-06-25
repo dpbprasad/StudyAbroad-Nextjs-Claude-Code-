@@ -26,6 +26,15 @@ export function Reveal({
       setShown(true);
       return;
     }
+    // Already in view on mount (above-the-fold) → reveal immediately. Don't rely on
+    // an IntersectionObserver callback alone; for tall/first elements it can fail to
+    // fire until the next scroll, leaving the element stuck invisible.
+    const viewportH = window.innerHeight || document.documentElement.clientHeight;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < viewportH && rect.bottom > 0) {
+      setShown(true);
+      return;
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
