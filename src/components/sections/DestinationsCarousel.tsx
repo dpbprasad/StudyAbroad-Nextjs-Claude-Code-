@@ -16,42 +16,42 @@ interface Destination {
 const destinationsData: Destination[] = [
   {
     country: "NEW ZEALAND",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/new-zealand.jpg",
     description: "Combine cutting-edge research, hands-on learning, and a welcoming cultural environment in one of the safest nations."
   },
   {
     country: "CANADA",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/canada.jpg",
     description: "Benefit from world-class co-op education systems, diverse communities, and robust post-study work opportunities."
   },
   {
     country: "UNITED KINGDOM",
-    image: "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/united-kingdom.jpg",
     description: "Step into historical academic excellence with fast-tracked undergraduate and postgraduate programs built for global markets."
   },
   {
     country: "UNITED STATES",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/united-states.jpg",
     description: "Access unmatched campus research facilities, specialized degree majors, and global industrial networking hubs."
   },
   {
     country: "AUSTRALIA",
-    image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/australia.jpg",
     description: "Experience innovation-driven degrees, vibrant student cities, and extensive post-graduation career pathways."
   },
   {
     country: "GERMANY",
-    image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/germany.jpg",
     description: "Avail world-class public university education, strong engineering ties, and minimal tuition structures."
   },
   {
     country: "NETHERLANDS",
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/netherlands.jpg",
     description: "Learn at high-ranking universities renowned for research excellence, entrepreneurship, and English-taught programs."
   },
   {
     country: "SWEDEN",
-    image: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=800&q=80",
+    image: "/images/destinations/sweden.jpg",
     description: "Focus on sustainability, creative problem-solving, and a lifestyle that balances academic and personal growth."
   }
 ];
@@ -129,7 +129,7 @@ const DestinationsCarousel: React.FC = () => {
     const renderCard = (dest: Destination, idx: number, withLink: boolean) => (
         <div key={idx} className="w-full flex-shrink-0 px-4 md:w-1/2 lg:w-1/4">
             <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-card-md transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-lg">
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-brand-950 via-brand-950/40 to-transparent" />
+                <div className="absolute inset-0 z-10 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_25%,rgba(0,0,0,0.5)_45%,transparent_72%)]" />
                 <div className="h-[380px] overflow-hidden">
                     <img
                         className="h-full w-full object-cover transition duration-700 ease-smooth group-hover:scale-110"

@@ -21,14 +21,14 @@ const articlesData: Article[] = [
         date: "11 Jun 2026",
         title: "Accommodation Support",
         desc: "Discover safe, affordable, and conveniently located student housing with Study Abroad (Pvt) Ltd. Our accommodation services connect you with trusted partners and university housing for a comfortable transition.",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzMzIzMzB8MHwxfHNlYXJjaHwxfHx0ZWNofGVufDB8fHx8MTc0ODkzNjgyOHww&ixlib=rb-4.1.0&q=80&w=1080"
+        image: "/images/articles/accommodation.jpg"
     },
     {
         id: "life-abroad",
         date: "10 Jun 2026",
         title: "Life Abroad",
         desc: "Embrace the adventure of study abroad. Learn how to handle daily responsibilities, overcome culture shock, build international friendships, and navigate university orientations to feel right at home.",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzMzIzMzB8MHwxfHNlYXJjaHwyfHx0ZWNofGVufDB8fHx8MTc0ODkzNjgyOHww&ixlib=rb-4.1.0&q=80&w=1080"
+        image: "/images/articles/life-abroad.jpg"
     }
 ];
 

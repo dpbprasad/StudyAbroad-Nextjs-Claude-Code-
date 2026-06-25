@@ -46,7 +46,7 @@ const ServicesSplit: React.FC<ServicesSplitProps> = ({ imageLeft = false }) => {
     <SplitSection
       imageLeft={imageLeft}
       bg="subtle"
-      image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=640&h=640"
+      image="/images/services.jpg"
       imageAlt="Study Abroad counsellor advising a student"
       eyebrow="Our Services"
       title="Our Study Abroad & Visa Services"

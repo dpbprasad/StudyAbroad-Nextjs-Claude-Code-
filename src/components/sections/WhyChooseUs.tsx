@@ -46,7 +46,7 @@ const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ imageLeft = false }) => {
     <SplitSection
       imageLeft={imageLeft}
       bg="subtle"
-      image="https://images.unsplash.com/photo-1702471897388-5d9c50ea434e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzMzIzMzB8MHwxfHNlYXJjaHwzMXx8d29ya3xlbnwwfDJ8fHwxNzQ4OTYzODEzfDA&ixlib=rb-4.1.0&q=80&h=640&w=640"
+      image="/images/why-choose-us.jpg"
       imageAlt="Study Abroad counsellors guiding students"
       eyebrow="Why Choose Us"
       title={
