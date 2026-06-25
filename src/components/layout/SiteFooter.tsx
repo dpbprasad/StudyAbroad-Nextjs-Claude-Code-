@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '../ui/Container';
-import { NewsletterSignup } from '../forms/NewsletterSignup';
+// import { NewsletterSignup } from '../forms/NewsletterSignup'; // newsletter bar hidden for now
 import { AccreditationSlider, type Accreditation } from '../ui/AccreditationSlider';
 
 /* Accreditation badges — data-driven so a backend can add more later.
@@ -36,16 +36,8 @@ const SiteFooter: React.FC = () => {
   return (
     <footer className="bg-brand-950 text-slate-400">
       <Container>
-        {/* Newsletter */}
-        <div className="flex flex-col gap-6 border-b border-white/10 py-12 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h3 className="font-display text-2xl font-semibold text-white">Stay in the loop</h3>
-            <p className="mt-1 max-w-md text-sm text-slate-400">
-              Study tips, scholarship alerts, and application deadlines — straight to your inbox.
-            </p>
-          </div>
-          <NewsletterSignup />
-        </div>
+        {/* Newsletter bar hidden for now — restore this block (and the
+            NewsletterSignup import) when the newsletter is ready. */}
 
         {/* Mobile: 2-col grid (Pages|Legal, WhatsApp|Accredited pair up).
             md+: original flex-wrap row layout, unchanged. */}
