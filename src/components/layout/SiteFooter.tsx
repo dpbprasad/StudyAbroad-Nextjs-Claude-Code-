@@ -54,7 +54,7 @@ const SiteFooter: React.FC = () => {
           {/* Brand */}
           <div className="col-span-2 md:max-w-sm">
             <Link href="/" className="inline-block" aria-label="Study Abroad — home">
-              <img src={LOGO_SRC} alt="Study Abroad (Pvt) Ltd" className="h-14 w-auto object-contain brightness-0 invert" />
+              <img src={LOGO_SRC} alt="Study Abroad (Pvt) Ltd" className="h-14 w-auto object-contain" />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-400">
               Sri Lanka's trusted student visa &amp; university placement consultancy since 2007.
