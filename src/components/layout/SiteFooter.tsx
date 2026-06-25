@@ -40,12 +40,12 @@ const legalLinks = [
   { label: 'Privacy Policy', href: '#' },
 ];
 
-const linkClass = 'text-sm text-slate-400 transition-colors duration-200 hover:text-white';
-const headingClass = 'mb-4 text-sm font-semibold uppercase tracking-wider text-slate-300';
+const linkClass = 'text-sm text-slate-300 transition-colors duration-200 hover:text-white';
+const headingClass = 'mb-4 text-sm font-semibold uppercase tracking-wider text-white';
 
 const SiteFooter: React.FC = () => {
   return (
-    <footer className="bg-brand-950 text-slate-400">
+    <footer className="bg-brand-950 text-slate-300">
       <Container>
         {/* Newsletter bar hidden for now — restore this block (and the
             NewsletterSignup import) when the newsletter is ready. */}
@@ -58,9 +58,9 @@ const SiteFooter: React.FC = () => {
             <Link href="/" className="inline-block" aria-label="Study Abroad — home">
               <img src={LOGO_SRC} alt="Study Abroad (Pvt) Ltd" className="h-14 w-auto object-contain" />
             </Link>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-400">
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-300">
               Sri Lanka's trusted student visa &amp; university placement consultancy since 2007.
-              <span className="mt-1 block text-slate-500">Global Minds. Global Futures.</span>
+              <span className="mt-1 block">Global Minds. Global Futures.</span>
             </p>
             <div className="mt-6 flex gap-3">
               {socials.map((s) => (
@@ -124,7 +124,7 @@ const SiteFooter: React.FC = () => {
           {/* Get in touch */}
           <div>
             <h3 className={headingClass}>Get in touch</h3>
-            <ul className="space-y-3 text-sm text-slate-400">
+            <ul className="space-y-3 text-sm text-slate-300">
               <li>
                 <a
                   href="https://maps.app.goo.gl/PLTg8veRcFbykqZe6"
@@ -150,7 +150,7 @@ const SiteFooter: React.FC = () => {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <Container>
-          <p className="py-5 text-center text-sm text-slate-500">
+          <p className="py-5 text-center text-sm text-slate-400">
             © Study Abroad (Pvt) Ltd. All rights reserved.
           </p>
         </Container>
