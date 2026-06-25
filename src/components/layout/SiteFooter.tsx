@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Container } from '../ui/Container';
 // import { NewsletterSignup } from '../forms/NewsletterSignup'; // newsletter bar hidden for now
 import { AccreditationSlider, type Accreditation } from '../ui/AccreditationSlider';
+import { BUSINESS } from '../../lib/site';
 
 /* Accreditation badges — data-driven so a backend can add more later.
    With 1 item it renders statically; 2+ auto-rotate with a swipe hint.
@@ -21,12 +22,22 @@ const socials = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com', path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11-.001-4.124 2.062 2.062 0 01.001 4.124zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' },
 ];
 
-const pageLinks = [
-  { label: 'FAQ', href: '/faq' },
-  { label: 'Contact', href: '/contact' },
+const companyLinks = [
+  { label: 'About Us', href: '/aboutus' },
   { label: 'Services', href: '/services' },
   { label: 'Countries', href: '/country-details?country=overview' },
+  { label: 'Success Stories', href: '/stories' },
+];
+
+const otherLinks = [
   { label: 'Resources', href: '/resources' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const legalLinks = [
+  { label: 'Terms of Service', href: '#' },
+  { label: 'Privacy Policy', href: '#' },
 ];
 
 const linkClass = 'text-sm text-slate-400 transition-colors duration-200 hover:text-white';
@@ -39,8 +50,8 @@ const SiteFooter: React.FC = () => {
         {/* Newsletter bar hidden for now — restore this block (and the
             NewsletterSignup import) when the newsletter is ready. */}
 
-        {/* Mobile: 2-col grid (Pages|Legal, WhatsApp|Accredited pair up).
-            md+: original flex-wrap row layout, unchanged. */}
+        {/* Mobile: 2-col grid (Company|Other, Legal|Get in touch pair up).
+            md+: flex-wrap row layout. */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-16 sm:gap-x-8 md:flex md:flex-row md:flex-wrap md:justify-between md:gap-x-8 lg:gap-x-12">
           {/* Brand */}
           <div className="col-span-2 md:max-w-sm">
@@ -67,13 +78,30 @@ const SiteFooter: React.FC = () => {
                 </a>
               ))}
             </div>
+            {accreditations.length > 0 && (
+              <div className="mt-8">
+                <AccreditationSlider items={accreditations} />
+              </div>
+            )}
           </div>
 
-          {/* Pages */}
+          {/* Company */}
           <div>
-            <h3 className={headingClass}>Pages</h3>
+            <h3 className={headingClass}>Company</h3>
             <ul className="space-y-2.5">
-              {pageLinks.map((l) => (
+              {companyLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className={linkClass}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Other */}
+          <div>
+            <h3 className={headingClass}>Other</h3>
+            <ul className="space-y-2.5">
+              {otherLinks.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className={linkClass}>{l.label}</Link>
                 </li>
@@ -85,26 +113,37 @@ const SiteFooter: React.FC = () => {
           <div>
             <h3 className={headingClass}>Legal</h3>
             <ul className="space-y-2.5">
-              <li><a href="#" className={linkClass}>Terms of Service</a></li>
-              <li><a href="#" className={linkClass}>Privacy Policy</a></li>
+              {legalLinks.map((l) => (
+                <li key={l.label}>
+                  <a href={l.href} className={linkClass}>{l.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* WhatsApp */}
+          {/* Get in touch */}
           <div>
-            <h3 className={headingClass}>WhatsApp</h3>
-            <div className="flex h-32 w-32 items-center justify-center rounded-lg border border-white/10 bg-white p-2">
-              <img src="/images/whatsapp-qr.png" alt="Scan to chat with us on WhatsApp" className="h-full w-full object-contain" />
-            </div>
+            <h3 className={headingClass}>Get in touch</h3>
+            <ul className="space-y-3 text-sm text-slate-400">
+              <li>
+                <a
+                  href="https://maps.app.goo.gl/PLTg8veRcFbykqZe6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-200 hover:text-white"
+                >
+                  {BUSINESS.address.street},<br />
+                  {BUSINESS.address.locality}, {BUSINESS.address.countryName}
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${BUSINESS.phone}`} className={linkClass}>{BUSINESS.phoneDisplay}</a>
+              </li>
+              <li>
+                <a href={`mailto:${BUSINESS.email}`} className={linkClass}>{BUSINESS.email}</a>
+              </li>
+            </ul>
           </div>
-
-          {/* Accredited — auto-hides when empty; footer reflows */}
-          {accreditations.length > 0 && (
-            <div>
-              <h3 className={headingClass}>Accredited</h3>
-              <AccreditationSlider items={accreditations} />
-            </div>
-          )}
         </div>
       </Container>
 
