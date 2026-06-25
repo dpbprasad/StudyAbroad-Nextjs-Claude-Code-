@@ -4,13 +4,10 @@ import Link from 'next/link';
 const Hero: React.FC = () => {
     return (
         <section className="relative flex items-center min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-6rem)] py-10 bg-brand-950 bg-cover bg-bottom bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
-  {/* Scrim for legible text over the photo — brand-navy tint (#0B2746) for an
-      on-theme look instead of flat black:
-      (1) a base overall darkening for baseline contrast, and
-      (2) a strong, wide radial boost concentrated behind the centered text,
-      easing toward the edges so the image stays relatively clean there. */}
-  <div className="absolute inset-0 bg-brand-950/50" />
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_80%_at_50%_50%,rgba(11,39,70,0.78)_0%,rgba(11,39,70,0.55)_45%,rgba(11,39,70,0.25)_75%,transparent_100%)]" />
+  {/* Soft, contained tint behind ONLY the centred content (headline, paragraph,
+      buttons) — a very light black radial that feathers out to transparent, so
+      the rest of the photo stays clean and it never looks like a box. */}
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.15)_55%,transparent_80%)]" />
   <div className="container relative z-10 mx-auto w-full px-4">
     <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
       {/* Eyebrow — glass pill, white text + blue accent dot for legibility */}
@@ -22,10 +19,10 @@ const Hero: React.FC = () => {
       </div>
 
       <h1 className="mb-6 max-w-2xl animate-fade-up text-balance bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-4xl font-semibold leading-[1.1] tracking-tight text-transparent [text-shadow:0_2px_20px_rgba(2,6,23,0.35)] md:text-5xl lg:text-6xl" style={{ animationDelay: '150ms' }}>
-        Your gateway to world-class education
+        Your Gateway to World-Class Education
       </h1>
 
-      <p className="mx-auto mb-10 max-w-xl animate-fade-up text-pretty text-base leading-relaxed text-slate-200 [text-shadow:0_1px_12px_rgba(2,6,23,0.45)] md:text-lg" style={{ animationDelay: '300ms' }}>
+      <p className="mx-auto mb-10 max-w-xl animate-fade-up text-pretty text-base leading-relaxed text-slate-100 [text-shadow:0_1px_2px_rgba(0,0,0,0.5),0_2px_22px_rgba(0,0,0,0.6)] md:text-lg" style={{ animationDelay: '300ms' }}>
         Your trusted partner for international education, admissions, recruitment, placements, and global opportunities.
       </p>
 
