@@ -4,12 +4,13 @@ import Link from 'next/link';
 const Hero: React.FC = () => {
     return (
         <section className="relative flex items-center min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-6rem)] py-10 bg-brand-950 bg-cover bg-bottom bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
-  {/* Scrim for legible text over the photo:
+  {/* Scrim for legible text over the photo — brand-navy tint (#0B2746) for an
+      on-theme look instead of flat black:
       (1) a base overall darkening for baseline contrast, and
       (2) a strong, wide radial boost concentrated behind the centered text,
       easing toward the edges so the image stays relatively clean there. */}
-  <div className="absolute inset-0 bg-black/30" />
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_80%_at_50%_50%,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_45%,rgba(0,0,0,0.15)_75%,transparent_100%)]" />
+  <div className="absolute inset-0 bg-brand-950/40" />
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_80%_at_50%_50%,rgba(11,39,70,0.7)_0%,rgba(11,39,70,0.45)_45%,rgba(11,39,70,0.18)_75%,transparent_100%)]" />
   <div className="container relative z-10 mx-auto w-full px-4">
     <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
       {/* Eyebrow — glass pill, white text + blue accent dot for legibility */}
