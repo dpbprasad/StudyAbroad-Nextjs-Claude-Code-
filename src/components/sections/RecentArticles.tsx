@@ -164,9 +164,9 @@ const RecentArticles: React.FC = () => {
                 const SLOT = 18;
                 const VIEW = SLOT * 5;
                 const total = SLOT * len;
-                const shift = Math.max(VIEW - total, Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
+                const shift = Math.max(Math.min(0, VIEW - total), Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
                 return (
-                    <div className="mt-6 flex justify-center md:hidden">
+                    <div className="mt-2 flex justify-center md:hidden">
                         <div className="overflow-hidden" style={{ width: Math.min(VIEW, total) }}>
                             <div
                                 className="flex transition-transform duration-300 ease-out"
@@ -202,7 +202,7 @@ const RecentArticles: React.FC = () => {
             })()}
 
             {/* "See all" text link — replaces the old pill button. */}
-            <div className="mt-8 flex justify-center">
+            <div className="mt-10 flex justify-center">
                 <Link
                     href="/resources"
                     className="group inline-flex items-center gap-2 text-base font-semibold text-brand-600 transition-colors hover:text-brand-700"

@@ -59,7 +59,7 @@ const TestimonialsCarousel: React.FC = () => {
                                 <div className="mx-auto grid max-w-5xl items-center gap-8 lg:grid-cols-[2fr_3fr] lg:gap-14">
                                     {/* 1:1 student image */}
                                     <div className="mx-auto w-full max-w-xs lg:max-w-none">
-                                        <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-card-lg">
+                                        <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.08)]">
                                             <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
                                         </div>
                                     </div>

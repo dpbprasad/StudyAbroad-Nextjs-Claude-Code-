@@ -130,7 +130,7 @@ const DestinationsCarousel: React.FC = () => {
 
     const renderCard = (dest: Destination, idx: number, withLink: boolean) => (
         <div key={idx} className="w-full flex-shrink-0 px-4 md:w-1/2 lg:w-1/4">
-            <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-card-md transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-lg">
+            <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.07)] transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-[0_14px_32px_-10px_rgba(15,23,42,0.16)]">
                 <div className="absolute inset-0 z-10 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_25%,rgba(0,0,0,0.5)_45%,transparent_72%)]" />
                 <div className="h-[380px] overflow-hidden">
                     <img
@@ -212,9 +212,11 @@ const DestinationsCarousel: React.FC = () => {
                 const SLOT = 18;        // px per dot slot
                 const VIEW = SLOT * 5;  // show ~5 dots at a time
                 const total = SLOT * len;
-                const shift = Math.max(VIEW - total, Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
+                const shift = Math.max(Math.min(0, VIEW - total), Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
                 return (
-                    <div className="mt-6 flex justify-center md:hidden">
+                    // -mt-1 trims the card's shadow-room padding so the gap matches
+                    // the Recent Articles carousel without clipping the card shadow.
+                    <div className="-mt-1 flex justify-center md:hidden">
                         <div className="overflow-hidden" style={{ width: VIEW }}>
                             <div
                                 className="flex transition-transform duration-300 ease-out"
@@ -251,7 +253,7 @@ const DestinationsCarousel: React.FC = () => {
 
             {/* "See all" text link — replaces the old pill button, sits under the
                 dots on mobile and below the cards on larger screens. */}
-            <div className="mt-8 flex justify-center">
+            <div className="mt-10 flex justify-center">
                 <Link
                     href="/country-details?country=overview"
                     className="group inline-flex items-center gap-2 text-base font-semibold text-brand-600 transition-colors hover:text-brand-700"
