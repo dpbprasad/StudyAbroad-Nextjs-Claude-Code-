@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
-import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 
 import { articles, type Article } from '../../lib/articles';
@@ -109,25 +108,21 @@ const RecentArticles: React.FC = () => {
                         Useful Tips &amp; Resources
                     </h2>
                 </Reveal>
-                <div className="flex items-center gap-3">
-                    <Button href="/resources" variant="secondary">
-                        All articles
-                    </Button>
-                    {isCarousel && (
-                        <>
-                            <button onClick={handlePrev} className={controlBtn} aria-label="Previous article">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button onClick={handleNext} className={controlBtn} aria-label="Next article">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </>
-                    )}
-                </div>
+                {/* Arrows are a desktop/tablet affordance; on mobile users swipe + use dots. */}
+                {isCarousel && (
+                    <div className="hidden items-center gap-3 md:flex">
+                        <button onClick={handlePrev} className={controlBtn} aria-label="Previous article">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <button onClick={handleNext} className={controlBtn} aria-label="Next article">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* Carousel (when list overflows) or static grid */}
@@ -159,6 +154,65 @@ const RecentArticles: React.FC = () => {
                     ))}
                 </div>
             )}
+
+            {/* Dynamic sliding dots (mobile only, when the list overflows): active
+                centered + wider, neighbours shrink and fade; strip slides to keep
+                the active centred. Matches the Destinations carousel. */}
+            {isCarousel && (() => {
+                const len = articles.length;
+                const active = ((currentIndex - visibleCards) % len + len) % len;
+                const SLOT = 18;
+                const VIEW = SLOT * 5;
+                const total = SLOT * len;
+                const shift = Math.max(VIEW - total, Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
+                return (
+                    <div className="mt-6 flex justify-center md:hidden">
+                        <div className="overflow-hidden" style={{ width: Math.min(VIEW, total) }}>
+                            <div
+                                className="flex transition-transform duration-300 ease-out"
+                                style={{ transform: `translateX(${shift}px)` }}
+                            >
+                                {articles.map((_, i) => {
+                                    const d = Math.abs(i - active);
+                                    const isActive = i === active;
+                                    const dot = isActive
+                                        ? 'h-1.5 w-4 bg-brand-600'
+                                        : d === 1
+                                        ? 'h-1.5 w-1.5 bg-slate-400'
+                                        : d === 2
+                                        ? 'h-1 w-1 bg-slate-300'
+                                        : 'h-1 w-1 bg-slate-300 opacity-40';
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => setCurrentIndex(i + visibleCards)}
+                                            aria-label={`Go to article ${i + 1}`}
+                                            aria-current={isActive ? 'true' : undefined}
+                                            className="flex h-6 shrink-0 items-center justify-center"
+                                            style={{ width: SLOT }}
+                                        >
+                                            <span className={`rounded-full transition-all duration-300 ${dot}`} />
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
+
+            {/* "See all" text link — replaces the old pill button. */}
+            <div className="mt-8 flex justify-center">
+                <Link
+                    href="/resources"
+                    className="group inline-flex items-center gap-2 text-base font-semibold text-brand-600 transition-colors hover:text-brand-700"
+                >
+                    View all articles
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </Link>
+            </div>
         </Section>
     );
 };

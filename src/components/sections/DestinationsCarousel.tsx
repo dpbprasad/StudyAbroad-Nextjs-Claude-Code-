@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
-import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 import { useSwipe } from '../../lib/useSwipe';
 
@@ -173,10 +172,8 @@ const DestinationsCarousel: React.FC = () => {
                         Country of Your Choice
                     </h2>
                 </Reveal>
-                <div className="flex items-center gap-3">
-                    <Button href="/country-details?country=overview" variant="secondary">
-                        All countries
-                    </Button>
+                {/* Arrows are a desktop/tablet affordance; on mobile users swipe + use dots. */}
+                <div className="hidden items-center gap-3 md:flex">
                     <button onClick={handlePrev} className={controlBtn} aria-label="Previous destination">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -204,6 +201,66 @@ const DestinationsCarousel: React.FC = () => {
                         {destinationsData.slice(0, 4).map((dest, idx) => renderCard(dest, idx, false))}
                     </div>
                 )}
+            </div>
+
+            {/* Dynamic sliding dots (Swiper/iOS style, mobile only): a fixed ~5-dot
+                window, active centered + wider, neighbours shrink and fade at the
+                edges; the strip slides to keep the active centred (clamped at ends). */}
+            {mounted && (() => {
+                const len = destinationsData.length;
+                const active = ((currentIndex - visibleCards) % len + len) % len;
+                const SLOT = 18;        // px per dot slot
+                const VIEW = SLOT * 5;  // show ~5 dots at a time
+                const total = SLOT * len;
+                const shift = Math.max(VIEW - total, Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
+                return (
+                    <div className="mt-6 flex justify-center md:hidden">
+                        <div className="overflow-hidden" style={{ width: VIEW }}>
+                            <div
+                                className="flex transition-transform duration-300 ease-out"
+                                style={{ transform: `translateX(${shift}px)` }}
+                            >
+                                {destinationsData.map((_, i) => {
+                                    const d = Math.abs(i - active);
+                                    const isActive = i === active;
+                                    const dot = isActive
+                                        ? 'h-1.5 w-4 bg-brand-600'
+                                        : d === 1
+                                        ? 'h-1.5 w-1.5 bg-slate-400'
+                                        : d === 2
+                                        ? 'h-1 w-1 bg-slate-300'
+                                        : 'h-1 w-1 bg-slate-300 opacity-40';
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => setCurrentIndex(i + visibleCards)}
+                                            aria-label={`Go to destination ${i + 1}`}
+                                            aria-current={isActive ? 'true' : undefined}
+                                            className="flex h-6 shrink-0 items-center justify-center"
+                                            style={{ width: SLOT }}
+                                        >
+                                            <span className={`rounded-full transition-all duration-300 ${dot}`} />
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
+
+            {/* "See all" text link — replaces the old pill button, sits under the
+                dots on mobile and below the cards on larger screens. */}
+            <div className="mt-8 flex justify-center">
+                <Link
+                    href="/country-details?country=overview"
+                    className="group inline-flex items-center gap-2 text-base font-semibold text-brand-600 transition-colors hover:text-brand-700"
+                >
+                    Explore all destinations
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </Link>
             </div>
         </Section>
     );
