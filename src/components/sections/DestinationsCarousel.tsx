@@ -129,8 +129,8 @@ const DestinationsCarousel: React.FC = () => {
     }, [transitionEnabled]);
 
     const renderCard = (dest: Destination, idx: number, withLink: boolean) => (
-        <div key={idx} className="w-full flex-shrink-0 px-4 md:w-1/2 lg:w-1/4">
-            <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.07)] transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-[0_14px_32px_-10px_rgba(15,23,42,0.16)]">
+        <div key={idx} className="w-full flex-shrink-0 px-2 sm:px-3 md:w-1/2 lg:w-1/4 lg:px-4">
+            <div className="group relative mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.07)] transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-[0_14px_32px_-10px_rgba(15,23,42,0.16)] md:max-w-none lg:max-w-[320px]">
                 <div className="absolute inset-0 z-10 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_25%,rgba(0,0,0,0.5)_45%,transparent_72%)]" />
                 <div className="h-[380px] overflow-hidden">
                     <img
@@ -188,7 +188,7 @@ const DestinationsCarousel: React.FC = () => {
             </div>
 
             {/* Track */}
-            <div className="-mx-4 select-none overflow-hidden py-4" {...swipe}>
+            <div className="-mx-2 select-none overflow-hidden py-4 sm:-mx-3 lg:-mx-4" {...swipe}>
                 {mounted ? (
                     <div
                         className={`flex ${transitionEnabled ? 'transition-transform duration-500 ease-in-out' : 'transition-none'}`}
