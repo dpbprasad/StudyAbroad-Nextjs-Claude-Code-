@@ -281,6 +281,15 @@ const countriesData: CountryData[] = [
 
 const flagSrc = (id: string) => (id === 'overview' ? LOGO_SRC : `/images/flags/${id}.gif`);
 
+/* Mobile pill order — tuned so the wrapping tab strip packs into the fewest rows
+   (long + short names paired per row) rather than following the list order.
+   Desktop keeps the canonical list order. Unknown ids fall through to the end. */
+const MOBILE_TAB_ORDER = ['overview', 'united-kingdom', 'new-zealand', 'netherlands', 'germany', 'australia', 'usa', 'canada', 'sweden'];
+const mobileTabs = [
+  ...MOBILE_TAB_ORDER.map((id) => countriesData.find((c) => c.id === id)).filter(Boolean as unknown as (c: CountryData | undefined) => c is CountryData),
+  ...countriesData.filter((c) => !MOBILE_TAB_ORDER.includes(c.id)),
+];
+
 const CheckIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -336,16 +345,16 @@ const CountryDetail: React.FC = () => {
             <Section bg="white">
                 <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-16">
                     {/* Sidebar */}
-                    <aside className="lg:sticky lg:top-28 lg:self-start">
-                        {/* Mobile: horizontal scroll tabs */}
-                        <div className="-mx-4 mb-2 flex gap-2 overflow-x-auto px-4 pb-2 lg:hidden">
-                            {countriesData.map((c) => {
+                    <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
+                        {/* Mobile: wrapping pill tabs (packed order, fewest rows) */}
+                        <div className="mb-4 flex flex-wrap gap-2 lg:hidden">
+                            {mobileTabs.map((c) => {
                                 const isActive = activeCountry.id === c.id;
                                 return (
                                     <button
                                         key={c.id}
                                         onClick={() => handleSelectCountry(c)}
-                                        className={`flex shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                                        className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
                                             isActive ? 'border-brand-600 bg-brand-600 text-white' : 'border-slate-300 bg-white text-slate-600'
                                         }`}
                                     >

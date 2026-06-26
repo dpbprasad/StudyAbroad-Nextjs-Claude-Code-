@@ -83,3 +83,12 @@ html, body {
   max-width: 100%;
   background: #ffffff;
 }
+
+/* Proportional scale-up on large screens.
+   The UI is built in rem, so nudging the root font-size grows type, spacing,
+   AND the max-width container together — the whole site gently "zooms" to suit
+   bigger displays while characters-per-line (readability) stay ideal.
+   Base stays 16px up to the 2xl breakpoint. */
+@media (min-width: 1536px) { :root { font-size: 17px; } }
+@media (min-width: 1920px) { :root { font-size: 18px; } }
+@media (min-width: 2560px) { :root { font-size: 19px; } }
