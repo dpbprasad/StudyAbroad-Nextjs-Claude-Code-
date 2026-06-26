@@ -6,6 +6,7 @@ import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Reveal } from '../ui/Reveal';
 import { testimonials } from '../../lib/testimonials';
+import { useSwipe } from '../../lib/useSwipe';
 
 const controlBtn =
   'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition-colors duration-200 hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2';
@@ -28,6 +29,8 @@ const TestimonialsCarousel: React.FC = () => {
     const handleNext = () =>
         setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
 
+    const swipe = useSwipe(handleNext, handlePrev);
+
     return (
         <Section bg="white">
             <Reveal className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
@@ -44,7 +47,7 @@ const TestimonialsCarousel: React.FC = () => {
                     </svg>
                 </button>
 
-                <div className="w-full overflow-hidden">
+                <div className="w-full select-none overflow-hidden" {...swipe}>
                     <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                         {testimonials.map((t, idx) => (
                             <div

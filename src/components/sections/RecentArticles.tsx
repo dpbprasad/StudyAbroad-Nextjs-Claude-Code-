@@ -8,6 +8,7 @@ import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 
 import { articles, type Article } from '../../lib/articles';
+import { useSwipe } from '../../lib/useSwipe';
 
 const controlBtn =
     'flex h-12 w-12 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition-colors duration-200 hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2';
@@ -70,6 +71,8 @@ const RecentArticles: React.FC = () => {
     const handleNext = () => transitionEnabled && setCurrentIndex((p) => p + 1);
     const handlePrev = () => transitionEnabled && setCurrentIndex((p) => p - 1);
 
+    const swipe = useSwipe(handleNext, handlePrev);
+
     // Seamless circular boundary jump
     useEffect(() => {
         if (!isCarousel) return;
@@ -129,7 +132,7 @@ const RecentArticles: React.FC = () => {
 
             {/* Carousel (when list overflows) or static grid */}
             {isCarousel ? (
-                <div className="-mx-4 overflow-hidden py-1">
+                <div className="-mx-4 select-none overflow-hidden py-1" {...swipe}>
                     <div
                         className={`flex ${transitionEnabled ? 'transition-transform duration-500 ease-in-out' : 'transition-none'}`}
                         style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}

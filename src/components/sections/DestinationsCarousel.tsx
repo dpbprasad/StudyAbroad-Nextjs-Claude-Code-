@@ -6,6 +6,7 @@ import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
+import { useSwipe } from '../../lib/useSwipe';
 
 interface Destination {
   country: string;
@@ -99,6 +100,8 @@ const DestinationsCarousel: React.FC = () => {
         setCurrentIndex((prev) => prev - 1);
     };
 
+    const swipe = useSwipe(handleNext, handlePrev);
+
     // Seamless circular loop jump
     useEffect(() => {
         if (!mounted) return;
@@ -188,7 +191,7 @@ const DestinationsCarousel: React.FC = () => {
             </div>
 
             {/* Track */}
-            <div className="-mx-4 overflow-hidden py-4">
+            <div className="-mx-4 select-none overflow-hidden py-4" {...swipe}>
                 {mounted ? (
                     <div
                         className={`flex ${transitionEnabled ? 'transition-transform duration-500 ease-in-out' : 'transition-none'}`}
