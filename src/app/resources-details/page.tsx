@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import ResourceArticle from '../../components/sections/ResourceArticle';
+import { PageSkeleton } from '../../components/ui/PageSkeleton';
 
 const ARTICLES: Record<string, { title: string; description: string }> = {
   accommodation: {
@@ -39,7 +40,7 @@ export async function generateMetadata(
 export default function ResourcesDetails() {
   return (
     <>
-      <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
+      <Suspense fallback={<PageSkeleton />}>
         <ResourceArticle />
       </Suspense>
     </>

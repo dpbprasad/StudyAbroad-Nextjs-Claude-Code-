@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import CountryDetail from '../../components/sections/CountryDetail';
+import { PageSkeleton } from '../../components/ui/PageSkeleton';
 
 const COUNTRY_NAMES: Record<string, string> = {
   'new-zealand': 'New Zealand',
@@ -41,7 +42,7 @@ export async function generateMetadata(
 export default function CountryDetails() {
   return (
     <>
-      <Suspense fallback={<div className="min-h-screen animate-pulse bg-white" />}>
+      <Suspense fallback={<PageSkeleton />}>
         <CountryDetail />
       </Suspense>
     </>
