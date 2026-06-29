@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '../ui/Container';
-// import { NewsletterSignup } from '../forms/NewsletterSignup'; // newsletter bar hidden for now
 import { AccreditationSlider, type Accreditation } from '../ui/AccreditationSlider';
 import { BUSINESS } from '../../lib/site';
 
@@ -47,9 +46,6 @@ const SiteFooter: React.FC = () => {
   return (
     <footer className="bg-brand-950 text-slate-300 print:hidden">
       <Container>
-        {/* Newsletter bar hidden for now — restore this block (and the
-            NewsletterSignup import) when the newsletter is ready. */}
-
         {/* Mobile: 2-col grid (Company|Other, Legal|Get in touch pair up).
             md+: flex-wrap row layout. */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-16 sm:gap-x-8 md:flex md:flex-row md:flex-wrap md:justify-between md:gap-x-8 lg:gap-x-12">
