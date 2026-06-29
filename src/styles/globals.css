@@ -92,3 +92,15 @@ html, body {
 @media (min-width: 1536px) { :root { font-size: 17px; } }
 @media (min-width: 1920px) { :root { font-size: 18px; } }
 @media (min-width: 2560px) { :root { font-size: 19px; } }
+
+/* Print: legal/policy pages are often saved as PDF. Strip site chrome and the
+   chat widget so the document prints clean. Page-level elements use the
+   Tailwind `print:hidden` utility; this covers the script-injected chat. */
+@media print {
+  html, body { background: #fff !important; }
+  /* Zoho SalesIQ floating chat widget (injected, can't take a class) */
+  [id*="zsiq"], [class*="zsiq"], [id*="siqi"], [class*="siqembed"], [class*="siqico"] {
+    display: none !important;
+  }
+  a { text-decoration: underline; }
+}

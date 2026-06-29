@@ -35,5 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/stories', 0.7),
     page('/faq', 0.7),
     page('/contact', 0.8),
+    page('/privacy-policy', 0.3, 'yearly'),
+    page('/terms-of-service', 0.3, 'yearly'),
   ];
 }

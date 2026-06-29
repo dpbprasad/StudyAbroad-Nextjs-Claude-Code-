@@ -31,7 +31,7 @@ export function PageHeader({
       : null;
 
   return (
-    <section className="relative overflow-hidden bg-brand-900">
+    <section className="relative overflow-hidden bg-brand-900 print:overflow-visible print:bg-white">
       {breadcrumbJsonLd && (
         <script
           type="application/ld+json"
@@ -39,11 +39,11 @@ export function PageHeader({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       )}
-      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-600/20 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-600/20 blur-3xl print:hidden" aria-hidden="true" />
       <Container>
-        <div className="relative py-12 lg:py-16">
+        <div className="relative py-12 lg:py-16 print:py-0">
           {breadcrumbs.length > 0 && (
-            <nav aria-label="Breadcrumb" className="mb-4 animate-fade-up">
+            <nav aria-label="Breadcrumb" className="mb-4 animate-fade-up print:hidden">
               <ol className="flex flex-wrap items-center gap-1.5 text-sm">
                 {breadcrumbs.map((c, i) => {
                   const isLast = i === breadcrumbs.length - 1;
@@ -69,11 +69,11 @@ export function PageHeader({
               </ol>
             </nav>
           )}
-          <h1 className="animate-fade-up font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem]" style={{ animationDelay: '100ms' }}>
+          <h1 className="animate-fade-up font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem] print:text-slate-900" style={{ animationDelay: '100ms' }}>
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-3 max-w-2xl animate-fade-up text-lg leading-relaxed text-slate-300" style={{ animationDelay: '200ms' }}>
+            <p className="mt-3 max-w-2xl animate-fade-up text-lg leading-relaxed text-slate-300 print:text-slate-600" style={{ animationDelay: '200ms' }}>
               {subtitle}
             </p>
           )}

@@ -36,8 +36,8 @@ const otherLinks = [
 ];
 
 const legalLinks = [
-  { label: 'Terms of Service', href: '#' },
-  { label: 'Privacy Policy', href: '#' },
+  { label: 'Terms of Service', href: '/terms-of-service' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
 ];
 
 const linkClass = 'text-sm text-slate-300 transition-colors duration-200 hover:text-white';
@@ -45,7 +45,7 @@ const headingClass = 'mb-4 text-sm font-semibold uppercase tracking-wider text-w
 
 const SiteFooter: React.FC = () => {
   return (
-    <footer className="bg-brand-950 text-slate-300">
+    <footer className="bg-brand-950 text-slate-300 print:hidden">
       <Container>
         {/* Newsletter bar hidden for now — restore this block (and the
             NewsletterSignup import) when the newsletter is ready. */}

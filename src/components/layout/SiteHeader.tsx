@@ -80,7 +80,7 @@ const SiteHeader: React.FC = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-md transition-transform duration-300 ${
+        className={`sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-md transition-transform duration-300 print:hidden ${
           hidden && !isMobileMenuOpen ? '-translate-y-full' : 'translate-y-0'
         } ${scrolled ? 'shadow-card' : ''}`}
       >
