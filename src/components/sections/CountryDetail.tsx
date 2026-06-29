@@ -279,7 +279,7 @@ const countriesData: CountryData[] = [
   }
 ];
 
-const flagSrc = (id: string) => (id === 'overview' ? LOGO_SRC : `/images/flags/${id}.gif`);
+const flagSrc = (id: string) => (id === 'overview' ? LOGO_SRC : `/images/flags/${id}.webp`);
 
 /* Mobile pill order — tuned so the wrapping tab strip packs into the fewest rows
    (long + short names paired per row) rather than following the list order.

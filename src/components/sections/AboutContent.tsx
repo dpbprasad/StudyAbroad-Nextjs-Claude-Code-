@@ -5,8 +5,7 @@ import { Card } from '../ui/Card';
 import { Reveal } from '../ui/Reveal';
 import { YouTubeFacade } from '../ui/YouTubeFacade';
 
-// CEO message video. TODO: set to the YouTube video ID — the part after
-// `watch?v=` in the URL (e.g. https://youtu.be/ABC123  ->  'ABC123').
+// CEO message video (youtu.be/fZDNEShwZGM).
 const CEO_VIDEO_ID = 'fZDNEShwZGM';
 
 type Point = { title: string; desc: string; icon: React.ReactNode };
