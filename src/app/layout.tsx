@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '../lib/site';
 import { OrganizationJsonLd } from '../components/seo/OrganizationJsonLd';
 import SiteHeader from '../components/layout/SiteHeader';
 import SiteFooter from '../components/layout/SiteFooter';
+import ConsentManager from '../components/ConsentManager';
 
 // Clean geometric sans — used for all headings + body (see design.md §2)
 const inter = Inter({
@@ -59,21 +59,11 @@ export default function RootLayout({
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased bg-white text-slate-700 font-body" suppressHydrationWarning>
         <OrganizationJsonLd />
-
-        {/* Initialize Zoho SalesIQ object */}
-        <Script id="zoho-salesiq-init" strategy="beforeInteractive">
-          {`window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}`}
-        </Script>
-        
-        {/* Load Zoho SalesIQ widget script */}
-        <Script
-          id="zsiqscript"
-          src="https://salesiq.zohopublic.com/widget?wc=siq174f78e9bbdc7a369582d2b56f29d0011d877dfa15b1bfae5334a66e91a7db68"
-          strategy="lazyOnload"
-        />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
+        {/* Cookie consent + consent-gated third parties (Zoho chat, analytics) */}
+        <ConsentManager />
       </body>
     </html>
   );

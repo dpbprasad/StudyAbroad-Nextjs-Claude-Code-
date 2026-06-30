@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Section } from '../components/ui/Section';
 import { Button } from '../components/ui/Button';
 
 export const metadata: Metadata = {
@@ -18,8 +17,8 @@ const popular = [
 
 export default function NotFound() {
   return (
-    <Section bg="white">
-      <div className="mx-auto flex max-w-xl flex-col items-center py-12 text-center md:py-20">
+    <section className="flex min-h-[calc(100svh-5rem)] items-center justify-center bg-white px-4 py-16 lg:min-h-[calc(100svh-6rem)]">
+      <div className="mx-auto flex max-w-xl flex-col items-center text-center">
         <p className="font-display text-7xl font-bold tracking-tight text-brand-600 md:text-8xl">404</p>
         <h1 className="mt-4 font-display text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
           This page took a gap year
@@ -48,6 +47,6 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
