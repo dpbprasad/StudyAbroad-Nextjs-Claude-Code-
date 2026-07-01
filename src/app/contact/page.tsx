@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '../../components/ui/PageHeader';
-import ContactContent from '../../components/sections/ContactContent';
+import ContactBookingTabs from '../../components/sections/ContactBookingTabs';
 
 export const metadata: Metadata = {
   title: 'Contact Us — Book a Free Consultation',
@@ -18,7 +18,7 @@ export default function Contact() {
         subtitle="Begin your journey — book a free consultation with our team."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
       />
-      <ContactContent />
+      <ContactBookingTabs />
     </>
   );
 }
