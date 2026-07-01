@@ -2,9 +2,13 @@ import React from 'react';
 import { Section } from '../ui/Section';
 import { Reveal } from '../ui/Reveal';
 import { CountUp } from '../ui/CountUp';
+import { BUSINESS } from '../../lib/site';
+
+// Auto-calculated from the founding year so it never goes stale.
+const yearsOfExperience = new Date().getFullYear() - Number(BUSINESS.foundingDate);
 
 const stats = [
-  { value: '19+', label: 'Years of Experience' },
+  { value: `${yearsOfExperience}+`, label: 'Years of Experience' },
   { value: '2K+', label: 'Success Stories' },
   { value: '99%', label: 'Visa Success Rate' },
   { value: '100+', label: 'University Partners' },
