@@ -33,7 +33,7 @@ const Hero: React.FC = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </Link>
-        <Link className="relative inline-flex w-full max-w-[16rem] items-center justify-center rounded-full border-[1.5px] border-brand-400 px-5 py-2.5 text-[13px] font-semibold text-white transition-all duration-200 hover:bg-brand-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 sm:w-auto sm:max-w-none" href="/stories">
+        <Link className="relative inline-flex w-full max-w-[13rem] items-center justify-center rounded-full border-[1.5px] border-brand-400 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 sm:w-auto sm:max-w-none" href="/stories">
           Success Stories
         </Link>
       </div>
