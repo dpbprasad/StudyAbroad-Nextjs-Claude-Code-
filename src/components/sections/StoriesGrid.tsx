@@ -6,6 +6,7 @@ import { Button } from '../ui/Button';
 import { testimonials as allTestimonials } from '../../lib/testimonials';
 
 const GOOGLE_REVIEWS_URL = 'https://share.google/uUZ4JGwh0nQbpeqQw';
+const YOUTUBE_PLAYLIST_URL = 'https://www.youtube.com/playlist?list=PLQJwASD0M4P8';
 
 const GoogleIcon = () => (
   <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
@@ -13,6 +14,12 @@ const GoogleIcon = () => (
     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" />
     <path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z" />
     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" />
+  </svg>
+);
+
+const YouTubeIcon = () => (
+  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="#FF0000" aria-hidden="true">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
   </svg>
 );
 
@@ -165,22 +172,37 @@ const StoriesGrid: React.FC = () => {
         )}
       </div>
 
-      <div className="mt-10 flex flex-col items-center gap-5 text-center">
+      <div className="mt-10 flex flex-col items-center gap-6 text-center">
         {hasMore && (
           <Button onClick={handleLoadMore} variant="secondary">Load More</Button>
         )}
-        <a
-          href={GOOGLE_REVIEWS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition-colors hover:text-brand-700"
-        >
-          <GoogleIcon />
-          Read our reviews on Google
-          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition-colors hover:text-brand-700"
+          >
+            <GoogleIcon />
+            Read our reviews on Google
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+          <span className="hidden h-4 w-px bg-slate-200 sm:block" aria-hidden="true" />
+          <a
+            href={YOUTUBE_PLAYLIST_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition-colors hover:text-brand-700"
+          >
+            <YouTubeIcon />
+            Watch video testimonials
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </Section>
   );
