@@ -6,7 +6,9 @@ import { Button } from '../ui/Button';
 import { testimonials as allTestimonials } from '../../lib/testimonials';
 
 const GOOGLE_REVIEWS_URL = 'https://share.google/uUZ4JGwh0nQbpeqQw';
-const YOUTUBE_PLAYLIST_URL = 'https://www.youtube.com/playlist?list=PLQJwASD0M4P8';
+// watch?v=…&list=… opens the first video playing with the full playlist
+// queued, rather than /playlist which only shows the static list index.
+const YOUTUBE_PLAYLIST_URL = 'https://www.youtube.com/watch?v=0dTedU8dYHQ&list=PLQJwASD0M4P8';
 
 const GoogleIcon = () => (
   <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
