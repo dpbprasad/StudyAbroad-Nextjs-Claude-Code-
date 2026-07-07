@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, useMemo } from 'react';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
-import { testimonials as allTestimonials, type Testimonial } from '../../lib/testimonials';
+import { testimonials as allTestimonials } from '../../lib/testimonials';
 
 const GOOGLE_REVIEWS_URL = 'https://share.google/uUZ4JGwh0nQbpeqQw';
 
@@ -26,25 +26,20 @@ const Stars = ({ className = '' }: { className?: string }) => (
   </div>
 );
 
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 const yearOrNull = (y?: string) => {
   const n = Number(y);
   return y && Number.isFinite(n) ? n : null;
 };
 
-// Quotes longer than this get clamped on the card with a "Read full story"
-// affordance, so no single testimonial towers over the grid and leaves gaps.
-const CLAMP_LINES = 10;
-const CLAMP_CHARS = 480; // ≈ CLAMP_LINES at the card width; decides who gets "Read more"
-
-const meta = (t: Testimonial) => [t.country, t.year].filter(Boolean).join(' • ');
-
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
 const StoriesGrid: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(9);
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
-  const [active, setActive] = useState<Testimonial | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  // When more cards remain, we clip the masonry at the shortest column's end so
+  // no column shows an empty gap, and fade that edge. null → show everything.
+  const [cutHeight, setCutHeight] = useState<number | null>(null);
 
   const sorted = useMemo(() => {
     return [...allTestimonials].sort((a, b) => {
@@ -66,11 +61,6 @@ const StoriesGrid: React.FC = () => {
     setVisibleCount(9);
   };
 
-  const closeModal = useCallback(() => setActive(null), []);
-
-  // Row-major masonry: keeps the newest-first reading order (unlike CSS
-  // columns) while packing cards tightly. Each item spans as many 1px grid
-  // rows as its content is tall, so columns stay balanced.
   useIsomorphicLayoutEffect(() => {
     const grid = gridRef.current;
     if (!grid) return;
@@ -85,6 +75,22 @@ const StoriesGrid: React.FC = () => {
         const span = Math.ceil((content.offsetHeight + rowGap) / (1 + rowGap));
         item.style.gridRowEnd = `span ${span}`;
       });
+
+      // Clip at the shortest column's bottom so every column is full up to the
+      // cut (no empty gap). Only when there are more cards to reveal + >1 column.
+      if (hasMore && items.length) {
+        const gridTop = grid.getBoundingClientRect().top;
+        const cols: Record<number, number> = {};
+        items.forEach((it) => {
+          const r = it.getBoundingClientRect();
+          const left = Math.round(r.left);
+          cols[left] = Math.max(cols[left] || 0, r.bottom - gridTop);
+        });
+        const bottoms = Object.values(cols);
+        setCutHeight(bottoms.length > 1 ? Math.floor(Math.min(...bottoms)) : null);
+      } else {
+        setCutHeight(null);
+      }
     };
 
     recalc();
@@ -95,19 +101,7 @@ const StoriesGrid: React.FC = () => {
       ro.disconnect();
       window.removeEventListener('resize', recalc);
     };
-  }, [visibleCount, sortOrder]);
-
-  // Lock scroll + close on Escape while the modal is open.
-  useEffect(() => {
-    if (!active) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeModal();
-    document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [active, closeModal]);
+  }, [visibleCount, sortOrder, hasMore]);
 
   return (
     <Section bg="white">
@@ -131,19 +125,17 @@ const StoriesGrid: React.FC = () => {
         </div>
       </div>
 
-      {/* Balanced row-major masonry — quotes are clamped so cards stay a
-          similar height and columns pack evenly (no ragged blank space),
-          while preserving the newest-first reading order. Full text → modal. */}
-      <div
-        ref={gridRef}
-        className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
-      >
-        {visibleStories.map((t) => {
-          const isLong = t.text.length > CLAMP_CHARS;
-          return (
+      {/* Masonry — clipped at the shortest column + faded while more remain */}
+      <div className="relative">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+          style={cutHeight ? { maxHeight: cutHeight, overflow: 'hidden' } : undefined}
+        >
+          {visibleStories.map((t) => (
             <div key={t.name} data-masonry-item>
               <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md">
-                {/* Navy top band that cradles the avatar */}
+                {/* Navy top band with a curved notch that cradles the avatar */}
                 <div className="relative h-16 bg-brand-900" aria-hidden="true">
                   <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
                 </div>
@@ -155,38 +147,22 @@ const StoriesGrid: React.FC = () => {
                 <div className="px-6 pb-7 pt-16 lg:px-8">
                   <p className="text-sm font-semibold text-brand-600">{t.program}</p>
                   {t.university && <p className="mt-0.5 text-xs text-slate-600">{t.university}</p>}
-                  <p className="mt-1 text-xs text-slate-500">{meta(t)}</p>
+                  <p className="mt-1 text-xs text-slate-500">{[t.country, t.year].filter(Boolean).join(' • ')}</p>
                   <Stars className="mt-3 justify-center" />
-                  <blockquote
-                    className="mt-5 text-[15px] leading-relaxed text-slate-700"
-                    style={
-                      isLong
-                        ? {
-                            display: '-webkit-box',
-                            WebkitLineClamp: CLAMP_LINES,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                          }
-                        : undefined
-                    }
-                  >
+                  <blockquote className="mt-5 text-[15px] leading-relaxed text-slate-700">
                     {t.text}
                   </blockquote>
-                  {isLong && (
-                    <button
-                      type="button"
-                      onClick={() => setActive(t)}
-                      className="mt-3 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
-                    >
-                      Read full story
-                    </button>
-                  )}
                   <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
                 </div>
               </div>
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        {/* Fade over the cut edge */}
+        {cutHeight && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-white" aria-hidden="true" />
+        )}
       </div>
 
       <div className="mt-10 flex flex-col items-center gap-5 text-center">
@@ -206,50 +182,6 @@ const StoriesGrid: React.FC = () => {
           </svg>
         </a>
       </div>
-
-      {/* Full-story modal */}
-      {active && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Full story from ${active.name}`}
-        >
-          <div
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-            onClick={closeModal}
-            aria-hidden="true"
-          />
-          <div className="relative flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl bg-white shadow-card-lg">
-            <button
-              type="button"
-              onClick={closeModal}
-              aria-label="Close"
-              className="absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <div className="overflow-y-auto px-7 pb-8 pt-9 text-center sm:px-9">
-              <img
-                className="mx-auto h-24 w-24 rounded-full object-cover ring-4 ring-brand-50"
-                src={active.image}
-                alt={active.name}
-              />
-              <p className="mt-4 text-sm font-semibold text-brand-600">{active.program}</p>
-              {active.university && <p className="mt-0.5 text-xs text-slate-600">{active.university}</p>}
-              <p className="mt-1 text-xs text-slate-500">{meta(active)}</p>
-              <Stars className="mt-3 justify-center" />
-              <blockquote className="mt-5 text-left text-[15px] leading-relaxed text-slate-700">
-                {active.text}
-              </blockquote>
-              <p className="mt-6 border-t border-slate-100 pt-5 font-semibold text-slate-900">{active.name}</p>
-            </div>
-          </div>
-        </div>
-      )}
     </Section>
   );
 };
