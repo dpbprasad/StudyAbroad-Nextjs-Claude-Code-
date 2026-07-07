@@ -57,8 +57,8 @@ const TestimonialsCarousel: React.FC = () => {
                                 inert={idx !== currentIndex ? true : undefined}
                             >
                                 <div className="mx-auto grid max-w-5xl items-center gap-8 lg:grid-cols-[2fr_3fr] lg:gap-14">
-                                    {/* 1:1 student image */}
-                                    <div className="mx-auto w-full max-w-xs lg:max-w-none">
+                                    {/* 1:1 student image — smaller on mobile (~220px) */}
+                                    <div className="mx-auto w-full max-w-[220px] lg:max-w-none">
                                         <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.08)]">
                                             <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
                                         </div>
@@ -80,11 +80,14 @@ const TestimonialsCarousel: React.FC = () => {
                                                 </svg>
                                             </Link>
                                         )}
-                                        <Stars className="mt-6 justify-center lg:justify-start" />
+                                        {/* Stars — hidden on mobile, shown md+ */}
+                                        <Stars className="mt-6 hidden justify-center md:flex lg:justify-start" />
                                         <div className="mt-4">
                                             <p className="text-xl font-semibold text-slate-900">{t.name}</p>
-                                            <p className="text-sm font-medium text-brand-600">{t.program}</p>
-                                            {t.university && <p className="text-sm text-slate-600">{t.university}</p>}
+                                            {/* Program + University — hidden on mobile. KEEP RECORD:
+                                                revisit at final stage; remove entirely if unused. */}
+                                            <p className="hidden text-sm font-medium text-brand-600 md:block">{t.program}</p>
+                                            {t.university && <p className="hidden text-sm text-slate-600 md:block">{t.university}</p>}
                                             <p className="mt-0.5 text-xs text-slate-500">{[t.country, t.year].filter(Boolean).join(' • ')}</p>
                                         </div>
                                     </div>
