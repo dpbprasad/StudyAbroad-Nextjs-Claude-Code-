@@ -64,7 +64,7 @@ export function Reveal({
   // composited layers alive, which can make the scroll itself feel less smooth.
   useEffect(() => {
     if (!shown || settled) return;
-    const t = window.setTimeout(() => setSettled(true), delay + 650);
+    const t = window.setTimeout(() => setSettled(true), delay + 800);
     return () => window.clearTimeout(t);
   }, [shown, settled, delay]);
 
@@ -72,9 +72,9 @@ export function Reveal({
     <div
       ref={ref}
       className={cn(
-        'transition-[opacity,transform] duration-[550ms] ease-smooth motion-reduce:transition-none',
+        'transition-[opacity,transform] duration-700 ease-smooth motion-reduce:transition-none',
         !settled && 'will-change-[opacity,transform]',
-        shown ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
+        shown ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0',
         className,
       )}
       style={{ transitionDelay: shown ? `${delay}ms` : '0ms' }}
