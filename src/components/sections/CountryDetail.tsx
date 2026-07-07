@@ -351,13 +351,14 @@ const CountryDetail: React.FC = () => {
             />
 
             <Section bg="white">
-                <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-16">
+                <div className="grid gap-6 lg:grid-cols-[280px_1fr] lg:gap-16">
                     {/* Sidebar */}
                     <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
-                        {/* Mobile / tablet: collapsible dropdown (same mechanism as the
-                            legal pages' "On this page" menu). Summary shows the active
+                        {/* Mobile / tablet: label + collapsible dropdown (same mechanism as
+                            the legal pages' "On this page" menu). Summary shows the active
                             destination; expands to the full flag list. */}
-                        <details ref={mobileMenuRef} className="group mb-6 rounded-2xl border border-slate-200 bg-white lg:hidden">
+                        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:hidden">Select a destination</p>
+                        <details ref={mobileMenuRef} className="group rounded-2xl border border-slate-200 bg-white lg:hidden">
                             <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
                                 <span className="flex min-w-0 items-center gap-3">
                                     <FlagChip id={activeCountry.id} size="sm" />
