@@ -281,14 +281,20 @@ const countriesData: CountryData[] = [
 
 const flagSrc = (id: string) => (id === 'overview' ? LOGO_SRC : `/images/flags/${id}.webp`);
 
-/* Mobile pill order — tuned so the wrapping tab strip packs into the fewest rows
-   (long + short names paired per row) rather than following the list order.
-   Desktop keeps the canonical list order. Unknown ids fall through to the end. */
-const MOBILE_TAB_ORDER = ['overview', 'united-kingdom', 'new-zealand', 'netherlands', 'germany', 'australia', 'usa', 'canada', 'sweden'];
-const mobileTabs = [
-  ...MOBILE_TAB_ORDER.map((id) => countriesData.find((c) => c.id === id)).filter(Boolean as unknown as (c: CountryData | undefined) => c is CountryData),
-  ...countriesData.filter((c) => !MOBILE_TAB_ORDER.includes(c.id)),
-];
+/* Round flag/logo chip used in both the sidebar list and the mobile dropdown. */
+const FlagChip: React.FC<{ id: string; size?: 'sm' | 'md' }> = ({ id, size = 'md' }) => (
+    <span
+        className={`flex flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/5 ${
+            size === 'sm' ? 'h-7 w-7' : 'h-8 w-8'
+        }`}
+    >
+        <img
+            src={flagSrc(id)}
+            alt=""
+            className={`h-full w-full ${id === 'overview' ? 'object-contain p-1' : 'object-cover'}`}
+        />
+    </span>
+);
 
 const CheckIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -303,6 +309,7 @@ const CountryDetail: React.FC = () => {
     const country = searchParams.get('country');
     const [activeCountry, setActiveCountry] = useState<CountryData>(countriesData[0]);
     const contentRef = useRef<HTMLDivElement>(null);
+    const mobileMenuRef = useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
         if (country && typeof country === 'string') {
@@ -320,6 +327,7 @@ const CountryDetail: React.FC = () => {
 
     const handleSelectCountry = (target: CountryData) => {
         setActiveCountry(target);
+        if (mobileMenuRef.current) mobileMenuRef.current.open = false; // collapse the mobile dropdown
         const params = new URLSearchParams(searchParams.toString());
         params.set('country', target.id);
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
@@ -346,26 +354,38 @@ const CountryDetail: React.FC = () => {
                 <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-16">
                     {/* Sidebar */}
                     <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
-                        {/* Mobile: wrapping pill tabs (packed order, fewest rows) */}
-                        <div className="mb-4 flex flex-wrap gap-2 lg:hidden">
-                            {mobileTabs.map((c) => {
-                                const isActive = activeCountry.id === c.id;
-                                return (
-                                    <button
-                                        key={c.id}
-                                        onClick={() => handleSelectCountry(c)}
-                                        className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
-                                            isActive ? 'border-brand-600 bg-brand-600 text-white' : 'border-slate-300 bg-white text-slate-600'
-                                        }`}
-                                    >
-                                        <span className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/5">
-                                            <img src={flagSrc(c.id)} alt="" className={`h-full w-full ${c.id === 'overview' ? 'object-contain p-0.5' : 'object-cover'}`} />
-                                        </span>
-                                        {c.name}
-                                    </button>
-                                );
-                            })}
-                        </div>
+                        {/* Mobile / tablet: collapsible dropdown (same mechanism as the
+                            legal pages' "On this page" menu). Summary shows the active
+                            destination; expands to the full flag list. */}
+                        <details ref={mobileMenuRef} className="group mb-6 rounded-2xl border border-slate-200 bg-white lg:hidden">
+                            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+                                <span className="flex min-w-0 items-center gap-3">
+                                    <FlagChip id={activeCountry.id} size="sm" />
+                                    <span className="truncate text-sm font-semibold text-slate-800">{activeCountry.name}</span>
+                                </span>
+                                <svg className="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </summary>
+                            <nav className="flex flex-col border-t border-slate-100 p-2">
+                                {countriesData.map((c) => {
+                                    const isActive = activeCountry.id === c.id;
+                                    return (
+                                        <button
+                                            key={c.id}
+                                            onClick={() => handleSelectCountry(c)}
+                                            aria-current={isActive ? 'page' : undefined}
+                                            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+                                                isActive ? 'bg-brand-50' : 'hover:bg-slate-50'
+                                            }`}
+                                        >
+                                            <FlagChip id={c.id} />
+                                            <span className={`text-sm font-medium ${isActive ? 'text-brand-700' : 'text-slate-700'}`}>{c.name}</span>
+                                        </button>
+                                    );
+                                })}
+                            </nav>
+                        </details>
 
                         {/* Desktop: vertical list */}
                         <div className="hidden rounded-2xl border border-slate-200 bg-white p-2 lg:block">
@@ -388,9 +408,7 @@ const CountryDetail: React.FC = () => {
                                                 }`}
                                                 aria-hidden="true"
                                             />
-                                            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/5">
-                                                <img src={flagSrc(c.id)} alt="" className={`h-full w-full ${c.id === 'overview' ? 'object-contain p-1' : 'object-cover'}`} />
-                                            </span>
+                                            <FlagChip id={c.id} />
                                             <span className={`text-sm font-medium ${isActive ? 'text-brand-700' : 'text-slate-700'}`}>{c.name}</span>
                                         </button>
                                     );
