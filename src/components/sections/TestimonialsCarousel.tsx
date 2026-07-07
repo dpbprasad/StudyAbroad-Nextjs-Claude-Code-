@@ -66,7 +66,7 @@ const TestimonialsCarousel: React.FC = () => {
 
                                     {/* Quote + student */}
                                     <div className="text-center lg:text-left">
-                                        <blockquote className="line-clamp-6 text-base leading-relaxed text-slate-700 md:text-xl">
+                                        <blockquote className="line-clamp-[8] text-base leading-relaxed text-slate-700 md:line-clamp-6 md:text-xl">
                                             {t.text}
                                         </blockquote>
                                         {t.text.length > 300 && (
