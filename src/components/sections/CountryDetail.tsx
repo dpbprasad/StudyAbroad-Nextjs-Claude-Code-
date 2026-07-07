@@ -420,10 +420,15 @@ const CountryDetail: React.FC = () => {
                     {/* Content */}
                     <div ref={contentRef} className="min-w-0 scroll-mt-24 space-y-12">
                         {/* Overview / intro */}
-                        <div className="space-y-4 text-[15px] leading-relaxed text-slate-600 md:text-lg">
-                            {activeCountry.overview.map((para, idx) => (
-                                <p key={idx}>{para}</p>
-                            ))}
+                        <div>
+                            <h2 className="mb-6 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
+                                {isOverview ? 'About Study Abroad' : `Overview of ${activeCountry.name}`}
+                            </h2>
+                            <div className="space-y-4 text-[15px] leading-relaxed text-slate-600 md:text-lg">
+                                {activeCountry.overview.map((para, idx) => (
+                                    <p key={idx}>{para}</p>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Education system */}
