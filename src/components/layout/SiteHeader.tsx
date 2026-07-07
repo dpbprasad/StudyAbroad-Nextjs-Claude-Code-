@@ -148,8 +148,8 @@ const SiteHeader: React.FC = () => {
           }`}
         />
         <nav
-          className={`absolute bottom-0 left-0 top-0 flex h-full w-5/6 max-w-sm flex-col overflow-y-auto bg-white px-6 py-6 shadow-card-lg transition-transform duration-300 ease-out ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          className={`absolute bottom-0 right-0 top-0 flex h-full w-5/6 max-w-sm flex-col overflow-y-auto bg-white px-6 py-6 shadow-card-lg transition-transform duration-300 ease-out ${
+            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="mb-10 flex items-center justify-between">
