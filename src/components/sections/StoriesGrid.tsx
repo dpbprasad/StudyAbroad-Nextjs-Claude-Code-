@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from 'react';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
-import { Reveal } from '../ui/Reveal';
-import { testimonials } from '../../lib/testimonials';
+import { testimonials as allTestimonials, type Testimonial } from '../../lib/testimonials';
 
 const GOOGLE_REVIEWS_URL = 'https://share.google/uUZ4JGwh0nQbpeqQw';
 
@@ -27,109 +26,232 @@ const Stars = ({ className = '' }: { className?: string }) => (
   </div>
 );
 
-// Measure before paint on the client (avoids a layout flash); plain effect on the server.
+const yearOrNull = (y?: string) => {
+  const n = Number(y);
+  return y && Number.isFinite(n) ? n : null;
+};
+
+// Quotes longer than this get clamped on the card with a "Read full story"
+// affordance, so no single testimonial towers over the grid and leaves gaps.
+const CLAMP_LINES = 10;
+const CLAMP_CHARS = 480; // ≈ CLAMP_LINES at the card width; decides who gets "Read more"
+
+const meta = (t: Testimonial) => [t.country, t.year].filter(Boolean).join(' • ');
+
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 const StoriesGrid: React.FC = () => {
-    const [visibleCount, setVisibleCount] = useState(9);
-    const gridRef = useRef<HTMLDivElement>(null);
+  const [visibleCount, setVisibleCount] = useState(9);
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+  const [active, setActive] = useState<Testimonial | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
-    const handleLoadMore = () => setVisibleCount((prev) => prev + 6);
+  const sorted = useMemo(() => {
+    return [...allTestimonials].sort((a, b) => {
+      const ya = yearOrNull(a.year);
+      const yb = yearOrNull(b.year);
+      if (ya === null && yb === null) return 0;
+      if (ya === null) return 1; // undated → always last
+      if (yb === null) return -1;
+      return sortOrder === 'newest' ? yb - ya : ya - yb;
+    });
+  }, [sortOrder]);
 
-    const visibleStories = testimonials.slice(0, visibleCount);
+  const visibleStories = sorted.slice(0, visibleCount);
+  const hasMore = visibleCount < sorted.length;
 
-    /*
-     * Row-major masonry via CSS grid row-spans.
-     * DOM order stays the sorted order (newest → oldest), so cards read
-     * left-to-right newest-first and the markup is SSR-stable (no post-hydration
-     * reshuffle, no multi-column paint bug). JS only sets each card's row-span
-     * from its measured height; it never reorders the DOM.
-     */
-    useIsomorphicLayoutEffect(() => {
-        const grid = gridRef.current;
-        if (!grid) return;
+  const handleLoadMore = () => setVisibleCount((p) => p + 6);
+  const changeSort = (o: 'newest' | 'oldest') => {
+    setSortOrder(o);
+    setVisibleCount(9);
+  };
 
-        // Enable masonry packing in JS only. The server/no-JS markup keeps normal
-        // auto-height rows so cards (and the buttons below) are laid out correctly
-        // before hydration — no collapsed-grid flash.
-        grid.style.gridAutoRows = '1px';
+  const closeModal = useCallback(() => setActive(null), []);
 
-        const recalc = () => {
-            const rowGap = parseFloat(getComputedStyle(grid).rowGap) || 0;
-            grid.querySelectorAll<HTMLElement>('[data-masonry-item]').forEach((item) => {
-                const content = item.firstElementChild as HTMLElement | null;
-                if (!content) return;
-                const span = Math.ceil((content.offsetHeight + rowGap) / (1 + rowGap));
-                item.style.gridRowEnd = `span ${span}`;
-            });
-        };
+  // Row-major masonry: keeps the newest-first reading order (unlike CSS
+  // columns) while packing cards tightly. Each item spans as many 1px grid
+  // rows as its content is tall, so columns stay balanced.
+  useIsomorphicLayoutEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    grid.style.gridAutoRows = '1px';
 
-        recalc();
+    const recalc = () => {
+      const rowGap = parseFloat(getComputedStyle(grid).rowGap) || 0;
+      const items = Array.from(grid.querySelectorAll<HTMLElement>('[data-masonry-item]'));
+      items.forEach((item) => {
+        const content = item.firstElementChild as HTMLElement | null;
+        if (!content) return;
+        const span = Math.ceil((content.offsetHeight + rowGap) / (1 + rowGap));
+        item.style.gridRowEnd = `span ${span}`;
+      });
+    };
 
-        // Re-measure when a card's height changes (fonts/images loading) or on resize.
-        const ro = new ResizeObserver(recalc);
-        grid.querySelectorAll<HTMLElement>('[data-masonry-item] > *').forEach((c) => ro.observe(c));
-        window.addEventListener('resize', recalc);
-        return () => {
-            ro.disconnect();
-            window.removeEventListener('resize', recalc);
-        };
-    }, [visibleCount]);
+    recalc();
+    const ro = new ResizeObserver(recalc);
+    grid.querySelectorAll<HTMLElement>('[data-masonry-item] > *').forEach((c) => ro.observe(c));
+    window.addEventListener('resize', recalc);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', recalc);
+    };
+  }, [visibleCount, sortOrder]);
 
-    return (
-        <Section bg="white">
-            <div
-                ref={gridRef}
-                className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+  // Lock scroll + close on Escape while the modal is open.
+  useEffect(() => {
+    if (!active) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeModal();
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [active, closeModal]);
+
+  return (
+    <Section bg="white">
+      {/* Sort toggle */}
+      <div className="mb-8 flex items-center justify-end gap-3">
+        <span className="text-sm font-medium text-slate-500">Sort by</span>
+        <div className="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
+          {(['newest', 'oldest'] as const).map((o) => (
+            <button
+              key={o}
+              type="button"
+              onClick={() => changeSort(o)}
+              aria-pressed={sortOrder === o}
+              className={`rounded-full px-4 py-1.5 font-semibold transition-colors ${
+                sortOrder === o ? 'bg-brand-600 text-white shadow-card' : 'text-slate-600 hover:text-brand-700'
+              }`}
             >
-                {visibleStories.map((t, idx) => (
-                    <div key={t.name} data-masonry-item>
-                        <Reveal delay={Math.min(idx, 6) * 70}>
-                            <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md">
-                                {/* Navy top band with a curved notch that cradles the avatar */}
-                                <div className="relative h-16 bg-brand-900" aria-hidden="true">
-                                    <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
-                                </div>
-                                <img
-                                    className="absolute left-1/2 top-4 z-10 h-24 w-24 -translate-x-1/2 rounded-full object-cover"
-                                    src={t.image}
-                                    alt={t.name}
-                                />
-                                <div className="px-6 pb-7 pt-16 lg:px-8">
-                                    <p className="text-sm font-semibold text-brand-600">{t.program}</p>
-                                    {t.university && <p className="mt-0.5 text-xs text-slate-600">{t.university}</p>}
-                                    <p className="mt-1 text-xs text-slate-500">{[t.country, t.year].filter(Boolean).join(' • ')}</p>
-                                    <Stars className="mt-3 justify-center" />
-                                    <blockquote className="mt-5 text-[15px] leading-relaxed text-slate-700">
-                                        {t.text}
-                                    </blockquote>
-                                    <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
-                                </div>
-                            </div>
-                        </Reveal>
-                    </div>
-                ))}
-            </div>
+              {o === 'newest' ? 'Newest' : 'Oldest'}
+            </button>
+          ))}
+        </div>
+      </div>
 
-            <div className="mt-12 flex flex-col items-center gap-5 text-center">
-                {visibleCount < testimonials.length && (
-                    <Button onClick={handleLoadMore} variant="secondary">Load More</Button>
-                )}
-                <a
-                    href={GOOGLE_REVIEWS_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition-colors hover:text-brand-700"
-                >
-                    <GoogleIcon />
-                    Read our reviews on Google
-                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </a>
+      {/* Balanced row-major masonry — quotes are clamped so cards stay a
+          similar height and columns pack evenly (no ragged blank space),
+          while preserving the newest-first reading order. Full text → modal. */}
+      <div
+        ref={gridRef}
+        className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+      >
+        {visibleStories.map((t) => {
+          const isLong = t.text.length > CLAMP_CHARS;
+          return (
+            <div key={t.name} data-masonry-item>
+              <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md">
+                {/* Navy top band that cradles the avatar */}
+                <div className="relative h-16 bg-brand-900" aria-hidden="true">
+                  <div className="absolute left-1/2 top-2 h-28 w-28 -translate-x-1/2 rounded-full bg-white" />
+                </div>
+                <img
+                  className="absolute left-1/2 top-4 z-10 h-24 w-24 -translate-x-1/2 rounded-full object-cover"
+                  src={t.image}
+                  alt={t.name}
+                />
+                <div className="px-6 pb-7 pt-16 lg:px-8">
+                  <p className="text-sm font-semibold text-brand-600">{t.program}</p>
+                  {t.university && <p className="mt-0.5 text-xs text-slate-600">{t.university}</p>}
+                  <p className="mt-1 text-xs text-slate-500">{meta(t)}</p>
+                  <Stars className="mt-3 justify-center" />
+                  <blockquote
+                    className="mt-5 text-[15px] leading-relaxed text-slate-700"
+                    style={
+                      isLong
+                        ? {
+                            display: '-webkit-box',
+                            WebkitLineClamp: CLAMP_LINES,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }
+                        : undefined
+                    }
+                  >
+                    {t.text}
+                  </blockquote>
+                  {isLong && (
+                    <button
+                      type="button"
+                      onClick={() => setActive(t)}
+                      className="mt-3 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
+                    >
+                      Read full story
+                    </button>
+                  )}
+                  <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
+                </div>
+              </div>
             </div>
-        </Section>
-    );
+          );
+        })}
+      </div>
+
+      <div className="mt-10 flex flex-col items-center gap-5 text-center">
+        {hasMore && (
+          <Button onClick={handleLoadMore} variant="secondary">Load More</Button>
+        )}
+        <a
+          href={GOOGLE_REVIEWS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition-colors hover:text-brand-700"
+        >
+          <GoogleIcon />
+          Read our reviews on Google
+          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      {/* Full-story modal */}
+      {active && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Full story from ${active.name}`}
+        >
+          <div
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            onClick={closeModal}
+            aria-hidden="true"
+          />
+          <div className="relative flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl bg-white shadow-card-lg">
+            <button
+              type="button"
+              onClick={closeModal}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="overflow-y-auto px-7 pb-8 pt-9 text-center sm:px-9">
+              <img
+                className="mx-auto h-24 w-24 rounded-full object-cover ring-4 ring-brand-50"
+                src={active.image}
+                alt={active.name}
+              />
+              <p className="mt-4 text-sm font-semibold text-brand-600">{active.program}</p>
+              {active.university && <p className="mt-0.5 text-xs text-slate-600">{active.university}</p>}
+              <p className="mt-1 text-xs text-slate-500">{meta(active)}</p>
+              <Stars className="mt-3 justify-center" />
+              <blockquote className="mt-5 text-left text-[15px] leading-relaxed text-slate-700">
+                {active.text}
+              </blockquote>
+              <p className="mt-6 border-t border-slate-100 pt-5 font-semibold text-slate-900">{active.name}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </Section>
+  );
 };
 
 export default StoriesGrid;
