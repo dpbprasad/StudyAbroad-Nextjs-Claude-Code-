@@ -6,6 +6,11 @@ import { cn } from '../../lib/utils';
 /**
  * Fade-up on scroll into view. Subtle, runs once, reduced-motion aware.
  * Wrap a section's content or map cards with a staggered `delay`. design.md §4
+ *
+ * Tuned to stay in sync with the scroll: it triggers the moment the element
+ * reaches the viewport (with a small head-start so fast flicks don't out-run
+ * it) and uses a short travel + duration so the motion lands quickly instead
+ * of trailing behind.
  */
 export function Reveal({
   children,
@@ -18,12 +23,14 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
+  const [settled, setSettled] = useState(false); // animation finished → drop will-change
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setShown(true);
+      setSettled(true);
       return;
     }
     // Already in view on mount (above-the-fold) → reveal immediately. Don't rely on
@@ -35,6 +42,10 @@ export function Reveal({
       setShown(true);
       return;
     }
+    // Fire as soon as the element reaches the viewport. threshold 0 = the instant
+    // its top edge crosses in (no "wait until 12% visible" lag); the +40px bottom
+    // margin starts it a touch early so a quick flick never scrolls past an
+    // element that hasn't animated yet.
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -42,18 +53,28 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0, rootMargin: '0px 0px 40px 0px' },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
+  // Promote to its own layer only while it's actually animating, then drop the
+  // hint. Leaving `will-change` on every wrapper permanently keeps dozens of
+  // composited layers alive, which can make the scroll itself feel less smooth.
+  useEffect(() => {
+    if (!shown || settled) return;
+    const t = window.setTimeout(() => setSettled(true), delay + 650);
+    return () => window.clearTimeout(t);
+  }, [shown, settled, delay]);
+
   return (
     <div
       ref={ref}
       className={cn(
-        'transition-all duration-[800ms] ease-smooth will-change-[opacity,transform] motion-reduce:transition-none',
-        shown ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
+        'transition-[opacity,transform] duration-[550ms] ease-smooth motion-reduce:transition-none',
+        !settled && 'will-change-[opacity,transform]',
+        shown ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
         className,
       )}
       style={{ transitionDelay: shown ? `${delay}ms` : '0ms' }}
