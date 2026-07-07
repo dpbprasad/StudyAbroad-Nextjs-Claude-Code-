@@ -6,33 +6,6 @@ import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
 
-/* ------------------------------------------------------------------ *
- * Zoho CRM "Web-to-Lead" config — PENDING values from the Zoho team.
- * Fill these in once Zoho generates the Web-to-Lead form. Until then,
- * the form validates and shows a "call/email us" notice (no lead is
- * silently lost). See design.md §11 (Contact).
- * ------------------------------------------------------------------ */
-const ZOHO = {
-  actionUrl: '', // e.g. https://crm.zoho.com/crm/WebToLeadForm  (region-specific)
-  hidden: {
-    xnQsjsdp: '',
-    xmIwtLD: '',
-    actionType: '', // base64 of "Leads"
-  },
-  // Map our fields → the field names Zoho expects (from the generated webform)
-  fields: {
-    firstName: 'First Name',
-    lastName: 'Last Name',
-    phone: 'Phone',
-    email: 'Email',
-    levelOfStudy: '', // custom field name (e.g. LEADCF1)
-    currentQualification: '', // custom field (contact page only)
-    preferredCountry: '', // custom field (contact page only)
-    message: 'Description',
-  },
-};
-const ZOHO_READY = Boolean(ZOHO.actionUrl);
-
 const levelOptions = [
   { value: 'Foundation', label: 'Foundation / Certificate' },
   { value: 'Diploma', label: 'Diploma' },
@@ -77,7 +50,7 @@ const initialForm = {
 
 type FormState = typeof initialForm;
 type Errors = Partial<Record<keyof FormState, string>>;
-type Status = 'idle' | 'submitting' | 'success' | 'pending' | 'error';
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export function ConsultationForm({ extended = false }: { extended?: boolean }) {
   const [form, setForm] = useState<FormState>(initialForm);
@@ -105,35 +78,32 @@ export function ConsultationForm({ extended = false }: { extended?: boolean }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Honeypot: if this hidden field is filled, it's a bot — silently drop.
-    if (honeypotRef.current?.value) return;
     const errs = validate();
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    if (!ZOHO_READY) {
-      setStatus('pending');
-      return;
-    }
-
     setStatus('submitting');
     try {
-      const body = new URLSearchParams();
-      body.append('xnQsjsdp', ZOHO.hidden.xnQsjsdp);
-      body.append('xmIwtLD', ZOHO.hidden.xmIwtLD);
-      body.append('actionType', ZOHO.hidden.actionType);
-
-      const f = ZOHO.fields;
-      if (f.firstName) body.append(f.firstName, form.firstName);
-      if (f.lastName) body.append(f.lastName, form.lastName);
-      if (f.phone) body.append(f.phone, form.phone);
-      if (f.email) body.append(f.email, form.email);
-      if (f.levelOfStudy) body.append(f.levelOfStudy, form.levelOfStudy);
-      if (f.message) body.append(f.message, form.message);
-      if (extended && f.currentQualification) body.append(f.currentQualification, form.currentQualification);
-      if (extended && f.preferredCountry) body.append(f.preferredCountry, form.preferredCountry);
-
-      await fetch(ZOHO.actionUrl, { method: 'POST', mode: 'no-cors', body });
+      // Store the lead in our backend. Zoho forwarding + email replies are
+      // handled server-side (added once the Zoho endpoint is provided).
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: extended ? 'contact' : 'consultation',
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phone: form.phone,
+          email: form.email,
+          levelOfStudy: form.levelOfStudy,
+          currentQualification: form.currentQualification,
+          preferredCountry: form.preferredCountry,
+          message: form.message,
+          company: honeypotRef.current?.value ?? '', // honeypot, checked server-side
+          source: typeof window !== 'undefined' ? window.location.pathname : undefined,
+        }),
+      });
+      if (!res.ok) throw new Error('Request failed');
       setStatus('success');
       setForm(initialForm);
     } catch {
@@ -215,13 +185,6 @@ export function ConsultationForm({ extended = false }: { extended?: boolean }) {
 
       <Textarea label="Message (optional)" name="message" rows={4} value={form.message} onChange={set('message')} placeholder="Tell us briefly what you'd like help with…" />
 
-      {status === 'pending' && (
-        <p role="alert" className="rounded-lg bg-gold-50 px-4 py-3 text-sm text-slate-700 ring-1 ring-gold-200">
-          Our online form is being finalised. In the meantime, please reach us directly at{' '}
-          <a href="mailto:info@studyabroad.lk" className="font-semibold text-brand-700 underline">info@studyabroad.lk</a>{' '}
-          or <a href="tel:+94774963373" className="font-semibold text-brand-700 underline">+94 77 496 3373</a>.
-        </p>
-      )}
       {status === 'error' && (
         <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-200">
           Something went wrong. Please try again, or email info@studyabroad.lk.
