@@ -41,7 +41,7 @@ const TestimonialsCarousel: React.FC = () => {
             </Reveal>
 
             <div className="flex items-center gap-4 lg:gap-6">
-                <button onClick={handlePrev} className={controlBtn} aria-label="Previous testimonial">
+                <button onClick={handlePrev} className={`${controlBtn} hidden md:flex`} aria-label="Previous testimonial">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
@@ -66,7 +66,7 @@ const TestimonialsCarousel: React.FC = () => {
 
                                     {/* Quote + student */}
                                     <div className="text-center lg:text-left">
-                                        <blockquote className="line-clamp-6 text-lg leading-relaxed text-slate-700 md:text-xl">
+                                        <blockquote className="line-clamp-6 text-base leading-relaxed text-slate-700 md:text-xl">
                                             {t.text}
                                         </blockquote>
                                         {t.text.length > 300 && (
@@ -94,12 +94,58 @@ const TestimonialsCarousel: React.FC = () => {
                     </div>
                 </div>
 
-                <button onClick={handleNext} className={controlBtn} aria-label="Next testimonial">
+                <button onClick={handleNext} className={`${controlBtn} hidden md:flex`} aria-label="Next testimonial">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
             </div>
+
+            {/* Dynamic sliding dots (mobile only): active centered + wider,
+                neighbours shrink and fade; strip slides to keep the active
+                centred. Matches the Destinations / Recent Articles carousels. */}
+            {(() => {
+                const len = testimonials.length;
+                const active = currentIndex;
+                const SLOT = 18;
+                const VIEW = SLOT * 5;
+                const total = SLOT * len;
+                const shift = Math.max(Math.min(0, VIEW - total), Math.min(0, VIEW / 2 - (active * SLOT + SLOT / 2)));
+                return (
+                    <div className="mt-8 flex justify-center md:hidden">
+                        <div className="overflow-hidden" style={{ width: Math.min(VIEW, total) }}>
+                            <div
+                                className="flex transition-transform duration-300 ease-out"
+                                style={{ transform: `translateX(${shift}px)` }}
+                            >
+                                {testimonials.map((_, i) => {
+                                    const d = Math.abs(i - active);
+                                    const isActive = i === active;
+                                    const dot = isActive
+                                        ? 'h-1.5 w-4 bg-brand-600'
+                                        : d === 1
+                                        ? 'h-1.5 w-1.5 bg-slate-400'
+                                        : d === 2
+                                        ? 'h-1 w-1 bg-slate-300'
+                                        : 'h-1 w-1 bg-slate-300 opacity-40';
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => setCurrentIndex(i)}
+                                            aria-label={`Go to testimonial ${i + 1}`}
+                                            aria-current={isActive ? 'true' : undefined}
+                                            className="flex h-6 shrink-0 items-center justify-center"
+                                            style={{ width: SLOT }}
+                                        >
+                                            <span className={`rounded-full transition-all duration-300 ${dot}`} />
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
         </Section>
     );
 };
