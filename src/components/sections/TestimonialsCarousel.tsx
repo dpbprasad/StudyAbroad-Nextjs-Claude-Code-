@@ -11,16 +11,6 @@ import { useSwipe } from '../../lib/useSwipe';
 const controlBtn =
   'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition-colors duration-200 hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2';
 
-const Stars: React.FC<{ count?: number; className?: string }> = ({ count = 5, className = '' }) => (
-  <div className={`flex gap-0.5 ${className}`} aria-label={`${count} out of 5 stars`}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <svg key={i} className={`h-4 w-4 ${i < count ? 'text-gold-400' : 'text-slate-300'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1.99 5.79L10 14.77l-5.2 2.73.99-5.79L1.58 7.62l5.82-.85L10 1.5z" />
-      </svg>
-    ))}
-  </div>
-);
-
 const TestimonialsCarousel: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -66,7 +56,7 @@ const TestimonialsCarousel: React.FC = () => {
 
                                     {/* Quote + student */}
                                     <div className="text-center lg:text-left">
-                                        <blockquote className="line-clamp-[8] text-base leading-relaxed text-slate-700 md:line-clamp-6 md:text-xl">
+                                        <blockquote className="line-clamp-[8] text-base leading-relaxed text-slate-700 md:text-xl">
                                             {t.text}
                                         </blockquote>
                                         {t.text.length > 300 && (
@@ -80,14 +70,11 @@ const TestimonialsCarousel: React.FC = () => {
                                                 </svg>
                                             </Link>
                                         )}
-                                        {/* Stars — hidden on mobile, shown md+ */}
-                                        <Stars className="mt-6 hidden justify-center md:flex lg:justify-start" />
-                                        <div className="mt-4">
+                                        {/* Program, university and star rating are intentionally
+                                            not shown here (client preference). The fields remain in
+                                            the data — they still render on the Stories page cards. */}
+                                        <div className="mt-6">
                                             <p className="text-xl font-semibold text-slate-900">{t.name}</p>
-                                            {/* Program + University — hidden on mobile. KEEP RECORD:
-                                                revisit at final stage; remove entirely if unused. */}
-                                            <p className="hidden text-sm font-medium text-brand-600 md:block">{t.program}</p>
-                                            {t.university && <p className="hidden text-sm text-slate-600 md:block">{t.university}</p>}
                                             <p className="mt-0.5 text-xs text-slate-500">{[t.country, t.year].filter(Boolean).join(' • ')}</p>
                                         </div>
                                     </div>
