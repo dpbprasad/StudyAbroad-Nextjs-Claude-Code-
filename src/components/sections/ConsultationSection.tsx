@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from '../ui/Section';
 import { Eyebrow } from '../ui/Eyebrow';
+import { Reveal } from '../ui/Reveal';
 import { ConsultationForm } from '../forms/ConsultationForm';
 
 const PinIcon = () => (
@@ -25,21 +26,21 @@ const MailIcon = () => (
 const ConsultationSection: React.FC = () => {
   return (
     <Section bg="subtle">
-      <div className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
+      <Reveal className="mx-auto mb-12 max-w-3xl text-center lg:mb-14">
         <Eyebrow className="justify-center">Contact Us</Eyebrow>
         <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
           Book Your Free Consultation
         </h2>
-      </div>
+      </Reveal>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
         {/* Form */}
-        <div className="rounded-2xl bg-white p-6 shadow-card-md ring-1 ring-slate-200 sm:p-8">
+        <Reveal className="rounded-2xl bg-white p-6 shadow-card-md ring-1 ring-slate-200 sm:p-8">
           <ConsultationForm />
-        </div>
+        </Reveal>
 
         {/* Info + map */}
-        <div className="flex flex-col gap-8">
+        <Reveal delay={120} className="flex flex-col gap-8">
           <div className="flex flex-col gap-6">
             <a
               href="https://maps.app.goo.gl/PLTg8veRcFbykqZe6"
@@ -89,7 +90,7 @@ const ConsultationSection: React.FC = () => {
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

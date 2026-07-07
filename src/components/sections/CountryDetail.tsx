@@ -6,6 +6,7 @@ import ConsultationCTA from './ConsultationCTA';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { PageHeader } from '../ui/PageHeader';
+import { Reveal } from '../ui/Reveal';
 
 interface Institution { name: string; desc: string; }
 interface Feature { title: string; desc: string; }
@@ -421,7 +422,7 @@ const CountryDetail: React.FC = () => {
                     {/* Content */}
                     <div ref={contentRef} className="min-w-0 scroll-mt-24 space-y-12">
                         {/* Overview / intro */}
-                        <div>
+                        <Reveal>
                             <h2 className="mb-6 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
                                 {isOverview ? 'About Study Abroad' : `Overview of ${activeCountry.name}`}
                             </h2>
@@ -430,10 +431,10 @@ const CountryDetail: React.FC = () => {
                                     <p key={idx}>{para}</p>
                                 ))}
                             </div>
-                        </div>
+                        </Reveal>
 
                         {/* Education system */}
-                        <div>
+                        <Reveal>
                             <h2 className="mb-8 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
                                 {activeCountry.educationSystemTitle}
                             </h2>
@@ -468,10 +469,10 @@ const CountryDetail: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Reveal>
 
                         {/* Features */}
-                        <div>
+                        <Reveal>
                             <h2 className="mb-8 font-display text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
                                 {isOverview ? 'Why Study Abroad' : `Why Choose ${activeCountry.name}`}
                             </h2>
@@ -486,7 +487,7 @@ const CountryDetail: React.FC = () => {
                                     </Card>
                                 ))}
                             </div>
-                        </div>
+                        </Reveal>
 
                         {/* CTA */}
                         <ConsultationCTA title={isOverview ? 'Ready to Study Abroad?' : `Ready to Study in ${activeCountry.name}?`} />

@@ -16,10 +16,15 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  translate = true,
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  /** Set false for an opacity-only fade (no vertical shift) — useful when a
+   *  transform would disturb layout measured with getBoundingClientRect,
+   *  e.g. the Stories masonry. */
+  translate?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
@@ -74,7 +79,7 @@ export function Reveal({
       className={cn(
         'transition-[opacity,transform] duration-700 ease-smooth motion-reduce:transition-none',
         !settled && 'will-change-[opacity,transform]',
-        shown ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0',
+        shown ? 'translate-y-0 opacity-100' : translate ? 'translate-y-5 opacity-0' : 'opacity-0',
         className,
       )}
       style={{ transitionDelay: shown ? `${delay}ms` : '0ms' }}

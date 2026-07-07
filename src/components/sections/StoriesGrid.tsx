@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useMemo } from 'react';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 import { testimonials as allTestimonials } from '../../lib/testimonials';
 
 const GOOGLE_REVIEWS_URL = 'https://share.google/uUZ4JGwh0nQbpeqQw';
@@ -143,6 +144,7 @@ const StoriesGrid: React.FC = () => {
         >
           {visibleStories.map((t) => (
             <div key={t.name} data-masonry-item>
+              <Reveal translate={false}>
               <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white text-center shadow-card ring-1 ring-slate-200 transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-md">
                 {/* Navy top band with a curved notch that cradles the avatar */}
                 <div className="relative h-16 bg-brand-900" aria-hidden="true">
@@ -164,6 +166,7 @@ const StoriesGrid: React.FC = () => {
                   <p className="mt-5 border-t border-slate-100 pt-4 font-semibold text-slate-900">{t.name}</p>
                 </div>
               </div>
+              </Reveal>
             </div>
           ))}
         </div>

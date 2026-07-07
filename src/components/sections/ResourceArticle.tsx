@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import ConsultationCTA from './ConsultationCTA';
 import { Section } from '../ui/Section';
 import { PageHeader } from '../ui/PageHeader';
+import { Reveal } from '../ui/Reveal';
 
 import { articles, type Article } from '../../lib/articles';
 
@@ -150,16 +151,18 @@ const ResourceArticle: React.FC = () => {
 
                     {/* Content */}
                     <article ref={articleRef} className="min-w-0 scroll-mt-24">
-                        <div className="mb-8 aspect-[16/9] overflow-hidden rounded-2xl shadow-card-md">
+                        <Reveal className="mb-8 aspect-[16/9] overflow-hidden rounded-2xl shadow-card-md">
                             <img src={activeArticle.image} alt={activeArticle.title} className="h-full w-full object-cover" />
-                        </div>
+                        </Reveal>
                         <div className="mb-8 flex items-center gap-2 text-sm text-slate-500">
                             <span className="font-medium text-brand-600">{activeArticle.category}</span>
                             <span aria-hidden="true">•</span>
                             <span>Published {activeArticle.date}</span>
                         </div>
 
-                        {activeArticle.id === 'accommodation' ? <AccommodationBody /> : <LifeAbroadBody />}
+                        <Reveal>
+                            {activeArticle.id === 'accommodation' ? <AccommodationBody /> : <LifeAbroadBody />}
+                        </Reveal>
 
                         <div className="mt-12">
                             <ConsultationCTA />

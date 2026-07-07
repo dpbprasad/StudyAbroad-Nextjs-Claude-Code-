@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 interface ConsultationCTAProps {
     title?: string;
@@ -11,6 +12,7 @@ const ConsultationCTA: React.FC<ConsultationCTAProps> = ({
     description = "From choosing the right university to securing your visa and settling in abroad, we handle every step — so you can focus on your future with confidence.",
 }) => {
     return (
+      <Reveal>
         <div className="rounded-3xl bg-brand-50 px-6 py-14 text-center ring-1 ring-brand-100 sm:px-10 lg:py-16">
             <div className="mx-auto max-w-2xl">
                 <h3 className="font-display text-2xl font-semibold leading-tight tracking-tight text-slate-900 md:text-3xl lg:text-4xl">
@@ -25,6 +27,7 @@ const ConsultationCTA: React.FC<ConsultationCTAProps> = ({
                 </div>
             </div>
         </div>
+      </Reveal>
     );
 };
 
