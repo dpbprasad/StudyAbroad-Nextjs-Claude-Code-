@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
   /** YouTube video ID — the part after `watch?v=` (or after `youtu.be/`). */
@@ -21,8 +21,33 @@ type Props = {
  */
 export function YouTubeFacade({ videoId, title, poster }: Props) {
   const [playing, setPlaying] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const frame =
     'group relative aspect-video w-full overflow-hidden rounded-2xl bg-brand-950 shadow-card-lg ring-1 ring-slate-900/5';
+
+  // Auto-pause when the player scrolls out of view (needs enablejsapi=1 on the
+  // iframe). We don't auto-resume — that would be an unexpected jolt of audio.
+  useEffect(() => {
+    if (!playing) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const pause = () =>
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+        '*',
+      );
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) pause();
+      },
+      { threshold: 0.5 }, // fire once the video is more than half out of view
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [playing]);
 
   // Placeholder until a real video ID is supplied.
   if (!videoId) {
@@ -39,7 +64,7 @@ export function YouTubeFacade({ videoId, title, poster }: Props) {
   const thumb = poster ?? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (
-    <div className={frame}>
+    <div ref={containerRef} className={frame}>
       {/* Poster — always painted; stays visible behind the player while it loads */}
       <img
         src={thumb}
@@ -55,8 +80,9 @@ export function YouTubeFacade({ videoId, title, poster }: Props) {
 
       {playing ? (
         <iframe
+          ref={iframeRef}
           className="absolute inset-0 h-full w-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&color=white`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&color=white`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
