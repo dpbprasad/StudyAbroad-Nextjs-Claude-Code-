@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
       <div className="mb-7 animate-fade-up">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_2px_12px_rgba(2,6,23,0.35)] backdrop-blur-md sm:gap-2.5 sm:px-4 sm:text-[13px] sm:tracking-[0.14em]">
           <span className="h-1.5 w-1.5 rounded-full bg-brand-400" aria-hidden="true" />
-          Est. 2007 · Global Minds. Global Futures
+          Est. 2007 | Global Minds. Global Futures.
         </span>
       </div>
 
