@@ -3,6 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import ConsentManager from '../ConsentManager';
+import { NewsletterBanner } from '../sections/NewsletterBanner';
 
 /**
  * Wraps the public site with its header/footer/cookie-consent, but renders the
@@ -25,6 +26,7 @@ export function SiteChrome({
     <>
       {header}
       <main>{children}</main>
+      <NewsletterBanner />
       {footer}
       <ConsentManager />
     </>
