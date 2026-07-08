@@ -1,0 +1,12 @@
+# Netlify configuration for the Study Abroad Next.js site.
+# Netlify auto-detects Next.js and enables its Next Runtime (SSR, API routes,
+# middleware, ISR). Environment variables (DATABASE_URL, AUTH_SECRET, …) are set
+# in the Netlify UI, NOT here — see DEPLOY.md.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Pin an LTS Node for reproducible builds (matches .nvmrc + package.json engines).
+  NODE_VERSION = "20"
