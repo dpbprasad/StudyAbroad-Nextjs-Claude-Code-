@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import { getHeroContent } from '../../lib/content';
 
-const Hero: React.FC = () => {
+const Hero = async () => {
+    const { heading, paragraph } = await getHeroContent();
     return (
         <section className="relative flex items-center min-h-[calc(100svh-5rem)] lg:min-h-[calc(100svh-6rem)] py-10 bg-brand-950 bg-cover bg-bottom bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
   {/* Soft, contained tint behind ONLY the centred content (headline, paragraph,
@@ -19,11 +21,11 @@ const Hero: React.FC = () => {
       </div>
 
       <h1 className="mb-6 max-w-2xl animate-fade-up text-balance bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-4xl font-semibold leading-[1.1] tracking-tight text-transparent [text-shadow:0_2px_20px_rgba(2,6,23,0.35)] md:text-5xl lg:text-6xl" style={{ animationDelay: '150ms' }}>
-        Your Gateway to World-Class Education
+        {heading}
       </h1>
 
       <p className="mx-auto mb-10 max-w-xl animate-fade-up text-pretty text-base leading-relaxed text-slate-100 [text-shadow:0_1px_2px_rgba(0,0,0,0.5),0_2px_22px_rgba(0,0,0,0.6)] md:text-lg" style={{ animationDelay: '300ms' }}>
-        Your trusted partner for international education, admissions, recruitment, placements, and global opportunities.
+        {paragraph}
       </p>
 
       <div className="flex w-full flex-col items-center justify-center gap-3 animate-fade-up sm:w-auto sm:flex-row sm:gap-4" style={{ animationDelay: '450ms' }}>

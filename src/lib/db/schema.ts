@@ -51,6 +51,17 @@ export const users = pgTable('users', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
+/**
+ * Editable site content as key/value rows (e.g. hero_heading, hero_paragraph).
+ * Key/value keeps it flexible so more editable fields can be added later
+ * without schema changes.
+ */
+export const siteContent = pgTable('site_content', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 export type Lead = typeof leads.$inferSelect;
 export type NewLead = typeof leads.$inferInsert;
 export type User = typeof users.$inferSelect;
