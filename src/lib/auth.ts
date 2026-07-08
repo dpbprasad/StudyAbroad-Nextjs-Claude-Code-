@@ -26,3 +26,10 @@ export async function requireSession(): Promise<SessionPayload> {
   if (!session) redirect('/admin/login');
   return session;
 }
+
+/** Require an admin session; editors are bounced to the dashboard. */
+export async function requireAdmin(): Promise<SessionPayload> {
+  const session = await requireSession();
+  if (session.role !== 'admin') redirect('/admin');
+  return session;
+}

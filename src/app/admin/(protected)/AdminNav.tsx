@@ -3,15 +3,15 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const links = [
-  { href: '/admin', label: 'Dashboard' },
-  { href: '/admin/leads', label: 'Leads' },
-  { href: '/admin/subscribers', label: 'Subscribers' },
-  { href: '/admin/content', label: 'Content' },
-];
-
-export function AdminNav() {
+export function AdminNav({ role }: { role: 'admin' | 'editor' }) {
   const pathname = usePathname();
+  const links = [
+    { href: '/admin', label: 'Dashboard' },
+    { href: '/admin/leads', label: 'Leads' },
+    { href: '/admin/subscribers', label: 'Subscribers' },
+    { href: '/admin/content', label: 'Content' },
+    ...(role === 'admin' ? [{ href: '/admin/users', label: 'Users' }] : []),
+  ];
   const isActive = (href: string) =>
     href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
 

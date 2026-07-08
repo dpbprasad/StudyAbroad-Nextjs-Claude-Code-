@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { requireSession } from '../../../lib/auth';
 import { logout } from '../../../lib/actions/auth';
 import { AdminNav } from './AdminNav';
@@ -15,13 +16,17 @@ export default async function ProtectedLayout({ children }: { children: React.Re
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-4 sm:gap-6">
             <img src="/logo.svg" alt="Study Abroad" className="h-8 w-auto object-contain" />
-            <AdminNav />
+            <AdminNav role={session.role} />
           </div>
           <div className="flex items-center gap-3">
-            <div className="hidden text-right sm:block">
+            <Link
+              href="/admin/account"
+              className="hidden rounded-lg px-2 py-1 text-right transition-colors hover:bg-slate-100 sm:block"
+              title="Your account"
+            >
               <p className="text-sm font-medium leading-tight text-slate-800">{session.name}</p>
               <p className="text-xs capitalize leading-tight text-slate-500">{session.role}</p>
-            </div>
+            </Link>
             <form action={logout}>
               <button
                 type="submit"
