@@ -5,7 +5,7 @@ import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '../lib/site';
 import { OrganizationJsonLd } from '../components/seo/OrganizationJsonLd';
 import SiteHeader from '../components/layout/SiteHeader';
 import SiteFooter from '../components/layout/SiteFooter';
-import ConsentManager from '../components/ConsentManager';
+import { SiteChrome } from '../components/layout/SiteChrome';
 
 // Clean geometric sans — used for all headings + body (see design.md §2)
 const inter = Inter({
@@ -59,11 +59,10 @@ export default function RootLayout({
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased bg-white text-slate-700 font-body" suppressHydrationWarning>
         <OrganizationJsonLd />
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
-        {/* Cookie consent + consent-gated third parties (Zoho chat, analytics) */}
-        <ConsentManager />
+        {/* Public pages get the header/footer/consent chrome; /admin renders bare. */}
+        <SiteChrome header={<SiteHeader />} footer={<SiteFooter />}>
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );
