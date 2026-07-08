@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Container } from '../ui/Container';
 import { AccreditationSlider, type Accreditation } from '../ui/AccreditationSlider';
 import { BUSINESS } from '../../lib/site';
+import { getContact, telHref } from '../../lib/content';
 
 /* Accreditation badges — data-driven so a backend can add more later.
    With 1 item it renders statically; 2+ auto-rotate with a swipe hint.
@@ -42,7 +43,8 @@ const legalLinks = [
 const linkClass = 'text-sm text-slate-300 transition-colors duration-200 hover:text-white';
 const headingClass = 'mb-4 text-sm font-semibold uppercase tracking-wider text-white';
 
-const SiteFooter: React.FC = () => {
+const SiteFooter = async () => {
+  const contact = await getContact();
   return (
     <footer className="bg-brand-950 text-slate-300 print:hidden">
       <Container>
@@ -123,15 +125,15 @@ const SiteFooter: React.FC = () => {
                   rel="noopener noreferrer"
                   className="transition-colors duration-200 hover:text-white"
                 >
-                  {BUSINESS.address.street},<br />
-                  {BUSINESS.address.locality}, {BUSINESS.address.countryName}
+                  {contact.street},<br />
+                  {contact.locality}, {BUSINESS.address.countryName}
                 </a>
               </li>
               <li>
-                <a href={`tel:${BUSINESS.phone}`} className={linkClass}>{BUSINESS.phoneDisplay}</a>
+                <a href={telHref(contact.phoneDisplay)} className={linkClass}>{contact.phoneDisplay}</a>
               </li>
               <li>
-                <a href={`mailto:${BUSINESS.email}`} className={linkClass}>{BUSINESS.email}</a>
+                <a href={`mailto:${contact.email}`} className={linkClass}>{contact.email}</a>
               </li>
             </ul>
           </div>

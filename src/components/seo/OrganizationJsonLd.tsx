@@ -1,4 +1,5 @@
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, BUSINESS } from '../../lib/site';
+import { getContact, telHref } from '../../lib/content';
 
 /**
  * Site-wide structured data (JSON-LD) as a @graph: Organization/LocalBusiness
@@ -6,7 +7,8 @@ import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, BUSINESS } from '../../lib/site'
  * engines (ChatGPT, Perplexity, AI Overviews) understand the business.
  * Rendered once, site-wide, from the root layout.
  */
-export function OrganizationJsonLd() {
+export async function OrganizationJsonLd() {
+  const contact = await getContact();
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -21,13 +23,13 @@ export function OrganizationJsonLd() {
         description: SITE_DESCRIPTION,
         slogan: 'Global Minds. Global Futures.',
         foundingDate: BUSINESS.foundingDate,
-        email: BUSINESS.email,
-        telephone: BUSINESS.phone,
+        email: contact.email,
+        telephone: telHref(contact.phoneDisplay).replace('tel:', ''),
         address: {
           '@type': 'PostalAddress',
-          streetAddress: BUSINESS.address.street,
-          addressLocality: BUSINESS.address.locality,
-          postalCode: BUSINESS.address.postalCode,
+          streetAddress: contact.street,
+          addressLocality: contact.locality,
+          postalCode: contact.postalCode,
           addressCountry: BUSINESS.address.country,
         },
         geo: {

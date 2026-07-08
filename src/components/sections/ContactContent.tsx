@@ -2,6 +2,7 @@ import React from 'react';
 import { Section } from '../ui/Section';
 import { Reveal } from '../ui/Reveal';
 import { ConsultationForm } from '../forms/ConsultationForm';
+import { getContact, telHref } from '../../lib/content';
 
 const PinIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -22,7 +23,8 @@ const MailIcon = () => (
   </svg>
 );
 
-const ContactContent: React.FC = () => {
+const ContactContent = async () => {
+  const contact = await getContact();
   return (
     <Section bg="subtle">
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
@@ -46,28 +48,28 @@ const ContactContent: React.FC = () => {
               <div>
                 <h3 className="text-base font-semibold text-slate-900">Visit Us</h3>
                 <p className="mt-0.5 text-[15px] leading-relaxed text-slate-600 transition-colors group-hover:text-brand-700">
-                  No. 109, Kirulapone Avenue, Colombo 05, 00500, Sri Lanka.
+                  {contact.street}, {contact.locality}, {contact.postalCode}, Sri Lanka.
                 </p>
               </div>
             </a>
 
-            <a href="tel:+94774963373" className="group flex items-start gap-4">
+            <a href={telHref(contact.phoneDisplay)} className="group flex items-start gap-4">
               <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
                 <PhoneIcon />
               </span>
               <div>
                 <h3 className="text-base font-semibold text-slate-900">Call Us</h3>
-                <p className="mt-0.5 text-[15px] text-slate-600 transition-colors group-hover:text-brand-700">+94 77 496 3373</p>
+                <p className="mt-0.5 text-[15px] text-slate-600 transition-colors group-hover:text-brand-700">{contact.phoneDisplay}</p>
               </div>
             </a>
 
-            <a href="mailto:info@studyabroad.lk" className="group flex items-start gap-4">
+            <a href={`mailto:${contact.email}`} className="group flex items-start gap-4">
               <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
                 <MailIcon />
               </span>
               <div>
                 <h3 className="text-base font-semibold text-slate-900">Email Us</h3>
-                <p className="mt-0.5 text-[15px] text-slate-600 transition-colors group-hover:text-brand-700">info@studyabroad.lk</p>
+                <p className="mt-0.5 text-[15px] text-slate-600 transition-colors group-hover:text-brand-700">{contact.email}</p>
               </div>
             </a>
           </div>

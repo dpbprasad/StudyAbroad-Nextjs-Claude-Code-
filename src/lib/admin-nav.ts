@@ -9,8 +9,8 @@ export type ContentSection = {
 
 export const CONTENT_SECTIONS: ContentSection[] = [
   { slug: 'hero', label: 'Homepage Hero', desc: 'Headline & intro paragraph', ready: true },
-  { slug: 'contact', label: 'Contact details', desc: 'Address, phone, email', ready: false },
-  { slug: 'stats', label: 'Homepage stats', desc: 'Headline numbers', ready: false },
+  { slug: 'contact', label: 'Contact details', desc: 'Address, phone, email', ready: true },
+  { slug: 'stats', label: 'Homepage stats', desc: 'Headline numbers', ready: true },
   { slug: 'testimonials', label: 'Testimonials', desc: 'Success stories', ready: false },
   { slug: 'articles', label: 'Articles', desc: 'Resource / blog posts', ready: false },
   { slug: 'countries', label: 'Countries', desc: 'Destination pages', ready: false },
