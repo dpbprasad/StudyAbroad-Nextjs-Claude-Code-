@@ -5,6 +5,10 @@ import { usePathname } from 'next/navigation';
 import ConsentManager from '../ConsentManager';
 import { NewsletterBanner } from '../sections/NewsletterBanner';
 
+// Newsletter subscribe section is temporarily hidden site-wide.
+// Flip to true to bring it back (needs the backend / DATABASE_URL to store signups).
+const SHOW_NEWSLETTER = false;
+
 /**
  * Wraps the public site with its header/footer/cookie-consent, but renders the
  * /admin dashboard bare (it has its own layout). Header/footer are passed in as
@@ -26,7 +30,7 @@ export function SiteChrome({
     <>
       {header}
       <main>{children}</main>
-      <NewsletterBanner />
+      {SHOW_NEWSLETTER && <NewsletterBanner />}
       {footer}
       <ConsentManager />
     </>

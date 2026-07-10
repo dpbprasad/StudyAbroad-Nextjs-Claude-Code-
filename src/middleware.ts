@@ -8,6 +8,12 @@ import { SESSION_COOKIE, verifySession } from './lib/session';
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // Front-end-only deploys don't configure the backend — hide /admin entirely
+  // (404) until AUTH_SECRET (and a database) are set on the host.
+  if (!process.env.AUTH_SECRET) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   if (pathname === '/admin/login') return NextResponse.next();
 
   const session = await verifySession(req.cookies.get(SESSION_COOKIE)?.value);
