@@ -108,3 +108,33 @@ export function buildLeadAutoReply(d: LeadEmailData): Built {
 
   return { subject: `We've received your enquiry — Study Abroad (Pvt) Ltd`, html: shell(inner), text };
 }
+
+/** Internal notification to the company for a new newsletter subscriber. */
+export function buildSubscriberNotification(email: string, source?: string): Built {
+  const inner = `
+    <h1 style="margin:0 0 4px;font-size:18px;color:#0f172a">New newsletter subscriber</h1>
+    <p style="margin:0 0 14px;color:#64748b;font-size:14px">Someone subscribed via the website${source ? ` (${esc(source)})` : ''}.</p>
+    <table style="border-collapse:collapse;width:100%">${row('Email', email)}</table>
+  `;
+  const text = `New newsletter subscriber\n\n` + textRow('Email', email) + textRow('Source', source);
+  return { subject: `New newsletter subscriber — ${email}`, html: shell(inner), text };
+}
+
+/** Welcome / confirmation to a new newsletter subscriber. */
+export function buildSubscriberWelcome(email: string): Built {
+  const inner = `
+    <h1 style="margin:0 0 12px;font-size:18px;color:#0f172a">You're subscribed 🎉</h1>
+    <p style="margin:0 0 14px;color:#334155;font-size:15px;line-height:1.6">
+      Thanks for joining the Study Abroad (Pvt) Ltd newsletter. You&rsquo;ll now receive scholarship
+      alerts, application deadlines, and study-abroad tips — straight to your inbox.
+    </p>
+    <p style="margin:0;color:#334155;font-size:15px;line-height:1.6">
+      If you didn&rsquo;t sign up, you can safely ignore this email.
+    </p>
+  `;
+  const text =
+    `You're subscribed!\n\n` +
+    `Thanks for joining the Study Abroad newsletter — scholarship alerts, application deadlines and study-abroad tips.\n\n` +
+    `If you didn't sign up, you can ignore this email.\n\nStudy Abroad (Pvt) Ltd · ${BUSINESS.email}`;
+  return { subject: `You're subscribed — Study Abroad (Pvt) Ltd`, html: shell(inner), text };
+}

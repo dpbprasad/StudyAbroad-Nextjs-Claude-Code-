@@ -5,9 +5,8 @@ import { usePathname } from 'next/navigation';
 import ConsentManager from '../ConsentManager';
 import { NewsletterBanner } from '../sections/NewsletterBanner';
 
-// Newsletter subscribe section is temporarily hidden site-wide.
-// Flip to true to bring it back (needs the backend / DATABASE_URL to store signups).
-const SHOW_NEWSLETTER = false;
+// Newsletter subscribe section visibility (site-wide).
+const SHOW_NEWSLETTER = true;
 
 /**
  * Wraps the public site with its header/footer/cookie-consent, but renders the
