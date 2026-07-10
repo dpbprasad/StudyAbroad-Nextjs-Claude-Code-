@@ -57,7 +57,9 @@ export default function ConsentManager() {
         <div className="fixed inset-x-0 bottom-0 z-50 px-4 pb-4 print:hidden">
           <div className="mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-card-lg sm:flex-row sm:items-center sm:gap-4 sm:p-5">
             <p className="flex-1 text-sm leading-relaxed text-slate-600">
-              We use cookies to power our live chat and improve your experience. See our{' '}
+              We use essential cookies to run this website. With your consent, we also use
+              non-essential cookies — for example, to power our live chat and improve your
+              experience. You can accept or decline below. See our{' '}
               <Link href="/privacy-policy" className="font-medium text-brand-600 underline-offset-2 hover:underline">
                 Privacy Policy
               </Link>
