@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '../../../lib/db';
 import { leads } from '../../../lib/db/schema';
+import { sendMail } from '../../../lib/mailer';
+import { buildLeadNotification, buildLeadAutoReply } from '../../../lib/emails';
 
 // Neon's HTTP driver runs on the edge too, but nodejs is the safe default on Netlify.
 export const runtime = 'nodejs';
@@ -56,32 +58,51 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
+  const lead = {
+    formType: v.formType,
+    firstName: v.firstName,
+    lastName: v.lastName,
+    email: v.email,
+    phone: v.phone,
+    levelOfStudy: v.levelOfStudy,
+    currentQualification: v.currentQualification,
+    preferredCountry: v.preferredCountry,
+    message: v.message,
+    source: v.source,
+  };
+
+  // 1) Store a copy in the DB (best-effort — email is the primary notification).
+  let saved = false;
   try {
-    const [row] = await db
-      .insert(leads)
-      .values({
-        formType: v.formType,
-        firstName: v.firstName,
-        lastName: v.lastName,
-        email: v.email,
-        phone: v.phone,
-        levelOfStudy: v.levelOfStudy,
-        currentQualification: v.currentQualification,
-        preferredCountry: v.preferredCountry,
-        message: v.message,
-        source: v.source,
-      })
-      .returning({ id: leads.id });
-
-    // TODO(zoho): forward to Zoho Web-to-Lead here once the endpoint is provided,
-    // then mark zohoSynced / zohoSyncedAt. Until then the lead is safely stored.
-
-    return NextResponse.json({ ok: true, id: row.id });
+    await db.insert(leads).values(lead);
+    saved = true;
   } catch (err) {
     console.error('Failed to store lead:', err);
+  }
+
+  // 2) Email: notify the company (reply-to the applicant) + auto-reply to the
+  //    applicant. Best-effort; a failure here must not lose the enquiry.
+  let emailed = false;
+  try {
+    const notifyTo = process.env.LEADS_NOTIFY_TO || process.env.MAIL_FROM || process.env.SMTP_USER;
+    const results = await Promise.allSettled([
+      notifyTo
+        ? sendMail({ to: notifyTo, replyTo: v.email, ...buildLeadNotification(lead) })
+        : Promise.resolve({ ok: false as const }),
+      sendMail({ to: v.email, ...buildLeadAutoReply(lead) }),
+    ]);
+    emailed = results.some((r) => r.status === 'fulfilled' && r.value.ok);
+  } catch (err) {
+    console.error('Failed to send lead emails:', err);
+  }
+
+  // Only fail the request if we captured the enquiry nowhere.
+  if (!saved && !emailed) {
     return NextResponse.json(
-      { error: 'Something went wrong on our side. Please try again.' },
+      { error: 'Something went wrong on our side. Please try again, or email us directly.' },
       { status: 500 },
     );
   }
+
+  return NextResponse.json({ ok: true });
 }
