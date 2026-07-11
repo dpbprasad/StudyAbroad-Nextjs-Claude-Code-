@@ -71,30 +71,27 @@ export async function POST(req: Request) {
     source: v.source,
   };
 
-  // 1) Store a copy in the DB (best-effort — email is the primary notification).
-  let saved = false;
-  try {
-    await db.insert(leads).values(lead);
-    saved = true;
-  } catch (err) {
-    console.error('Failed to store lead:', err);
-  }
+  // Capture the enquiry: store a copy in the DB, email the company (reply-to the
+  // applicant), and auto-reply to the applicant — all concurrently, so a slow
+  // database never delays the emails or pushes a serverless function past its
+  // timeout. Each is best-effort; the enquiry survives if any one succeeds.
+  const notifyTo = process.env.LEADS_NOTIFY_TO || process.env.MAIL_FROM || process.env.SMTP_USER;
+  const [saveRes, notifyRes, replyRes] = await Promise.allSettled([
+    db ? db.insert(leads).values(lead) : Promise.reject(new Error('no database configured')),
+    notifyTo
+      ? sendMail({ to: notifyTo, replyTo: v.email, ...buildLeadNotification(lead) })
+      : Promise.resolve({ ok: false as const }),
+    sendMail({ to: v.email, ...buildLeadAutoReply(lead) }),
+  ]);
 
-  // 2) Email: notify the company (reply-to the applicant) + auto-reply to the
-  //    applicant. Best-effort; a failure here must not lose the enquiry.
-  let emailed = false;
-  try {
-    const notifyTo = process.env.LEADS_NOTIFY_TO || process.env.MAIL_FROM || process.env.SMTP_USER;
-    const results = await Promise.allSettled([
-      notifyTo
-        ? sendMail({ to: notifyTo, replyTo: v.email, ...buildLeadNotification(lead) })
-        : Promise.resolve({ ok: false as const }),
-      sendMail({ to: v.email, ...buildLeadAutoReply(lead) }),
-    ]);
-    emailed = results.some((r) => r.status === 'fulfilled' && r.value.ok);
-  } catch (err) {
-    console.error('Failed to send lead emails:', err);
-  }
+  const saved = saveRes.status === 'fulfilled';
+  const emailed =
+    (notifyRes.status === 'fulfilled' && notifyRes.value.ok) ||
+    (replyRes.status === 'fulfilled' && replyRes.value.ok);
+
+  if (saveRes.status === 'rejected') console.error('Failed to store lead:', saveRes.reason);
+  if (notifyRes.status === 'rejected') console.error('Lead notification failed:', notifyRes.reason);
+  if (replyRes.status === 'rejected') console.error('Lead auto-reply failed:', replyRes.reason);
 
   // Only fail the request if we captured the enquiry nowhere.
   if (!saved && !emailed) {
