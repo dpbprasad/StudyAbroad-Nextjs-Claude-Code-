@@ -9,8 +9,18 @@ export const SITE_CONTENT_TAG = 'site-content';
 /** Back-compat alias (hero action imported this name). */
 export const HERO_CONTENT_TAG = SITE_CONTENT_TAG;
 
+// Cap how long a content read may block page rendering. If the database is
+// slow/unreachable (e.g. a cold Neon compute), we abandon the query and let the
+// caller fall back to built-in defaults, so the public site never hangs.
+const DB_READ_TIMEOUT_MS = 2500;
+
 async function readKeys(keys: string[]): Promise<Record<string, string>> {
-  const rows = await db.select().from(siteContent).where(inArray(siteContent.key, keys));
+  if (!db) return {}; // no database configured → use defaults
+  const query = db.select().from(siteContent).where(inArray(siteContent.key, keys));
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error('db-read-timeout')), DB_READ_TIMEOUT_MS),
+  );
+  const rows = await Promise.race([query, timeout]);
   return Object.fromEntries(rows.map((r) => [r.key, r.value]));
 }
 
